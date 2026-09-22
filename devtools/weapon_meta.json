@@ -1,0 +1,1391 @@
+{
+ "_comment": "Hand-maintained weapon key metadata for gen_weapon_schema.py. Key = the lowercase key the mod reads. types: ALL, P (every projectile-firing type) or a list of Type values. desc is only needed where the mod's own Readme_Weapon*.md doesn't document the key (the docs take priority). Defaults/kinds the loader code states plainly are extracted from the code; 'default'/'default_display' here cover the rest.",
+ "weapon_types": {
+  "projectile": [
+   "MachineGun1",
+   "MachineGun2",
+   "Rocket",
+   "Bomb",
+   "Depth",
+   "Torpedo",
+   "ASMissile",
+   "AAMissile",
+   "ATMissile",
+   "Missile",
+   "TVMissile",
+   "MkRocket",
+   "ASWeapon"
+  ],
+  "other": [
+   "Dispenser",
+   "Smoke",
+   "Dummy",
+   "TargetingPod",
+   "DropTank",
+   "CAS",
+   "Carrier"
+  ]
+ },
+ "keys": {
+  "type": {
+   "name": "Type",
+   "group": "Basic",
+   "types": "ALL",
+   "kind": "enum",
+   "required": true
+  },
+  "displayname": {
+   "name": "DisplayName",
+   "group": "Basic",
+   "types": "ALL",
+   "desc": {
+    "ja": "HUDの武器名表示(WPN_NAME)に使われる名前。省略時はファイル名の先頭を大文字にしたものになります。",
+    "en": "Name shown by the HUD weapon name (WPN_NAME). Defaults to the file name with its first letter capitalized."
+   },
+   "kind": "string",
+   "default_display": {
+    "ja": "ファイル名",
+    "en": "file name"
+   }
+  },
+  "group": {
+   "name": "Group",
+   "group": "Basic",
+   "types": "ALL",
+   "desc": {
+    "ja": "同じグループ名(大文字小文字を区別する完全一致)の武器同士で、連射間隔(Delay)とリロード時間(ReloadTime)を共有します。どれか1つを使うと、同じグループの全武器に同じ待ち時間が適用されます。",
+    "en": "Weapons with the same group name (case-sensitive exact match) share their fire cooldown (Delay) and reload timer (ReloadTime): using any one applies the same wait to all of them."
+   },
+   "kind": "string"
+  },
+  "modenum": {
+   "name": "ModeNum",
+   "group": "Basic",
+   "types": "ALL",
+   "kind": "int"
+  },
+  "sight": {
+   "name": "Sight",
+   "group": "Basic",
+   "types": "ALL",
+   "desc": {
+    "ja": "選択中に表示される照準の種類。MoveSight(既定)は機体の照準方向に追従、MissileSightはロックオン式の照準、Noneは照準を表示しません。",
+    "en": "Reticle shown while the weapon is selected. MoveSight (default) follows the aim direction, MissileSight is a lock-on style reticle, None shows nothing."
+   },
+   "kind": "enum",
+   "choices": [
+    "MoveSight",
+    "MissileSight",
+    "None"
+   ],
+   "default": "MoveSight"
+  },
+  "delay": {
+   "name": "Delay",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "連射間隔(tick)。1回発射してから次に発射できるまでの時間です。",
+    "en": "Fire interval in ticks - the wait after each shot before the next one can be fired."
+   }
+  },
+  "round": {
+   "name": "Round",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "弾倉の装弾数。0(既定)は無制限で、リロードの概念自体がなくなります。",
+    "en": "Magazine size. 0 (default) means unlimited, with no reload cycle at all."
+   }
+  },
+  "reloadtime": {
+   "name": "ReloadTime",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "弾倉が空になったときのリロード時間(tick)。Roundが1以上のときのみ意味を持ちます。",
+    "en": "Reload time in ticks when the magazine runs empty. Only meaningful when Round is 1 or more."
+   }
+  },
+  "maxammo": {
+   "name": "MaxAmmo",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "弾倉(Round)の補充元となる予備弾の総数。弾倉とは別枠です。0(既定)は予備弾無制限。",
+    "en": "Total reserve ammo the magazine (Round) refills from - a pool separate from the magazine. 0 (default) means an unlimited reserve."
+   }
+  },
+  "suppliednum": {
+   "name": "SuppliedNum",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "機体メニューの補給ボタン1回で補充される弾数(装弾数が上限)。",
+    "en": "Ammo added per press of the resupply button in the vehicle menu (capped at the magazine size)."
+   }
+  },
+  "item": {
+   "name": "Item",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "補給1回に必要な素材。「個数, 素材名」の形式で、iron_ingot / gunpowder / redstone をそれぞれ1行ずつ、最大3行まで指定できます。それ以外の素材名は無視されます。",
+    "en": "Materials consumed per resupply, written \"count, material\". Up to 3 lines, one each for iron_ingot / gunpowder / redstone; any other material is ignored."
+   },
+   "kind": "list_columns",
+   "max_rows": 3,
+   "columns": [
+    {
+     "name": "count",
+     "type": "int"
+    },
+    {
+     "name": "item",
+     "type": "enum",
+     "choices": [
+      "iron_ingot",
+      "gunpowder",
+      "redstone"
+     ]
+    }
+   ]
+  },
+  "heatcount": {
+   "name": "HeatCount",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "1発ごとに加算される熱量(オーバーヒート方式の武器用)。",
+    "en": "Heat added per shot (for overheat-style weapons)."
+   }
+  },
+  "maxheatcount": {
+   "name": "MaxHeatCount",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "熱量の上限。蓄積した熱量がこの値に達すると、冷えるまで発射できなくなります。0(既定)は熱管理なし。",
+    "en": "Heat limit. Once accumulated heat reaches this value, firing is blocked until it cools down. 0 (default) disables heat."
+   }
+  },
+  "usablewhilediving": {
+   "name": "UsableWhileDiving",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "trueにすると、潜水艦の潜航中でもこの武器を使用できます(既定では潜航中に使えるのは魚雷のみ)。",
+    "en": "When true, this weapon stays usable while a submarine is submerged (by default only torpedoes are)."
+   }
+  },
+  "rotationspeed": {
+   "name": "RotationSpeed",
+   "group": "Firing",
+   "types": "ALL",
+   "desc": {
+    "ja": "発射中に、この武器に連動する回転パーツ(ガトリングの銃身など)が回る速さ(1秒あたりの回転数)。",
+    "en": "How fast linked rotating parts (e.g. a gatling barrel) spin while firing, in rotations per second."
+   }
+  },
+  "power": {
+   "name": "Power",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "命中時のダメージ量。",
+    "en": "Damage dealt on hit."
+   }
+  },
+  "acceleration": {
+   "name": "Acceleration",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "弾の初速(ブロック/tick)。上限による切り詰めは行われません。",
+    "en": "Muzzle velocity in blocks/tick. Not capped."
+   }
+  },
+  "gravity": {
+   "name": "Gravity",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "弾にかかる重力。符号は無視され、常に下向きに働きます(-0.04 と 0.04 は同じ意味)。",
+    "en": "Gravity on the projectile. The sign is ignored - it always pulls downward (-0.04 and 0.04 are the same)."
+   }
+  },
+  "gravityinwater": {
+   "name": "GravityInWater",
+   "group": "Projectile",
+   "types": "P"
+  },
+  "accuracy": {
+   "name": "Accuracy",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "発射時に加わるランダムな角度のずれ(度)。大きいほど弾がばらけます。0(既定)は完全にまっすぐ。",
+    "en": "Random angular error in degrees applied at firing; larger values scatter shots more. 0 (default) fires perfectly straight."
+   }
+  },
+  "piercing": {
+   "name": "Piercing",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "ブロックを何個まで貫通(破壊)して進めるか。0(既定)は貫通なし。",
+    "en": "How many blocks in a row the projectile can punch through (destroying them). 0 (default) means none."
+   }
+  },
+  "bound": {
+   "name": "Bound",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "着弾時の跳ね返りの強さ。0(既定)は跳ねずにその場で止まります。",
+    "en": "Bounce strength on impact. 0 (default) means no bounce - it stops at the first hit."
+   }
+  },
+  "modelbullet": {
+   "name": "ModelBullet",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "弾の見た目に使うモデル名(拡張子なし)。models/obj/bullet_<名前>.obj と textures/vehicle/bullet_<名前>.png が使われます。省略時はアイテム表示になります。",
+    "en": "Model name (no extension) used for the projectile: models/obj/bullet_<name>.obj with textures/vehicle/bullet_<name>.png. Without it the projectile is drawn as an item."
+   },
+   "kind": "string"
+  },
+  "bulletcolor": {
+   "name": "BulletColor",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "空中での弾の軌跡(パーティクル)の色。A, R, G, B(各0〜255)の順にコンマ区切りで指定します。既定は不透明の白。",
+    "en": "Trail (particle) color in the air, as A, R, G, B (0-255 each) separated by commas. Default is opaque white."
+   },
+   "kind": "columns",
+   "columns": [
+    {
+     "name": "A",
+     "type": "int",
+     "default": 255
+    },
+    {
+     "name": "R",
+     "type": "int",
+     "default": 255
+    },
+    {
+     "name": "G",
+     "type": "int",
+     "default": 255
+    },
+    {
+     "name": "B",
+     "type": "int",
+     "default": 255
+    }
+   ]
+  },
+  "bulletcolorinwater": {
+   "name": "BulletColorInWater",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "水中での弾の軌跡の色(A, R, G, B)。省略時はBulletColorと同じ色になります。",
+    "en": "Trail color while underwater (A, R, G, B). Defaults to the same color as BulletColor."
+   },
+   "kind": "columns",
+   "columns": [
+    {
+     "name": "A",
+     "type": "int",
+     "default": ""
+    },
+    {
+     "name": "R",
+     "type": "int",
+     "default": ""
+    },
+    {
+     "name": "G",
+     "type": "int",
+     "default": ""
+    },
+    {
+     "name": "B",
+     "type": "int",
+     "default": ""
+    }
+   ],
+   "default_display": {
+    "ja": "BulletColorと同じ",
+    "en": "same as BulletColor"
+   }
+  },
+  "trajectoryparticle": {
+   "name": "TrajectoryParticle",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "飛行中に弾の後ろに出るパーティクルの種類。none で無効。",
+    "en": "Particle trailing the projectile in flight. none disables it."
+   },
+   "kind": "enum_open",
+   "choices": [
+    "none",
+    "smoke",
+    "largesmoke",
+    "flame",
+    "explode",
+    "largeexplode",
+    "hugeexplosion"
+   ],
+   "default": "none"
+  },
+  "trajectoryparticlestarttick": {
+   "name": "TrajectoryParticleStartTick",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "発射から何tick後に軌跡パーティクルを出し始めるか。",
+    "en": "Ticks after firing before the trail particle starts appearing."
+   }
+  },
+  "disablesmoke": {
+   "name": "DisableSmoke",
+   "group": "Projectile",
+   "types": "P",
+   "desc": {
+    "ja": "trueにすると、飛行中の軌跡パーティクル(TrajectoryParticle)を表示しません。",
+    "en": "When true, suppresses the in-flight trail particle (TrajectoryParticle)."
+   }
+  },
+  "explosion": {
+   "name": "Explosion",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "着弾時の爆発の威力。0(既定)で爆発なし、1がガストの火球程度です。",
+    "en": "Explosion power on impact. 0 (default) means no explosion; 1 is about a ghast fireball."
+   }
+  },
+  "explosioninwater": {
+   "name": "ExplosionInWater",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "水に触れた状態で爆発したときの威力。省略時はExplosionと同じ値になります。",
+    "en": "Explosion power when detonating in water. Defaults to the same value as Explosion."
+   }
+  },
+  "explosionblock": {
+   "name": "ExplosionBlock",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "ブロック破壊用の独立した威力。0を指定するとブロックを壊しません。省略した場合は、その場で使われる爆発の威力(ExplosionまたはExplosionInWater)でブロックを壊します。",
+    "en": "Separate block-destruction power. 0 means blocks are not broken. When omitted, blocks are broken using whichever explosion power applies (Explosion or ExplosionInWater)."
+   },
+   "kind": "float",
+   "default_display": {
+    "ja": "爆発の威力と同じ",
+    "en": "same as the explosion power"
+   }
+  },
+  "flaming": {
+   "name": "Flaming",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "trueにすると、命中した対象に火を付けます。Explosionが0のときは効果がありません。",
+    "en": "When true, sets the hit target on fire. Has no effect while Explosion is 0."
+   }
+  },
+  "fae": {
+   "name": "FAE",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "trueにすると燃料気化爆弾として扱い、爆発でブロックを一切壊しません(ExplosionBlockの設定に関係なく)。",
+    "en": "When true, treated as a fuel-air explosive: its explosion never breaks blocks, regardless of ExplosionBlock."
+   }
+  },
+  "explosionaltitude": {
+   "name": "ExplosionAltitude",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "真下の地面からの高さがこの値以下になった時点で、何にも当たっていなくても起爆します。0(既定)は無効。",
+    "en": "Detonates as soon as its height above the ground directly below drops to this value, even without hitting anything. 0 (default) disables it."
+   }
+  },
+  "delayfuse": {
+   "name": "DelayFuse",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "命中してから実際に起爆(消滅)するまでの遅延(tick)。0は即時。省略時は遅延なし。",
+    "en": "Delay in ticks between hitting something and actually detonating. 0 is immediate; omitted means no delay."
+   },
+   "kind": "int",
+   "default_display": {
+    "ja": "なし",
+    "en": "none"
+   }
+  },
+  "timefuse": {
+   "name": "TimeFuse",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "発射からこのtick数が経つと、何にも当たっていなくても起爆(消滅)します。省略時は無効。",
+    "en": "Detonates (disappears) this many ticks after firing, whether or not it has hit anything. Omitted means disabled."
+   },
+   "kind": "int",
+   "default_display": {
+    "ja": "なし",
+    "en": "none"
+   }
+  },
+  "bomblet": {
+   "name": "Bomblet",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "展開する子弾の数(クラスター爆弾用)。0(既定)は子弾なし。子弾の性能はこの武器自体の設定が使われます。",
+    "en": "Number of submunitions scattered (cluster munitions). 0 (default) means none. Submunitions use this weapon's own settings."
+   }
+  },
+  "bombletstime": {
+   "name": "BombletSTime",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "発射から子弾が展開するまでの時間(tick)。",
+    "en": "Ticks after firing before the submunitions deploy."
+   }
+  },
+  "bombletdiff": {
+   "name": "BombletDiff",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "子弾の拡散の度合い(親弾の進行方向からどれだけばらけるか)。",
+    "en": "How widely the submunitions spread from the parent projectile's direction."
+   }
+  },
+  "modelbomblet": {
+   "name": "ModelBomblet",
+   "group": "Explosion",
+   "types": "P",
+   "desc": {
+    "ja": "子弾の見た目に使うモデル名。ModelBulletと同じ規則(bullet_<名前>)でファイルを参照します。",
+    "en": "Model name for the submunitions, using the same bullet_<name> convention as ModelBullet."
+   },
+   "kind": "string"
+  },
+  "locktime": {
+   "name": "LockTime",
+   "group": "Guidance",
+   "types": [
+    "AAMissile",
+    "ATMissile",
+    "Missile"
+   ]
+  },
+  "lockrange": {
+   "name": "LockRange",
+   "group": "Guidance",
+   "types": [
+    "AAMissile",
+    "ATMissile",
+    "Missile"
+   ],
+   "desc": {
+    "ja": "ロックオンできる最大距離(ブロック)。0(既定)は無制限。",
+    "en": "Maximum lock-on distance in blocks. 0 (default) means unlimited."
+   }
+  },
+  "locktimeperblock": {
+   "name": "LockTimePerBlock",
+   "group": "Guidance",
+   "types": [
+    "AAMissile",
+    "ATMissile",
+    "Missile"
+   ],
+   "desc": {
+    "ja": "目標までの距離1ブロックあたりに追加で必要なロックオン時間(tick)。必要時間 = LockTime + この値 × 距離。",
+    "en": "Extra lock-on ticks required per block of distance to the target: required = LockTime + this × distance."
+   }
+  },
+  "turnrate": {
+   "name": "TurnRate",
+   "group": "Guidance",
+   "types": [
+    "AAMissile",
+    "ATMissile",
+    "Missile",
+    "ASMissile",
+    "MkRocket",
+    "ASWeapon"
+   ],
+   "desc": {
+    "ja": "誘導中に弾の進行方向が1tickで曲がれる最大角度(度)。",
+    "en": "Maximum degrees the projectile's heading can turn per tick while guiding."
+   }
+  },
+  "ridableonly": {
+   "name": "RidableOnly",
+   "group": "Guidance",
+   "types": [
+    "AAMissile",
+    "ATMissile",
+    "Missile"
+   ]
+  },
+  "proximityfusedist": {
+   "name": "ProximityFuseDist",
+   "group": "Guidance",
+   "types": [
+    "AAMissile",
+    "ATMissile",
+    "Missile"
+   ]
+  },
+  "rigiditytime": {
+   "name": "RigidityTime",
+   "group": "Guidance",
+   "types": [
+    "AAMissile",
+    "ATMissile",
+    "Missile"
+   ]
+  },
+  "divedistance": {
+   "name": "DiveDistance",
+   "group": "Guidance",
+   "types": [
+    "ASWeapon"
+   ]
+  },
+  "accelerationinwater": {
+   "name": "AccelerationInWater",
+   "group": "Torpedo",
+   "types": [
+    "Torpedo",
+    "ASWeapon"
+   ]
+  },
+  "velocityinwater": {
+   "name": "VelocityInWater",
+   "group": "Torpedo",
+   "types": [
+    "Torpedo",
+    "ASWeapon"
+   ]
+  },
+  "targetdepth": {
+   "name": "TargetDepth",
+   "group": "Torpedo",
+   "types": [
+    "Torpedo",
+    "ASWeapon"
+   ]
+  },
+  "guidedtorpedo": {
+   "name": "GuidedTorpedo",
+   "group": "Torpedo",
+   "types": [
+    "Torpedo"
+   ]
+  },
+  "sound": {
+   "name": "Sound",
+   "group": "Effects",
+   "types": "ALL",
+   "desc": {
+    "ja": "発射音のファイル名(拡張子なし、フォルダ名なし)。省略時は「<武器名>_snd」が使われます。見つからない場合は無音で発射します。",
+    "en": "Firing sound file name (no extension, no folder). Defaults to \"<weapon name>_snd\". Fires silently if the file isn't found."
+   },
+   "kind": "string",
+   "hint": "sound",
+   "default_display": {
+    "ja": "<武器名>_snd",
+    "en": "<weapon name>_snd"
+   }
+  },
+  "soundvolume": {
+   "name": "SoundVolume",
+   "group": "Effects",
+   "types": "ALL",
+   "desc": {
+    "ja": "発射音の音量。",
+    "en": "Firing sound volume."
+   }
+  },
+  "soundpitch": {
+   "name": "SoundPitch",
+   "group": "Effects",
+   "types": "ALL",
+   "desc": {
+    "ja": "発射音の高さ(ピッチ)。",
+    "en": "Firing sound pitch."
+   }
+  },
+  "soundpitchrandom": {
+   "name": "SoundPitchRandom",
+   "group": "Effects",
+   "types": "ALL",
+   "desc": {
+    "ja": "発射音のピッチに加えるランダムな揺らぎの幅。",
+    "en": "Random variation added to the firing sound pitch."
+   }
+  },
+  "sounddelay": {
+   "name": "SoundDelay",
+   "group": "Effects",
+   "types": "ALL",
+   "desc": {
+    "ja": "発射音を実際に鳴らす間隔(tick)。連射の速い武器で、毎発ではなく一定間隔で鳴らしたいときに使います。連射間隔(Delay)とは独立しています。",
+    "en": "Interval in ticks at which the firing sound actually plays - for fast-firing weapons that shouldn't play it every shot. Independent of Delay."
+   }
+  },
+  "addmuzzleflash": {
+   "name": "AddMuzzleFlash",
+   "group": "Effects",
+   "types": "P",
+   "desc": {
+    "ja": "発射炎(マズルフラッシュ)を表示します。値は「発射位置からの距離, 大きさ, 表示tick数, A, R, G, B」。",
+    "en": "Shows a muzzle flash. Value: distance from the muzzle, size, display ticks, A, R, G, B."
+   },
+   "kind": "columns",
+   "columns": [
+    {
+     "name": "distance",
+     "type": "float",
+     "default": 0.5
+    },
+    {
+     "name": "size",
+     "type": "float",
+     "default": 0.2
+    },
+    {
+     "name": "ticks",
+     "type": "int",
+     "default": 1
+    },
+    {
+     "name": "A",
+     "type": "int",
+     "default": 150
+    },
+    {
+     "name": "R",
+     "type": "int",
+     "default": 254
+    },
+    {
+     "name": "G",
+     "type": "int",
+     "default": 219
+    },
+    {
+     "name": "B",
+     "type": "int",
+     "default": 184
+    }
+   ]
+  },
+  "addmuzzleflashsmoke": {
+   "name": "AddMuzzleFlashSmoke",
+   "group": "Effects",
+   "types": "P",
+   "desc": {
+    "ja": "発射時の煙を表示します。値は「距離, 個数, 大きさ, 範囲, 表示tick数, A, R, G, B」。",
+    "en": "Shows a smoke puff when firing. Value: distance, count, size, range, display ticks, A, R, G, B."
+   },
+   "kind": "columns",
+   "columns": [
+    {
+     "name": "distance",
+     "type": "float",
+     "default": 2.2
+    },
+    {
+     "name": "count",
+     "type": "int",
+     "default": 1
+    },
+    {
+     "name": "size",
+     "type": "float",
+     "default": 5.0
+    },
+    {
+     "name": "range",
+     "type": "float",
+     "default": 2.0
+    },
+    {
+     "name": "ticks",
+     "type": "int",
+     "default": 15
+    },
+    {
+     "name": "A",
+     "type": "int",
+     "default": 180
+    },
+    {
+     "name": "R",
+     "type": "int",
+     "default": 250
+    },
+    {
+     "name": "G",
+     "type": "int",
+     "default": 245
+    },
+    {
+     "name": "B",
+     "type": "int",
+     "default": 240
+    }
+   ]
+  },
+  "setcartridge": {
+   "name": "SetCartridge",
+   "group": "Effects",
+   "types": "P",
+   "desc": {
+    "ja": "発射時に薬莢を排出します。値は「モデル名, 初速, ヨー, ピッチ, 大きさ, 重力, 跳ね返り」。重力は符号に関係なく下向きに働きます。",
+    "en": "Ejects a cartridge case when firing. Value: model name, speed, yaw, pitch, scale, gravity, bounce. Gravity always pulls downward regardless of sign."
+   },
+   "kind": "columns",
+   "columns": [
+    {
+     "name": "model",
+     "type": "string",
+     "default": "cartridge"
+    },
+    {
+     "name": "speed",
+     "type": "float",
+     "default": 0.0
+    },
+    {
+     "name": "yaw",
+     "type": "float",
+     "default": 0.0
+    },
+    {
+     "name": "pitch",
+     "type": "float",
+     "default": 0.0
+    },
+    {
+     "name": "scale",
+     "type": "float",
+     "default": 1.0
+    },
+    {
+     "name": "gravity",
+     "type": "float",
+     "default": -0.04
+    },
+    {
+     "name": "bound",
+     "type": "float",
+     "default": 0.4
+    }
+   ]
+  },
+  "recoil": {
+   "name": "Recoil",
+   "group": "Effects",
+   "types": "ALL",
+   "desc": {
+    "ja": "発射ごとの画面の揺れ(反動)の強さ。0(既定)は揺れなし。",
+    "en": "Strength of the camera shake (recoil) per shot. 0 (default) means none."
+   }
+  },
+  "recoilbufcount": {
+   "name": "RecoilBufCount",
+   "group": "Effects",
+   "types": "ALL",
+   "desc": {
+    "ja": "反動の揺れ方。値は「揺れ全体の長さ(tick), 戻りの速さの倍率」。",
+    "en": "How the recoil shake behaves. Value: total shake duration in ticks, return-speed multiplier."
+   },
+   "kind": "columns",
+   "columns": [
+    {
+     "name": "ticks",
+     "type": "int",
+     "default": 40
+    },
+    {
+     "name": "rate",
+     "type": "int",
+     "default": 5
+    }
+   ]
+  },
+  "camerarotationspeedpitch": {
+   "name": "CameraRotationSpeedPitch",
+   "group": "View",
+   "types": "ALL",
+   "desc": {
+    "ja": "この武器を選択中、視点の上下方向の回転速度に掛かる倍率。小さくすると細かい照準合わせがしやすくなります。",
+    "en": "Multiplier on vertical view rotation speed while this weapon is selected; smaller values allow finer aiming."
+   }
+  },
+  "fixcamerapitch": {
+   "name": "FixCameraPitch",
+   "group": "View",
+   "types": "ALL",
+   "desc": {
+    "ja": "trueにすると、この武器を選択中は視点の上下角を水平(0度)に固定します。",
+    "en": "When true, locks the view pitch to level (0 degrees) while this weapon is selected."
+   }
+  },
+  "displaymortardistance": {
+   "name": "DisplayMortarDistance",
+   "group": "View",
+   "types": "ALL"
+  },
+  "dispenseitem": {
+   "name": "DispenseItem",
+   "group": "Special",
+   "types": [
+    "Dispenser"
+   ],
+   "kind": "string"
+  },
+  "dispenserange": {
+   "name": "DispenseRange",
+   "group": "Special",
+   "types": [
+    "Dispenser"
+   ]
+  },
+  "smokecolor": {
+   "name": "SmokeColor",
+   "group": "Special",
+   "types": [
+    "Smoke"
+   ],
+   "kind": "columns",
+   "columns": [
+    {
+     "name": "A",
+     "type": "int",
+     "default": 230
+    },
+    {
+     "name": "R",
+     "type": "int",
+     "default": 200
+    },
+    {
+     "name": "G",
+     "type": "int",
+     "default": 20
+    },
+    {
+     "name": "B",
+     "type": "int",
+     "default": 80
+    }
+   ]
+  },
+  "smokesize": {
+   "name": "SmokeSize",
+   "group": "Special",
+   "types": [
+    "Smoke"
+   ]
+  },
+  "smokemaxage": {
+   "name": "SmokeMaxAge",
+   "group": "Special",
+   "types": [
+    "Smoke"
+   ]
+  },
+  "target": {
+   "name": "Target",
+   "group": "Special",
+   "types": [
+    "TargetingPod"
+   ],
+   "kind": "string"
+  },
+  "length": {
+   "name": "Length",
+   "group": "Special",
+   "types": [
+    "TargetingPod"
+   ]
+  },
+  "radius": {
+   "name": "Radius",
+   "group": "Special",
+   "types": [
+    "TargetingPod"
+   ]
+  },
+  "marktime": {
+   "name": "MarkTime",
+   "group": "Special",
+   "types": [
+    "TargetingPod"
+   ]
+  },
+  "fuelperammo": {
+   "name": "FuelPerAmmo",
+   "group": "Special",
+   "types": [
+    "DropTank"
+   ]
+  },
+  "destruct": {
+   "name": "Destruct",
+   "group": "Special",
+   "types": [
+    "Bomb"
+   ]
+  },
+  "casaircraft": {
+   "name": "CasAircraft",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ],
+   "kind": "string",
+   "hint": "vehicle"
+  },
+  "casweaponindex": {
+   "name": "CasWeaponIndex",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ]
+  },
+  "casaccuracy": {
+   "name": "CasAccuracy",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ]
+  },
+  "castimeout": {
+   "name": "CasTimeout",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ]
+  },
+  "casstucktimeout": {
+   "name": "CasStuckTimeout",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ]
+  },
+  "casyawoffset": {
+   "name": "CasYawOffset",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ]
+  },
+  "casformationsize": {
+   "name": "CasFormationSize",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ]
+  },
+  "casformationspacing": {
+   "name": "CasFormationSpacing",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ]
+  },
+  "casformationelementspacing": {
+   "name": "CasFormationElementSpacing",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ],
+   "default_display": {
+    "ja": "自動(FormationSpacingから算出)",
+    "en": "auto (derived from FormationSpacing)"
+   }
+  },
+  "casformationtype": {
+   "name": "CasFormationType",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ],
+   "kind": "enum",
+   "choices": [
+    "LineAbreast",
+    "LineAstern",
+    "VFormation",
+    "Diamond",
+    "Delta"
+   ],
+   "default": "LineAbreast"
+  },
+  "caswaypoint": {
+   "name": "CasWaypoint",
+   "group": "CAS",
+   "types": [
+    "CAS"
+   ],
+   "kind": "list_columns",
+   "columns": [
+    {
+     "name": "relX",
+     "type": "int"
+    },
+    {
+     "name": "relY",
+     "type": "int"
+    },
+    {
+     "name": "relZ",
+     "type": "int"
+    },
+    {
+     "name": "speed%",
+     "type": "float"
+    },
+    {
+     "name": "attack",
+     "type": "enum",
+     "choices": [
+      "true",
+      "false"
+     ]
+    }
+   ],
+   "min_rows": 1
+  },
+  "castargetmode": {
+   "name": "CasTargetMode",
+   "group": "CAS",
+   "types": [
+    "CAS",
+    "Carrier",
+    "MachineGun1",
+    "MachineGun2",
+    "ASMissile",
+    "MkRocket",
+    "Bomb",
+    "Rocket"
+   ],
+   "kind": "enum",
+   "choices": [
+    "Ballistic",
+    "Raycast",
+    "Collision"
+   ],
+   "default": "Ballistic"
+  },
+  "casattackstartaltitude": {
+   "name": "CasAttackStartAltitude",
+   "group": "CAS",
+   "types": [
+    "CAS",
+    "Carrier"
+   ]
+  },
+  "casattackstopaltitude": {
+   "name": "CasAttackStopAltitude",
+   "group": "CAS",
+   "types": [
+    "CAS",
+    "Carrier"
+   ]
+  },
+  "carrieraircraft": {
+   "name": "CarrierAircraft",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ],
+   "kind": "string",
+   "hint": "vehicle"
+  },
+  "carrierweaponindex": {
+   "name": "CarrierWeaponIndex",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrieraccuracy": {
+   "name": "CarrierAccuracy",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carriertimeout": {
+   "name": "CarrierTimeout",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrierstucktimeout": {
+   "name": "CarrierStuckTimeout",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrieryawoffset": {
+   "name": "CarrierYawOffset",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrierlandingyawoffset": {
+   "name": "CarrierLandingYawOffset",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carriertargetyawoffset": {
+   "name": "CarrierTargetYawOffset",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrierlandingtoammoradius": {
+   "name": "CarrierLandingToAmmoRadius",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrierformationsize": {
+   "name": "CarrierFormationSize",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrierformationspacing": {
+   "name": "CarrierFormationSpacing",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ]
+  },
+  "carrierformationelementspacing": {
+   "name": "CarrierFormationElementSpacing",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ],
+   "default_display": {
+    "ja": "自動(FormationSpacingから算出)",
+    "en": "auto (derived from FormationSpacing)"
+   }
+  },
+  "carrierformationtype": {
+   "name": "CarrierFormationType",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ],
+   "kind": "enum",
+   "choices": [
+    "LineAbreast",
+    "LineAstern",
+    "VFormation",
+    "Diamond",
+    "Delta"
+   ],
+   "default": "LineAbreast"
+  },
+  "carrierwaypoint": {
+   "name": "CarrierWaypoint",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ],
+   "kind": "list_columns",
+   "columns": [
+    {
+     "name": "relX",
+     "type": "int"
+    },
+    {
+     "name": "relY",
+     "type": "int"
+    },
+    {
+     "name": "relZ",
+     "type": "int"
+    },
+    {
+     "name": "speed%",
+     "type": "float"
+    },
+    {
+     "name": "attack",
+     "type": "enum",
+     "choices": [
+      "true",
+      "false"
+     ]
+    }
+   ],
+   "min_rows": 1
+  },
+  "carrierlaunchwaypoint": {
+   "name": "CarrierLaunchWaypoint",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ],
+   "kind": "list_columns",
+   "columns": [
+    {
+     "name": "relX",
+     "type": "int"
+    },
+    {
+     "name": "relY",
+     "type": "int"
+    },
+    {
+     "name": "relZ",
+     "type": "int"
+    },
+    {
+     "name": "speed%",
+     "type": "float"
+    },
+    {
+     "name": "gear",
+     "type": "enum",
+     "choices": [
+      "-",
+      "0",
+      "1"
+     ],
+     "optional": true
+    },
+    {
+     "name": "bay",
+     "type": "enum",
+     "choices": [
+      "-",
+      "0",
+      "1"
+     ],
+     "optional": true
+    },
+    {
+     "name": "boost km/h",
+     "type": "string",
+     "optional": true
+    }
+   ]
+  },
+  "carrierlandingwaypoint": {
+   "name": "CarrierLandingWaypoint",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ],
+   "kind": "list_columns",
+   "columns": [
+    {
+     "name": "relX",
+     "type": "int"
+    },
+    {
+     "name": "relY",
+     "type": "int"
+    },
+    {
+     "name": "relZ",
+     "type": "int"
+    },
+    {
+     "name": "speed%",
+     "type": "float"
+    },
+    {
+     "name": "gear",
+     "type": "enum",
+     "choices": [
+      "-",
+      "0",
+      "1"
+     ],
+     "optional": true
+    },
+    {
+     "name": "bay",
+     "type": "enum",
+     "choices": [
+      "-",
+      "0",
+      "1"
+     ],
+     "optional": true
+    },
+    {
+     "name": "boost km/h",
+     "type": "string",
+     "optional": true
+    }
+   ],
+   "min_rows": 1
+  },
+  "carrierrecoverypoint": {
+   "name": "CarrierRecoveryPoint",
+   "group": "Carrier",
+   "types": [
+    "Carrier"
+   ],
+   "kind": "list_columns",
+   "columns": [
+    {
+     "name": "relX",
+     "type": "float"
+    },
+    {
+     "name": "relY",
+     "type": "float"
+    },
+    {
+     "name": "relZ",
+     "type": "float"
+    },
+    {
+     "name": "radius",
+     "type": "float"
+    }
+   ]
+  }
+ }
+}

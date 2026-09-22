@@ -1,0 +1,9 @@
+{
+ "id": "motorcycleaddon",
+ "name": {"ja": "バイクアドオン対応", "en": "Motorcycle addon support"},
+ "version": "1.0.0",
+ "description": {"ja": "motorcycleaddon の機体種別と motorcycle 設定を追加します。プラグイン作成の見本も兼ねています。",
+                 "en": "Adds motorcycleaddon's entity type and its motorcycle settings. Also serves as a plugin example."},
+ "schemas": ["vehicle_motorcycle.json"],
+ "python": "plugin.py"
+}

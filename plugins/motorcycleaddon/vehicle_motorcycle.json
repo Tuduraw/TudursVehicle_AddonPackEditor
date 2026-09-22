@@ -1,0 +1,34 @@
+{
+ "schema_version": 1,
+ "kind": "vehicle",
+ "entity_types": [
+  {"id": "motorcycleaddon:motorcycle", "label": {"ja": "バイク(motorcycleaddon)", "en": "Motorcycle (motorcycleaddon)"},
+   "inherits": "tudursvehiclemod:car"}
+ ],
+ "extend": {
+  "VehicleDefinition": [
+   {"key": "motorcycle", "type": "object", "ref": "MotorcycleSettings", "required": false, "group": "Other",
+    "entity_types": ["motorcycleaddon:motorcycle"],
+    "desc": {"ja": "バイク固有の設定(バンク角・ウィリーなど)。motorcycleaddon が同じ機体JSONから読み込みます。",
+             "en": "Motorcycle-specific settings (lean angle, wheelie, ...). Read by motorcycleaddon from the same vehicle JSON."}}
+  ]
+ },
+ "records": {
+  "MotorcycleSettings": {"fields": [
+   {"key": "max_lean_degrees", "type": "float", "required": false, "default": 35.0,
+    "desc": {"ja": "旋回時のバンク角の上限(度)。0 で傾かなくなります(サイドカー等)。", "en": "Maximum lean angle while turning (degrees). 0 disables leaning (e.g. sidecars)."}},
+   {"key": "lean_smoothing", "type": "float", "required": false, "default": 0.15,
+    "desc": {"ja": "傾きが目標角度に追従する速さ(0〜1)。", "en": "How quickly the lean follows its target (0-1)."}},
+   {"key": "full_lean_speed", "type": "float", "required": false, "default": 0.35,
+    "desc": {"ja": "最大バンク角に達する速度(ブロック/tick)。", "en": "Speed at which the full lean angle is reached (blocks/tick)."}},
+   {"key": "upright_turn_penalty", "type": "float", "required": false, "default": 0.6,
+    "desc": {"ja": "直立モード時の旋回速度の倍率。", "en": "Turn speed multiplier in upright mode."}},
+   {"key": "enable_acrobatics", "type": "bool", "required": false, "default": false,
+    "desc": {"ja": "ウィリー(アクロバットキー)を許可するかどうか。", "en": "Whether wheelies (acrobatics key) are allowed."}},
+   {"key": "wheelie_angle_degrees", "type": "float", "required": false, "default": 35.0,
+    "desc": {"ja": "ウィリー時の最大角度(度)。", "en": "Maximum wheelie angle (degrees)."}},
+   {"key": "wheelie_rate", "type": "float", "required": false, "default": 0.08,
+    "desc": {"ja": "ウィリー角度に達する速さ。", "en": "How quickly the wheelie angle is reached."}}
+  ]}
+ }
+}

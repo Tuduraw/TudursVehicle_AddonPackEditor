@@ -1,0 +1,93 @@
+{
+ "_comment": "Hand corrections applied on top of gen_schema.py's automatic output. A field set to null is removed from the schema entirely.",
+ "vehicle": {
+  "VehicleDefinition": {
+   "runway": {
+    "desc": {
+     "ja": "滑走路を1つだけ定義する旧形式。複数定義できる runways を使ってください(両方ある場合は runways が優先されます)。",
+     "en": "Legacy single-runway form. Prefer runways, which accepts any number of decks."
+    },
+    "advanced": true
+   },
+   "flare_type": {
+    "desc": {
+     "ja": "フレア(欺瞞装置)の種類。0(既定)はフレアなし。1〜10はMCヘリのFlareTypeと同じく放出パターン(見た目)の違いで、誘導妨害の効果自体は同じです。",
+     "en": "Flare (countermeasure) type. 0 (default) means no flares. 1-10 match MC Heli's FlareType and only change the release pattern (visuals); the guidance-breaking effect is identical."
+    }
+   },
+   "regeneration": {
+    "desc": {
+     "ja": "true の場合、2番席以降に搭乗しているモブが時間経過で自動回復します(MCヘリの Regeneration 相当)。",
+     "en": "When true, mobs riding seat 2 and later heal over time (MC Heli's Regeneration)."
+    }
+   },
+   "default_freelook": {
+    "desc": {
+     "ja": "true の場合、搭乗直後からフリールック状態になり、フリールックキーを押している間だけ通常の固定視点に戻ります(通常の機体とは逆の挙動)。",
+     "en": "When true the view starts in free-look on mount, and holding the free-look key returns to the normal fixed view (the reverse of other vehicles)."
+    }
+   },
+   "pivot_turn_throttle": {
+    "entity_types": [
+     "tudursvehiclemod:car"
+    ]
+   },
+   "wheel_rotation_speed": {
+    "entity_types": [
+     "tudursvehiclemod:car"
+    ]
+   },
+   "wheel_parts": {
+    "entity_types": [
+     "tudursvehiclemod:car"
+    ]
+   },
+   "steering_wheel_parts": {
+    "entity_types": [
+     "tudursvehiclemod:car"
+    ]
+   },
+   "crawler_tracks": {
+    "entity_types": [
+     "tudursvehiclemod:car"
+    ]
+   },
+   "track_roller_parts": {
+    "entity_types": [
+     "tudursvehiclemod:car"
+    ]
+   },
+   "wake_trail_spread_distance": {
+    "entity_types": [
+     "tudursvehiclemod:aircraft",
+     "tudursvehiclemod:car",
+     "tudursvehiclemod:ship",
+     "tudursvehiclemod:submarine",
+     "tudursvehiclemod:vtol"
+    ]
+   },
+   "wake_trail_duration_ticks": {
+    "entity_types": [
+     "tudursvehiclemod:aircraft",
+     "tudursvehiclemod:car",
+     "tudursvehiclemod:ship",
+     "tudursvehiclemod:submarine",
+     "tudursvehiclemod:vtol"
+    ]
+   },
+   "vtol_rotor_parts": {
+    "entity_types": [
+     "tudursvehiclemod:static_emplacement",
+     "tudursvehiclemod:vtol"
+    ]
+   }
+  }
+ },
+ "_comment_entity_types": "entity_types narrows a field to the listed types. gen_schema.py already restricts a field when the source only reads it from type-specific entity classes; these entries cover fields the base class reads generically but that only mean something for certain types.",
+ "vehicle_legacy_keys": {
+  "hide_entity": "passenger_display",
+  "entity_width": "passenger_display",
+  "entity_height": "passenger_display"
+ },
+ "_comment_legacy": "vehicle_legacy_keys: top-level keys the mod still accepts for compatibility and moves into the named object on load (see the mod's VehicleJsonCompat). The editor warns about them as the old form instead of as unknown keys."
+}

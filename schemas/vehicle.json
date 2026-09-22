@@ -1,0 +1,3226 @@
+{
+ "schema_version": 1,
+ "kind": "vehicle",
+ "root": "VehicleDefinition",
+ "entity_types": [
+  {
+   "id": "tudursvehiclemod:car",
+   "label": {
+    "ja": "車両(地上)",
+    "en": "Car (ground)"
+   }
+  },
+  {
+   "id": "tudursvehiclemod:aircraft",
+   "label": {
+    "ja": "固定翼機",
+    "en": "Aircraft (fixed-wing)"
+   }
+  },
+  {
+   "id": "tudursvehiclemod:helicopter",
+   "label": {
+    "ja": "ヘリコプター",
+    "en": "Helicopter"
+   }
+  },
+  {
+   "id": "tudursvehiclemod:ship",
+   "label": {
+    "ja": "艦船",
+    "en": "Ship"
+   }
+  },
+  {
+   "id": "tudursvehiclemod:submarine",
+   "label": {
+    "ja": "潜水艦",
+    "en": "Submarine"
+   }
+  },
+  {
+   "id": "tudursvehiclemod:vtol",
+   "label": {
+    "ja": "VTOL機",
+    "en": "VTOL"
+   }
+  },
+  {
+   "id": "tudursvehiclemod:static_emplacement",
+   "label": {
+    "ja": "固定砲台",
+    "en": "Static emplacement"
+   }
+  }
+ ],
+ "records": {
+  "VehicleDefinition": {
+   "fields": [
+    {
+     "key": "entity_type",
+     "required": true,
+     "getter": "entityType",
+     "type": "identifier",
+     "group": "Basic",
+     "hint": "entity_type",
+     "desc": {
+      "ja": "この機体の動作モデル(挙動の実体クラス)を指定します。必須項目です。使用可能な値: `tudursvehiclemod:aircraft` / `helicopter` / `vtol` / `car` / `ship` / `submarine` / `static_emplacement`。各タイプの詳細は個別ドキュメントを参照してください。",
+      "en": "Specifies this vehicle's own behavior model (the actual implementing class). Required. Available values: `tudursvehiclemod:aircraft` / `helicopter` / `vtol` / `car` / `ship` / `submarine` / `static_emplacement`. See each type's own dedicated document for details."
+     },
+     "example": {
+      "ja": "\"entity_type\": \"tudursvehiclemod:aircraft\"",
+      "en": "\"entity_type\": \"tudursvehiclemod:aircraft\""
+     }
+    },
+    {
+     "key": "model",
+     "required": true,
+     "getter": "model",
+     "type": "identifier",
+     "group": "Basic",
+     "hint": "obj_model",
+     "desc": {
+      "ja": "表示用の3DモデルファイルへのパスをIdentifier形式で指定します。必須項目です。OBJ形式(三角形・四角形・多角形いずれも可)。慣例として`assets/<namespace>/models/obj/<名前>.obj`に配置します。",
+      "en": "The path to the 3D model file for display, in Identifier form. Required. OBJ format (triangle, quad, or n-gon faces are all fine). Conventionally placed at `assets/<namespace>/models/obj/<name>.obj`."
+     },
+     "example": {
+      "ja": "\"model\": \"tudursvehiclemod:models/obj/f16.obj\"",
+      "en": "\"model\": \"tudursvehiclemod:models/obj/f16.obj\""
+     }
+    },
+    {
+     "key": "texture",
+     "required": true,
+     "getter": "texture",
+     "type": "identifier",
+     "group": "Basic",
+     "hint": "texture",
+     "desc": {
+      "ja": "上記モデルに適用するテクスチャ画像へのパス。必須項目です。慣例として`assets/<namespace>/textures/vehicle/<名前>.png`に配置します。",
+      "en": "The path to the texture image applied to the model above. Required. Conventionally placed at `assets/<namespace>/textures/vehicle/<name>.png`."
+     },
+     "example": {
+      "ja": "\"texture\": \"tudursvehiclemod:textures/vehicle/f16.png\"",
+      "en": "\"texture\": \"tudursvehiclemod:textures/vehicle/f16.png\""
+     }
+    },
+    {
+     "key": "scale",
+     "required": false,
+     "getter": "scale",
+     "default": 1.0,
+     "type": "float",
+     "group": "Basic",
+     "desc": {
+      "ja": "モデルの表示倍率。",
+      "en": "The model's own display scale."
+     },
+     "example": {
+      "ja": "\"scale\": 1.2",
+      "en": "\"scale\": 1.2"
+     }
+    },
+    {
+     "key": "width",
+     "required": true,
+     "getter": "width",
+     "type": "float",
+     "group": "Basic",
+     "desc": {
+      "ja": "この機体自身の見た目上のサイズを表す参考値です。必須項目です。実際の当たり判定サイズには通常使われません(後述の`force_bounding_box`参照)。",
+      "en": "Reference values representing this vehicle's own visual size. Required. Not normally used for the actual hitbox size (see `force_bounding_box` below)."
+     },
+     "example": {
+      "ja": "\"width\": 2.2,\n\"height\": 1.4",
+      "en": "\"width\": 2.2,\n\"height\": 1.4"
+     }
+    },
+    {
+     "key": "height",
+     "required": true,
+     "getter": "height",
+     "type": "float",
+     "group": "Basic",
+     "desc": {
+      "ja": "この機体自身の見た目上のサイズを表す参考値です。必須項目です。実際の当たり判定サイズには通常使われません(後述の`force_bounding_box`参照)。",
+      "en": "Reference values representing this vehicle's own visual size. Required. Not normally used for the actual hitbox size (see `force_bounding_box` below)."
+     },
+     "example": {
+      "ja": "\"width\": 2.2,\n\"height\": 1.4",
+      "en": "\"width\": 2.2,\n\"height\": 1.4"
+     }
+    },
+    {
+     "key": "max_speed",
+     "required": false,
+     "getter": "maxSpeed",
+     "default": 1.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "この機体の最高速度。単位はブロック/tick相当。",
+      "en": "This vehicle's own top speed. Units are roughly blocks/tick."
+     },
+     "example": {
+      "ja": "\"max_speed\": 1.8",
+      "en": "\"max_speed\": 1.8"
+     }
+    },
+    {
+     "key": "acceleration",
+     "required": false,
+     "getter": "acceleration",
+     "default": 0.05,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "スロットルに対する加速の追従度。",
+      "en": "How closely acceleration follows throttle."
+     },
+     "example": {
+      "ja": "\"acceleration\": 0.05",
+      "en": "\"acceleration\": 0.05"
+     }
+    },
+    {
+     "key": "turn_speed",
+     "required": false,
+     "getter": "turnSpeed",
+     "default": 3.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "旋回性能。大きいほど小回りが利きます。MCヘリの`MobilityYaw`に相当。負の値を指定しても自動的に絶対値へ正規化されます(旋回入力の反転を防止するため)。",
+      "en": "Turning performance. A larger value turns more tightly. Corresponds to MC Heli's own `MobilityYaw`. A negative value is automatically normalized to its absolute value (to prevent turn input from being reversed)."
+     },
+     "example": {
+      "ja": "\"turn_speed\": 3.5",
+      "en": "\"turn_speed\": 3.5"
+     }
+    },
+    {
+     "key": "step_height",
+     "required": false,
+     "getter": "stepHeight",
+     "default": 1.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "自動で乗り越えられる段差の高さ。",
+      "en": "The height of a step/ledge that can be automatically climbed."
+     },
+     "example": {
+      "ja": "\"step_height\": 1.0",
+      "en": "\"step_height\": 1.0"
+     },
+     "entity_types": [
+      "tudursvehiclemod:car"
+     ]
+    },
+    {
+     "key": "gravity",
+     "required": false,
+     "getter": "gravity",
+     "default": -0.04,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "この機体自身にかかる重力加速度。",
+      "en": "The gravitational acceleration applied to this vehicle itself."
+     },
+     "example": {
+      "ja": "\"gravity\": -0.04",
+      "en": "\"gravity\": -0.04"
+     }
+    },
+    {
+     "key": "on_ground_pitch",
+     "required": false,
+     "getter": "onGroundPitch",
+     "default": 0.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "接地時にイージングして向かうピッチ角(度)。",
+      "en": "The pitch angle (degrees) it eases toward while on the ground."
+     },
+     "example": {
+      "ja": "\"on_ground_pitch\": 0.0",
+      "en": "\"on_ground_pitch\": 0.0"
+     },
+     "entity_types": [
+      "tudursvehiclemod:aircraft",
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "reverse_throttle",
+     "required": false,
+     "getter": "reverseThrottle",
+     "default": 0.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "後進可能な最低スロットル値(負の値)。例: `-0.2`で後進20%まで。`0`は後進不可を意味します。正の値を指定しても自動的に負へ正規化されます。",
+      "en": "The lowest throttle value at which reverse is possible (a negative value). For example, `-0.2` allows reversing up to 20%. `0` means reverse is not possible at all. A positive value is automatically normalized to negative."
+     },
+     "example": {
+      "ja": "\"reverse_throttle\": -0.2",
+      "en": "\"reverse_throttle\": -0.2"
+     }
+    },
+    {
+     "key": "dive_max_speed",
+     "required": false,
+     "getter": "diveMaxSpeed",
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "`Submarine`タイプ専用。潜航中の最高速度(`max_speed`は水上航行時のみ使用)。詳細は`Readme_Vehicle_Submarine.md`参照。",
+      "en": "`Submarine` type only. Top speed while submerged (`max_speed` is only used while surfaced). See `Readme_Vehicle_Submarine.md` for details."
+     },
+     "example": {
+      "ja": "\"dive_max_speed\": 0.6",
+      "en": "\"dive_max_speed\": 0.6"
+     },
+     "entity_types": [
+      "tudursvehiclemod:submarine"
+     ]
+    },
+    {
+     "key": "engine_sound_volume",
+     "required": false,
+     "getter": "engineSoundVolume",
+     "default": 3.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "`engine_sound`の音量倍率。MCヘリ武器設定の`SoundVolume`と同じ考え方で、`1.0`が通常の最大音量、それを超えると聞こえる距離が伸びます(本プロジェクト独自の追加項目)。",
+      "en": "A volume multiplier for `engine_sound`. The same idea as `SoundVolume` in an MC Heli weapon config - `1.0` is ordinary maximum volume, and going above it extends the audible distance instead (an addition specific to this project)."
+     },
+     "example": {
+      "ja": "\"engine_sound_volume\": 3.0",
+      "en": "\"engine_sound_volume\": 3.0"
+     }
+    },
+    {
+     "key": "pivot_turn_throttle",
+     "required": false,
+     "getter": "pivotTurnThrottle",
+     "default": 0.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "`Car`タイプ専用。旋回に必要な最低スロットル(`max_speed`に対する割合、0〜1)。`0`(既定)ならスロットル0でもその場旋回(超信地旋回)可能。詳細は`Readme_Vehicle_Car.md`参照。",
+      "en": "`Car` type only. The minimum throttle required to turn (a fraction of `max_speed`, 0-1). At `0` (default), pivot turning (turning in place) is possible even at zero throttle. See `Readme_Vehicle_Car.md` for details."
+     },
+     "example": {
+      "ja": "\"pivot_turn_throttle\": 0.2",
+      "en": "\"pivot_turn_throttle\": 0.2"
+     },
+     "entity_types": [
+      "tudursvehiclemod:car"
+     ]
+    },
+    {
+     "key": "wheel_rotation_speed",
+     "required": false,
+     "getter": "wheelRotationSpeed",
+     "default": 40.0,
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "`Car`タイプ専用。タイヤの回転速度係数。詳細は`Readme_Vehicle_Car.md`参照。",
+      "en": "`Car` type only. The tire rotation speed coefficient. See `Readme_Vehicle_Car.md` for details."
+     },
+     "example": {
+      "ja": "\"wheel_rotation_speed\": 40.0",
+      "en": "\"wheel_rotation_speed\": 40.0"
+     },
+     "entity_types": [
+      "tudursvehiclemod:car"
+     ]
+    },
+    {
+     "key": "throttle_up_down",
+     "required": false,
+     "getter": "throttleUpDown",
+     "type": "float",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "W/S入力に対するスロットル変化速度の倍率。`1.0`で各機体タイプの既定値そのまま、`2.0`で2倍速、`0.5`で半分の速さになります。省略時は各タイプの既定ステップ値を使用します。",
+      "en": "A multiplier on how fast throttle changes in response to W/S input. `1.0` is each vehicle type's own default as-is, `2.0` is double speed, `0.5` is half speed. If omitted, each type's own default step value is used."
+     },
+     "example": {
+      "ja": "\"throttle_up_down\": 1.5",
+      "en": "\"throttle_up_down\": 1.5"
+     },
+     "entity_types": [
+      "tudursvehiclemod:aircraft",
+      "tudursvehiclemod:car",
+      "tudursvehiclemod:ship",
+      "tudursvehiclemod:submarine",
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "weight_type",
+     "required": false,
+     "getter": "weightType",
+     "default": "unknown",
+     "type": "enum",
+     "group": "MovementStats",
+     "choices": [
+      "tank",
+      "car",
+      "unknown"
+     ],
+     "desc": {
+      "ja": "機体の重量タイプ。MCヘリの`WeightType`と同じ:\n- `tank`: モブに衝突してもダメージを受けない。ブロック破壊力が高い\n- `car`: モブに衝突すると自分もダメージを受ける。ブロック破壊力が低い\n- `unknown`(既定): どちらの挙動も発生しません",
+      "en": "The vehicle's own weight category. Same as MC Heli's own `WeightType`:\n- `tank`: takes no damage from colliding with a mob. Has high block-destruction power\n- `car`: takes damage itself from colliding with a mob. Has low block-destruction power\n- `unknown` (default): neither behavior occurs"
+     },
+     "example": {
+      "ja": "\"weight_type\": \"tank\"",
+      "en": "\"weight_type\": \"tank\""
+     }
+    },
+    {
+     "key": "throttle_switch_hold_ticks",
+     "required": false,
+     "getter": "throttleSwitchHoldTicks",
+     "type": "int",
+     "group": "MovementStats",
+     "desc": {
+      "ja": "スロットルが正負を跨ぐ際、0%で一時停止する時間(tick単位)。省略時は各機体タイプの既定値(40tick)。",
+      "en": "How long (ticks) throttle pauses at 0% when crossing from positive to negative or vice versa. If omitted, each vehicle type's own default (40 ticks)."
+     },
+     "example": {
+      "ja": "\"throttle_switch_hold_ticks\": 40",
+      "en": "\"throttle_switch_hold_ticks\": 40"
+     }
+    },
+    {
+     "key": "seats",
+     "required": false,
+     "getter": "seats",
+     "default": [],
+     "type": "list",
+     "item_ref": "SeatDefinition",
+     "group": "Parts",
+     "desc": {
+      "ja": "搭乗可能な座席の一覧。配列の0番目が必ず操縦席(パイロット席)として扱われます。",
+      "en": "The list of mountable seats. Index 0 of the array is always treated as the driver's seat (pilot seat)."
+     }
+    },
+    {
+     "key": "weapons",
+     "required": false,
+     "getter": "weapons",
+     "default": [],
+     "type": "list",
+     "item_ref": "WeaponDefinition",
+     "group": "Parts",
+     "desc": {
+      "ja": "この機体に搭載する武器マウントの一覧。実際のダメージ・弾速等の数値は`weapon_name`で参照する`.txt`ファイル(`Readme_Weapon.md`参照)側で定義され、ここでは搭載位置・照準範囲のみを設定します。",
+      "en": "The list of weapon mounts equipped on this vehicle. The actual damage/projectile speed/etc. values are defined on the `.txt` file referenced by `weapon_name` (see `Readme_Weapon.md`) - only the mount position and aim range are set here."
+     },
+     "example": {
+      "ja": "\"weapons\": [\n{\n\"seat_index\": 0,\n\"offsets\": [ { \"x\": 0.6, \"y\": 0.2, \"z\": 3.0 } ],\n\"projectile_item\": \"minecraft:iron_nugget\",\n\"weapon_name\": \"m61_vulcan\"\n}\n]",
+      "en": "\"weapons\": [\n{\n\"seat_index\": 0,\n\"offsets\": [ { \"x\": 0.6, \"y\": 0.2, \"z\": 3.0 } ],\n\"projectile_item\": \"minecraft:iron_nugget\",\n\"weapon_name\": \"m61_vulcan\"\n}\n]"
+     }
+    },
+    {
+     "key": "spinning_parts",
+     "required": false,
+     "getter": "spinningParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "PartAnimation",
+     "group": "Parts",
+     "desc": {
+      "ja": "OBJモデル内の名前付きグループ(`o`/`g`行)を、自身のピボット・軸を中心に常時一定速度で回転させます(プロペラ・ローター等)。",
+      "en": "Continuously spins a named group inside the OBJ model (an `o`/`g` line) at a constant speed, around its own pivot/axis (propellers, rotors, etc.)."
+     }
+    },
+    {
+     "key": "toggle_parts",
+     "required": false,
+     "getter": "toggleParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "TogglePart",
+     "group": "Parts",
+     "desc": {
+      "ja": "OBJモデル内の名前付きグループを、2つの状態(閉=0/開=1)間でイージングさせます(ハッチ・キャノピー・降着装置カバー等)。",
+      "en": "Eases a named group inside the OBJ model between two states (closed=0/open=1) (hatches, canopies, landing gear covers, etc.)."
+     }
+    },
+    {
+     "key": "spawn_item",
+     "required": false,
+     "getter": "spawnItem",
+     "type": "object",
+     "ref": "SpawnItemDefinition",
+     "group": "Basic",
+     "desc": {
+      "ja": "階層式スポナーアイテムでの表示・分類設定。",
+      "en": "Display/categorization settings for the tiered spawner item."
+     },
+     "example": {
+      "ja": "\"spawn_item\": { \"display_name\": \"F-16 Fighting Falcon\", \"tier\": 3 }",
+      "en": "\"spawn_item\": { \"display_name\": \"F-16 Fighting Falcon\", \"tier\": 3 }"
+     }
+    },
+    {
+     "key": "weapon_parts",
+     "required": false,
+     "getter": "weaponParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "WeaponPart",
+     "group": "Parts",
+     "desc": {
+      "ja": "OBJモデル内の名前付きグループを、対応する武器の照準方向(搭乗者の視点)へ追従回転させます(砲塔・銃座等)。",
+      "en": "Rotates a named group inside the OBJ model to track the corresponding weapon's own aim direction (the occupant's own view) (turrets, gun positions, etc.)."
+     }
+    },
+    {
+     "key": "hud",
+     "required": false,
+     "getter": "hud",
+     "type": "string",
+     "group": "VehicleExtras",
+     "hint": "hud",
+     "desc": {
+      "ja": "この機体が使用するHUDスクリプト名(`assets/<namespace>/hud/<名前>.txt`、拡張子なしで指定)。省略時はHUD表示なし。",
+      "en": "The HUD script name this vehicle uses (`assets/<namespace>/hud/<name>.txt`, specified without extension). If omitted, no HUD is shown at all."
+     },
+     "example": {
+      "ja": "`\"hud\": \"f16_hud\"`",
+      "en": "`\"hud\": \"f16_hud\"`"
+     }
+    },
+    {
+     "key": "engine_sound",
+     "required": false,
+     "getter": "engineSound",
+     "type": "string",
+     "group": "VehicleExtras",
+     "hint": "sound",
+     "desc": {
+      "ja": "エンジン音として再生するサウンド名(任意の名前空間の`assets/<namespace>/sounds/<名前>.ogg`に一致するもの)。",
+      "en": "The sound name played as the engine sound (matched against `assets/<namespace>/sounds/<name>.ogg` in any namespace)."
+     },
+     "example": {
+      "ja": "`\"engine_sound\": \"jet_engine\"`",
+      "en": "`\"engine_sound\": \"jet_engine\"`"
+     }
+    },
+    {
+     "key": "max_health",
+     "required": false,
+     "getter": "maxHealth",
+     "default": 100.0,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "最大HP。",
+      "en": "Max HP."
+     },
+     "example": {
+      "ja": "`\"max_health\": 150.0`",
+      "en": "`\"max_health\": 150.0`"
+     }
+    },
+    {
+     "key": "armor_damage_factor",
+     "required": false,
+     "getter": "armorDamageFactor",
+     "default": 1.0,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "被ダメージへの倍率(装甲係数)。",
+      "en": "A multiplier on damage taken (an armor factor)."
+     },
+     "example": {
+      "ja": "`\"armor_damage_factor\": 0.5`",
+      "en": "`\"armor_damage_factor\": 0.5`"
+     }
+    },
+    {
+     "key": "armor_min_damage",
+     "required": false,
+     "getter": "armorMinDamage",
+     "default": 0.0,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "装甲係数適用後のダメージがこの値未満の場合、そのダメージは完全に無効化されます。",
+      "en": "If damage after the armor factor is applied is below this value, that damage is fully negated."
+     },
+     "example": {
+      "ja": "`\"armor_min_damage\": 2.0`",
+      "en": "`\"armor_min_damage\": 2.0`"
+     }
+    },
+    {
+     "key": "armor_max_damage",
+     "required": false,
+     "getter": "armorMaxDamage",
+     "default": "unlimited",
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "装甲係数適用後のダメージがこの値を超える場合、この値まで切り下げられます。",
+      "en": "If damage after the armor factor is applied exceeds this value, it's clamped down to this value."
+     },
+     "example": {
+      "ja": "`\"armor_max_damage\": 40.0`",
+      "en": "`\"armor_max_damage\": 40.0`"
+     }
+    },
+    {
+     "key": "damage_factor",
+     "required": false,
+     "getter": "damageFactor",
+     "default": 1.0,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "搭乗中のプレイヤーが受けるダメージへの倍率。",
+      "en": "A multiplier on damage taken by the riding player."
+     },
+     "example": {
+      "ja": "`\"damage_factor\": 0.3`",
+      "en": "`\"damage_factor\": 0.3`"
+     }
+    },
+    {
+     "key": "max_fuel",
+     "required": false,
+     "getter": "maxFuel",
+     "default": 600.0,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "最大燃料量。",
+      "en": "Maximum fuel amount."
+     },
+     "example": {
+      "ja": "`\"max_fuel\": 800.0`",
+      "en": "`\"max_fuel\": 800.0`"
+     }
+    },
+    {
+     "key": "fuel_consumption",
+     "required": false,
+     "getter": "fuelConsumptionPerSecond",
+     "default": 0.5,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "秒あたりの燃料消費量(スロットルに応じて変動)。燃料切れになるとスロットルが強制的に0になります(操縦自体は可能)。負の値を指定すると、この乗り物は燃料を一切使用しません。燃料の減少・燃料切れによる出力制限・燃料計の低燃料警告のいずれも発生せず、常に満タン扱いとして動作します(内部の燃料値や`max_fuel`の設定に関わらず)。人力で走る自転車のように、燃料という概念自体がそぐわない乗り物向けの設定です。",
+      "en": "Fuel consumption per second (varies with throttle). Running out of fuel forces throttle to 0 (piloting itself remains possible). A negative value means this vehicle uses no fuel at all - fuel never depletes, throttle is never restricted for running out, and the fuel gauge's low-fuel warning never fires; the vehicle always behaves as if fully fuelled (regardless of its own actual internal fuel value or `max_fuel` setting). Intended for a vehicle where the concept of fuel doesn't fit at all, such as a human-pedalled bicycle."
+     },
+     "example": {
+      "ja": "`\"fuel_consumption\": 0.5`",
+      "en": "`\"fuel_consumption\": 0.5`"
+     }
+    },
+    {
+     "key": "inventory_size",
+     "required": false,
+     "getter": "inventorySize",
+     "default": 0,
+     "type": "int",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "この機体が保持する永続インベントリのスロット数。`0`ならインベントリなし。",
+      "en": "How many slots this vehicle's own persistent inventory has. `0` means no inventory at all."
+     },
+     "example": {
+      "ja": "`\"inventory_size\": 9`",
+      "en": "`\"inventory_size\": 9`"
+     }
+    },
+    {
+     "key": "ammo_parts",
+     "required": false,
+     "getter": "ammoParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "AmmoPart",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "MCヘリの`AddPartWeaponMissile`に相当。特定武器の残弾数が一定以下になった際に非表示になる、外部から見える弾体パーツ(ミサイル・爆弾等)。各要素:\n- `part`(必須): 対象のOBJパーツ名\n- `weapon_name`(必須): 対象武器の`weapon_name`\n- `slot_index`(既定値`0`): 残弾数がこの値以下になった時点で非表示化(0,1,2...と複数指定すると1発ずつ順番に消えていく演出が可能)\n- `display_penalty`(Optional): このパーツが表示状態(残弾がslot_indexを上回っている間)にある間、機体の速度・運動性能をそれぞれ低下させる。`\"速度低下(%), 運動性能低下(%)\"`という形式の文字列で指定する(例: `\"10, 5\"`で速度10%減・運動性能5%減)。省略時は影響なし。複数のパーツを設定した場合、表示中の全パーツの値が加算される(乗算ではない)。パーツごとに個別の値を設定できるため、武器の種類や搭載位置に応じて異なる影響を与えられる",
+      "en": "Corresponds to MC Heli's own `AddPartWeaponMissile`. Externally-visible projectile parts (missiles, bombs, etc.) that become hidden once a specific weapon's own remaining ammo drops to a certain level or below. Each element:\n- `part` (required): the target OBJ part's name\n- `weapon_name` (required): the target weapon's own `weapon_name`\n- `slot_index` (default `0`): hidden once remaining ammo drops to this value or below (setting several with 0, 1, 2, ... lets you produce an effect where they disappear one at a time, in order)\n- `display_penalty` (optional): while this part is in its displayed state (as long as remaining ammo is above `slot_index`), reduces the vehicle's own speed and maneuverability respectively. Specified as a string of the form `\"speed reduction(%), maneuverability reduction(%)\"` (for example, `\"10, 5\"` for a 10% speed reduction and 5% maneuverability reduction). If omitted, no effect. With several parts configured, the values of every currently-displayed part are added together (not multiplied) - since each part can have its own individual value, different effects can apply depending on weapon type or mount position"
+     }
+    },
+    {
+     "key": "submerged_damage_height",
+     "required": false,
+     "getter": "submergedDamageHeight",
+     "default": 0.0,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "水面下このブロック数までなら潜っても毎tickダメージを受けません。`0`(既定)は少しでも水没すると即座にダメージが発生することを意味します。",
+      "en": "Submerging up to this many blocks below the water surface takes no damage per tick. `0` (default) means damage occurs the instant any part is submerged at all."
+     },
+     "example": {
+      "ja": "`\"submerged_damage_height\": 1.5`",
+      "en": "`\"submerged_damage_height\": 1.5`"
+     },
+     "entity_types": [
+      "tudursvehiclemod:car",
+      "tudursvehiclemod:submarine"
+     ]
+    },
+    {
+     "key": "force_bounding_box",
+     "required": false,
+     "getter": "forceBoundingBox",
+     "default": false,
+     "type": "bool",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "`false`(既定)の場合、当たり判定は本MOD標準の固定サイズが使われます。`true`にすると、代わりにこのファイル自身の`width`/`height`が実際の当たり判定サイズとして使われます。",
+      "en": "When `false` (default), the hitbox uses this mod's own standard fixed size. When `true`, this file's own `width`/`height` are used as the actual hitbox size instead."
+     },
+     "example": {
+      "ja": "`\"force_bounding_box\": true`",
+      "en": "`\"force_bounding_box\": true`"
+     }
+    },
+    {
+     "key": "stall_speed",
+     "required": false,
+     "getter": "stallSpeedFraction",
+     "default": 0.3,
+     "type": "float",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "`Aircraft`タイプ専用。失速が発生する速度の割合。詳細は`Readme_Vehicle_Aircraft.md`参照。",
+      "en": "`Aircraft` type only. The speed fraction at which a stall occurs. See `Readme_Vehicle_Aircraft.md` for details."
+     },
+     "example": {
+      "ja": "`\"stall_speed\": 0.3`",
+      "en": "`\"stall_speed\": 0.3`"
+     },
+     "entity_types": [
+      "tudursvehiclemod:aircraft",
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "passenger_display",
+     "required": false,
+     "getter": "passengerDisplay",
+     "type": "object",
+     "ref": "PassengerDisplay",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "搭乗者の見た目に関する設定です。以下の項目をこのオブジェクトの中に記述します。\n- `hide_entity`(既定値`false`): `true`の場合、搭乗中のプレイヤーモデル自体を完全に非表示にします(機能自体は維持されたまま見た目のみ消えます)。\n- `entity_width` / `entity_height`(既定値いずれも`1.0`): 搭乗中のプレイヤーモデルの表示スケール。",
+      "en": "Settings for how passengers look. The following fields go inside this object.\n- `hide_entity` (default `false`): when `true`, completely hides the riding player's own model (the feature itself is still fully functional - only the visible appearance disappears).\n- `entity_width` / `entity_height` (default `1.0` for each): the display scale of the riding player's own model."
+     },
+     "example": {
+      "ja": "\"passenger_display\": { \"hide_entity\": false, \"entity_width\": 0.9, \"entity_height\": 0.9 }",
+      "en": "\"passenger_display\": { \"hide_entity\": false, \"entity_width\": 0.9, \"entity_height\": 0.9 }"
+     }
+    },
+    {
+     "key": "float_capable",
+     "required": false,
+     "getter": "isFloatCapable",
+     "default": false,
+     "type": "bool",
+     "group": "VehicleExtras",
+     "desc": {
+      "ja": "`Aircraft`(および`Vtol`)・`Helicopter`タイプ専用。水上への着水・浮遊が可能かどうか。詳細は`Readme_Vehicle_Aircraft.md`・`Readme_Vehicle_Helicopter.md`参照。",
+      "en": "`Aircraft` (and `Vtol`)/`Helicopter` types only. Whether landing on/floating on water is possible. See `Readme_Vehicle_Aircraft.md` / `Readme_Vehicle_Helicopter.md` for details."
+     },
+     "example": {
+      "ja": "`\"float_capable\": true`",
+      "en": "`\"float_capable\": true`"
+     },
+     "entity_types": [
+      "tudursvehiclemod:aircraft",
+      "tudursvehiclemod:car",
+      "tudursvehiclemod:helicopter",
+      "tudursvehiclemod:static_emplacement",
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "wheel_parts",
+     "required": false,
+     "getter": "wheelParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "WheelPart",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "MCヘリの`AddPartWheel`に相当。スピン回転(進行に応じた回転)と、操舵回転(ハンドル操作に応じた向きの変化)の2つを合成して表現します(スピンが内側、操舵が外側に適用されます)。",
+      "en": "Corresponds to MC Heli's `AddPartWheel`. Represents the combination of spin rotation (rotating as the vehicle moves forward) and steering rotation (turning to follow steering input) - applied together (spin is applied on the inside, steering on the outside)."
+     },
+     "entity_types": [
+      "tudursvehiclemod:car"
+     ]
+    },
+    {
+     "key": "steering_wheel_parts",
+     "required": false,
+     "getter": "steeringWheelParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "SteeringWheelPart",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "MCヘリの`AddPartSteeringWheel`に相当。運転席内で見えるハンドル自体のモデルを、操舵入力に応じて回転させます(タイヤのスピン・操舵とは独立、ハンドル自体の1軸回転のみ)。各要素:\n- `part`(必須): 対象のOBJパーツ名\n- `pivot_x`/`pivot_y`/`pivot_z`(必須): 回転中心座標\n- `axis_x`/`axis_y`/`axis_z`(既定値`0.0`/`0.0`/`1.0`): 回転軸\n- `max_angle`(既定値`130.0`): 最大操舵時の回転角度(度)",
+      "en": "Corresponds to MC Heli's `AddPartSteeringWheel`. Rotates the model for the steering wheel itself, visible inside the driver's seat, in response to steering input (independent from tire spin/steering - purely a single-axis rotation of the wheel itself). Each element:\n- `part` (required): the target OBJ part's name\n- `pivot_x` / `pivot_y` / `pivot_z` (required): the rotation pivot coordinate\n- `axis_x` / `axis_y` / `axis_z` (default `0.0` / `0.0` / `1.0`): the rotation axis\n- `max_angle` (default `130.0`): the rotation angle (degrees) at maximum steering"
+     },
+     "example": {
+      "ja": "\"steering_wheel_parts\": [\n{ \"part\": \"$steering_wheel\", \"pivot_x\": 0.4, \"pivot_y\": 0.9, \"pivot_z\": 1.0, \"max_angle\": 130.0 }\n]",
+      "en": "\"steering_wheel_parts\": [\n{ \"part\": \"$steering_wheel\", \"pivot_x\": 0.4, \"pivot_y\": 0.9, \"pivot_z\": 1.0, \"max_angle\": 130.0 }\n]"
+     },
+     "entity_types": [
+      "tudursvehiclemod:car"
+     ]
+    },
+    {
+     "key": "crawler_tracks",
+     "required": false,
+     "getter": "crawlerTracks",
+     "default": [],
+     "type": "list",
+     "item_ref": "CrawlerTrackPart",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "MCヘリの`AddCrawlerTrack`に相当。1つの履帯コマモデルを、閉じたループ状の経路上に連続配置して表現します。",
+      "en": "Corresponds to MC Heli's `AddCrawlerTrack`. Represents a track by placing a single track-link model repeatedly along a closed loop path."
+     },
+     "entity_types": [
+      "tudursvehiclemod:car"
+     ]
+    },
+    {
+     "key": "track_roller_parts",
+     "required": false,
+     "getter": "trackRollerParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "TrackRollerPart",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "MCヘリの`AddTrackRoller`に相当。履帯の上を転がる小さな転輪です。対応する`crawler_tracks`(X座標の符号で自動的にマッチング)の実際の移動速度に完全に同期して自転します(独立した固定速度での回転ではありません)。",
+      "en": "Corresponds to MC Heli's `AddTrackRoller`. Small wheels that roll on top of the track. They spin fully in sync with the actual movement speed of the matching `crawler_tracks` entry (matched automatically by the sign of the X coordinate) - not spinning at some independent, fixed rate."
+     },
+     "example": {
+      "ja": "\"track_roller_parts\": [\n{ \"part\": \"$roller1_l\", \"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5 },\n{ \"part\": \"$roller2_l\", \"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 0.0 }\n]",
+      "en": "\"track_roller_parts\": [\n{ \"part\": \"$roller1_l\", \"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5 },\n{ \"part\": \"$roller2_l\", \"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 0.0 }\n]"
+     },
+     "entity_types": [
+      "tudursvehiclemod:car"
+     ]
+    },
+    {
+     "key": "vtol_rotor_parts",
+     "required": false,
+     "getter": "vtolRotorParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "VtolRotorPart",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "MCヘリの`AddPartRotor`に相当。ヘリコプターモード⇔固定翼機モードの切り替えに合わせて傾動するローターナセル等のパーツです(ティルトローター機向け)。",
+      "en": "Corresponds to MC Heli's `AddPartRotor`. Parts such as rotor nacelles that tilt in sync with switching between helicopter mode and fixed-wing mode (for tiltrotor aircraft)."
+     },
+     "entity_types": [
+      "tudursvehiclemod:static_emplacement",
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "is_uav",
+     "required": false,
+     "getter": "isUav",
+     "default": false,
+     "type": "bool",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "`true`の場合、この機体は無人機(UAV)として扱われます。通常の搭乗・操縦席の意味が失われ、専用のステーションブロック経由での遠隔操縦専用になります。詳細は`README.md`の「無人機(UAV)・自律ドローン・近接航空支援(CAS)」セクションを参照してください。",
+      "en": "When `true`, this vehicle is treated as an unmanned aerial vehicle (UAV). Its ordinary seat/cockpit meaning is lost, and it becomes dedicated to remote operation via a dedicated Station block instead. See the \"Unmanned (UAV) / Autonomous Drones / Close Air Support (CAS)\" section of `README.md` for details."
+     },
+     "example": {
+      "ja": "\"is_uav\": true",
+      "en": "\"is_uav\": true"
+     }
+    },
+    {
+     "key": "is_target_drone",
+     "required": false,
+     "getter": "isTargetDrone",
+     "default": false,
+     "type": "bool",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "`true`の場合、通常の搭乗を無効化し、標的ドローン(自律AI飛行)専用として扱います。ドローンセンターブロックからの制御自体は、このフラグに関わらずどの機体でも可能です。",
+      "en": "When `true`, ordinary mounting is disabled, and it's treated as dedicated to being a target drone (autonomous AI flight). Control from a Drone Center block itself is available for any vehicle regardless of this flag."
+     },
+     "example": {
+      "ja": "\"is_target_drone\": true",
+      "en": "\"is_target_drone\": true"
+     }
+    },
+    {
+     "key": "vtol_hover_speed_fraction",
+     "required": false,
+     "getter": "vtolHoverSpeedFraction",
+     "default": 0.1,
+     "type": "float",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "ヘリコプターモード中のWASD水平移動の最高速度を、`max_speed`(固定翼機モードでの最高速度と共通)に対する割合で指定します。既定の`0.1`は10%です。本プロジェクト独自の追加項目(MCヘリ非対応)で、ヘリコプターモードの水平移動が固定翼機モードと同じ速度になってしまうと過剰に速く感じるための調整項目です。",
+      "en": "The top speed for WASD horizontal movement while in helicopter mode, given as a fraction of `max_speed` (the same top speed used for fixed-wing mode). The default `0.1` is 10%. This is an addition specific to this project (not supported by MC Heli) - a tuning knob for when horizontal movement in helicopter mode ending up at the same speed as fixed-wing mode would feel excessively fast."
+     },
+     "example": {
+      "ja": "\"vtol_hover_speed_fraction\": 0.15",
+      "en": "\"vtol_hover_speed_fraction\": 0.15"
+     },
+     "entity_types": [
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "runway",
+     "required": false,
+     "type": "object",
+     "ref": "RunwayDefinition",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "滑走路を1つだけ定義する旧形式。複数定義できる runways を使ってください(両方ある場合は runways が優先されます)。",
+      "en": "Legacy single-runway form. Prefer runways, which accepts any number of decks."
+     },
+     "advanced": true
+    },
+    {
+     "key": "runways",
+     "required": false,
+     "getter": "runways",
+     "default": [],
+     "type": "list",
+     "item_ref": "RunwayDefinition",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "この機体自身の任意の位置に、他の乗り物が離着陸・停泊するための滑走路を定義します。この機体自身のJSONに直接設定します。実体としては見えない支持タイル(`CarrierRunwayPlatformEntity`)の集合が範囲全体に敷き詰められ、他の乗り物の降着装置・失速判定・当たり判定を、実際にブロックが存在するかのように扱います。複数の甲板・エレベーター等、独立した滑走路を複数持たせたい場合は`runways`配列を使用してください(両方同時に指定した場合、両方とも有効になります)。",
+      "en": "Defines a runway anywhere on this vehicle's own body, for other vehicles to take off from/land on/park on. Set directly on this vehicle's own JSON. Under the hood, an invisible set of support tiles (`CarrierRunwayPlatformEntity`) is laid across the whole area, and another vehicle's own landing gear, stall detection, and collision are all treated as if actual blocks were present there. If you want several independent runways - multiple decks, an elevator, etc. - use the `runways` array (if both `runway` and `runways` are set at once, both take effect)."
+     }
+    },
+    {
+     "key": "wake_trail_spread_distance",
+     "required": false,
+     "getter": "wakeTrailSpreadDistance",
+     "type": "float",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "航跡(船首波・航跡)の広がり幅を手動で指定します。省略時は船体形状(喫水線での実測ビーム幅)から自動検出されます。",
+      "en": "Manually specifies how wide the wake trail (bow wave / wake) spreads. If omitted, it's auto-detected from the hull shape (measured beam width at the waterline)."
+     },
+     "example": {
+      "ja": "\"wake_trail_spread_distance\": 8.0",
+      "en": "\"wake_trail_spread_distance\": 8.0"
+     },
+     "entity_types": [
+      "tudursvehiclemod:aircraft",
+      "tudursvehiclemod:car",
+      "tudursvehiclemod:ship",
+      "tudursvehiclemod:submarine",
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "wake_trail_duration_ticks",
+     "required": false,
+     "getter": "wakeTrailDurationTicks",
+     "default": 300,
+     "type": "int",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "航跡の1点が消えるまでの表示時間(tick)。",
+      "en": "How long (ticks) a single point of the wake trail stays visible before fading."
+     },
+     "example": {
+      "ja": "\"wake_trail_duration_ticks\": 300",
+      "en": "\"wake_trail_duration_ticks\": 300"
+     },
+     "entity_types": [
+      "tudursvehiclemod:aircraft",
+      "tudursvehiclemod:car",
+      "tudursvehiclemod:ship",
+      "tudursvehiclemod:submarine",
+      "tudursvehiclemod:vtol"
+     ]
+    },
+    {
+     "key": "flare_type",
+     "required": false,
+     "getter": "flareType",
+     "default": 0,
+     "type": "int",
+     "group": "GroundVehicleParts",
+     "desc": {
+      "ja": "フレア(欺瞞装置)の種類。0(既定)はフレアなし。1〜10はMCヘリのFlareTypeと同じく放出パターン(見た目)の違いで、誘導妨害の効果自体は同じです。",
+      "en": "Flare (countermeasure) type. 0 (default) means no flares. 1-10 match MC Heli's FlareType and only change the release pattern (visuals); the guidance-breaking effect is identical."
+     }
+    },
+    {
+     "key": "search_light_parts",
+     "required": false,
+     "getter": "searchLightParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "SearchLightPart",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "MCヘリの`AddSearchLight`/`AddFixedSearchLight`/`AddSteeringSearchLight`に相当する、円錐状のサーチライト。各要素:\n- `part`(必須): 対象のOBJパーツ名\n- `pivot_x`/`pivot_y`/`pivot_z`(必須): 発光位置\n- `start_color_argb`/`end_color_argb`(必須、整数ARGB): 光源側・末端側の色\n- `length`/`end_radius`(必須): 光の長さと末端の半径\n- `yaw`/`pitch`(既定値いずれも`0.0`): 基準の向き\n- `steer_angle`(既定値`0.0`): `follow_mode: STEERING`時の最大振れ角\n- `follow_mode`(必須、`PILOT_VIEW`/`FIXED`/`STEERING`): 向きの決定方式\n- `PILOT_VIEW`: 現在操作中の搭乗者の視点に追従(`AddSearchLight`相当)\n- `FIXED`: 機体基準で固定(`AddFixedSearchLight`相当)\n- `STEERING`: 操舵角に追従(`AddSteeringSearchLight`相当)",
+      "en": "A cone-shaped searchlight, corresponding to MC Heli's own `AddSearchLight` / `AddFixedSearchLight` / `AddSteeringSearchLight`. Each element:\n- `part` (required): the target OBJ part's name\n- `pivot_x`/`pivot_y`/`pivot_z` (required): the light source position\n- `start_color_argb`/`end_color_argb` (required, integer ARGB): the color at the source end and the far end\n- `length`/`end_radius` (required): the light's own length and the far-end radius\n- `yaw`/`pitch` (default `0.0` for each): the reference direction\n- `steer_angle` (default `0.0`): the maximum swing angle for `follow_mode: STEERING`\n- `follow_mode` (required, `PILOT_VIEW`/`FIXED`/`STEERING`): how the direction is determined\n- `PILOT_VIEW`: follows the view of whichever occupant is currently operating it (corresponds to `AddSearchLight`)\n- `FIXED`: fixed relative to the vehicle (corresponds to `AddFixedSearchLight`)\n- `STEERING`: follows the steering angle (corresponds to `AddSteeringSearchLight`)"
+     },
+     "example": {
+      "ja": "\"search_light_parts\": [\n{\n\"part\": \"$search_light\",\n\"pivot_x\": 0.0, \"pivot_y\": 0.5, \"pivot_z\": 1.0,\n\"start_color_argb\": -1, \"end_color_argb\": 0,\n\"length\": 30.0, \"end_radius\": 6.0,\n\"follow_mode\": \"PILOT_VIEW\"\n}\n]",
+      "en": "\"search_light_parts\": [\n{\n\"part\": \"$search_light\",\n\"pivot_x\": 0.0, \"pivot_y\": 0.5, \"pivot_z\": 1.0,\n\"start_color_argb\": -1, \"end_color_argb\": 0,\n\"length\": 30.0, \"end_radius\": 6.0,\n\"follow_mode\": \"PILOT_VIEW\"\n}\n]"
+     }
+    },
+    {
+     "key": "nav_light_parts",
+     "required": false,
+     "getter": "navLightParts",
+     "default": [],
+     "type": "list",
+     "item_ref": "NavLightPart",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "本プロジェクト独自追加。円錐状の広がりや操作を持たない、単純な定点光源(航海灯・航空灯向け)。機体が存在する限り常時点灯します(サーチライトと異なりオン/オフの切り替えはありません)。各要素:\n- `part`(必須): 対象のOBJパーツ名\n- `pivot_x`/`pivot_y`/`pivot_z`(必須): 発光位置\n- `color_argb`(必須、整数ARGB): 光の色。アルファ値が輝度を表すため、`0`にするとモデル上にパーツは存在するが発光しない状態にできます",
+      "en": "An addition specific to this project. A simple fixed-point light source (for navigation lights) with no cone-shaped spread or steering at all. Lit at all times as long as the vehicle exists (unlike a searchlight, there's no on/off toggle). Each element:\n- `part` (required): the target OBJ part's name\n- `pivot_x`/`pivot_y`/`pivot_z` (required): the light source position\n- `color_argb` (required, integer ARGB): the light's own color. Since the alpha value represents brightness, setting it to `0` lets you keep the part present in the model without it actually being lit"
+     }
+    },
+    {
+     "key": "fuel_supply_range",
+     "required": false,
+     "getter": "fuelSupplyRange",
+     "default": 0.0,
+     "type": "float",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "MCヘリの`FuelSupplyRange`/`AmmoSupplyRange`、および本プロジェクト独自追加の耐久値版。この半径(ブロック)内にいる他の機体へ、燃料・弾薬・耐久値を継続的に供給します。供給する側は消費・減少しません。自機自身への供給は行われません。`0`(既定)は補給機能なし。",
+      "en": "MC Heli's own `FuelSupplyRange`/`AmmoSupplyRange`, and a health-value equivalent added specifically by this project. Continuously supplies fuel/ammo/health to other vehicles within this radius (blocks). The supplying vehicle doesn't consume or lose any itself. Never supplies to itself. `0` (default) means no supply feature at all."
+     },
+     "example": {
+      "ja": "\"fuel_supply_range\": 20.0,\n\"ammo_supply_range\": 20.0,\n\"health_supply_range\": 20.0",
+      "en": "\"fuel_supply_range\": 20.0,\n\"ammo_supply_range\": 20.0,\n\"health_supply_range\": 20.0"
+     }
+    },
+    {
+     "key": "ammo_supply_range",
+     "required": false,
+     "getter": "ammoSupplyRange",
+     "default": 0.0,
+     "type": "float",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "MCヘリの`FuelSupplyRange`/`AmmoSupplyRange`、および本プロジェクト独自追加の耐久値版。この半径(ブロック)内にいる他の機体へ、燃料・弾薬・耐久値を継続的に供給します。供給する側は消費・減少しません。自機自身への供給は行われません。`0`(既定)は補給機能なし。",
+      "en": "MC Heli's own `FuelSupplyRange`/`AmmoSupplyRange`, and a health-value equivalent added specifically by this project. Continuously supplies fuel/ammo/health to other vehicles within this radius (blocks). The supplying vehicle doesn't consume or lose any itself. Never supplies to itself. `0` (default) means no supply feature at all."
+     },
+     "example": {
+      "ja": "\"fuel_supply_range\": 20.0,\n\"ammo_supply_range\": 20.0,\n\"health_supply_range\": 20.0",
+      "en": "\"fuel_supply_range\": 20.0,\n\"ammo_supply_range\": 20.0,\n\"health_supply_range\": 20.0"
+     }
+    },
+    {
+     "key": "health_supply_range",
+     "required": false,
+     "getter": "healthSupplyRange",
+     "default": 0.0,
+     "type": "float",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "MCヘリの`FuelSupplyRange`/`AmmoSupplyRange`、および本プロジェクト独自追加の耐久値版。この半径(ブロック)内にいる他の機体へ、燃料・弾薬・耐久値を継続的に供給します。供給する側は消費・減少しません。自機自身への供給は行われません。`0`(既定)は補給機能なし。",
+      "en": "MC Heli's own `FuelSupplyRange`/`AmmoSupplyRange`, and a health-value equivalent added specifically by this project. Continuously supplies fuel/ammo/health to other vehicles within this radius (blocks). The supplying vehicle doesn't consume or lose any itself. Never supplies to itself. `0` (default) means no supply feature at all."
+     },
+     "example": {
+      "ja": "\"fuel_supply_range\": 20.0,\n\"ammo_supply_range\": 20.0,\n\"health_supply_range\": 20.0",
+      "en": "\"fuel_supply_range\": 20.0,\n\"ammo_supply_range\": 20.0,\n\"health_supply_range\": 20.0"
+     }
+    },
+    {
+     "key": "regeneration",
+     "required": false,
+     "getter": "regeneration",
+     "default": false,
+     "type": "bool",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "true の場合、2番席以降に搭乗しているモブが時間経過で自動回復します(MCヘリの Regeneration 相当)。",
+      "en": "When true, mobs riding seat 2 and later heal over time (MC Heli's Regeneration)."
+     }
+    },
+    {
+     "key": "default_freelook",
+     "required": false,
+     "getter": "defaultFreelook",
+     "default": false,
+     "type": "bool",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "true の場合、搭乗直後からフリールック状態になり、フリールックキーを押している間だけ通常の固定視点に戻ります(通常の機体とは逆の挙動)。",
+      "en": "When true the view starts in free-look on mount, and holding the free-look key returns to the normal fixed view (the reverse of other vehicles)."
+     }
+    },
+    {
+     "key": "enable_ejection_seat",
+     "required": false,
+     "getter": "enableEjectionSeat",
+     "default": false,
+     "type": "bool",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "パイロットがSpaceキーを長押しすることで、`enable_parachuting`が有効な座席の搭乗者(パイロット自身を含む)を一斉に脱出させられるようにするかどうか。`enable_parachuting`が有効な座席の搭乗者にはパラシュートが付与され、無効な座席の搭乗者は単純に強制降車します。",
+      "en": "Whether the pilot can hold the Space key to eject every occupant of a seat with `enable_parachuting` set (including the pilot themself) all at once. An occupant of a seat with `enable_parachuting` enabled is given a parachute; an occupant of a seat where it's disabled is simply force-dismounted."
+     },
+     "example": {
+      "ja": "`\"enable_ejection_seat\": true`",
+      "en": "`\"enable_ejection_seat\": true`"
+     }
+    },
+    {
+     "key": "mob_drop_option",
+     "required": false,
+     "getter": "mobDropOption",
+     "type": "object",
+     "ref": "MobDropOption",
+     "group": "AuxiliaryParts",
+     "desc": {
+      "ja": "パイロットがパラシュートジャンプ用の割り当てキーを短く押すことで、`enable_parachuting`が有効な座席(パイロット席を除く、番号の若い順)の搭乗者(mob)を、`interval_ticks`で指定した間隔で1体ずつ順番にパラシュート降下させる機能。設定しない場合、このキー操作は何も行いません。同じキーを長押しした場合は、`enable_ejection_seat`と同様に全座席が対象になり、`enable_parachuting`が有効かどうかに応じてパラシュート付与または強制降車が行われます。各要素:\n- `rel_x` / `rel_y` / `rel_z`(必須): 機体の基準位置からの、投下位置の相対座標(機体の現在の向きに合わせて回転します)。\n- `interval_ticks`(必須): 次のmobを投下するまでの間隔(tick数、1/20秒単位)。",
+      "en": "A feature where a short press of the assigned parachute-jump key drops the occupants (mobs) of every seat with `enable_parachuting` set (excluding the pilot seat, in ascending seat order) one at a time, parachuting each in turn at the interval given by `interval_ticks`. If left unset, that key press does nothing. Holding the same key instead targets every seat, exactly like `enable_ejection_seat` - each occupant either gets a parachute or is force-dismounted depending on whether `enable_parachuting` is enabled for their own seat. Fields:\n- `rel_x` / `rel_y` / `rel_z` (required): the drop position's own relative coordinate from the vehicle's own reference position (rotates to match the vehicle's own current heading).\n- `interval_ticks` (required): the interval before dropping the next mob (in ticks, 1/20 second each)."
+     },
+     "example": {
+      "ja": "\"mob_drop_option\": { \"rel_x\": 0.0, \"rel_y\": -0.5, \"rel_z\": 0.0, \"interval_ticks\": 20 }",
+      "en": "\"mob_drop_option\": { \"rel_x\": 0.0, \"rel_y\": -0.5, \"rel_z\": 0.0, \"interval_ticks\": 20 }"
+     }
+    }
+   ]
+  },
+  "MobDropOption": {
+   "fields": [
+    {
+     "key": "rel_x",
+     "required": true,
+     "getter": "relX",
+     "type": "float",
+     "desc": {
+      "ja": "機体の基準位置からの、投下位置の相対座標(機体の現在の向きに合わせて回転します)。",
+      "en": "the drop position's own relative coordinate from the vehicle's own reference position (rotates to match the vehicle's own current heading)."
+     }
+    },
+    {
+     "key": "rel_y",
+     "required": true,
+     "getter": "relY",
+     "type": "float",
+     "desc": {
+      "ja": "機体の基準位置からの、投下位置の相対座標(機体の現在の向きに合わせて回転します)。",
+      "en": "the drop position's own relative coordinate from the vehicle's own reference position (rotates to match the vehicle's own current heading)."
+     }
+    },
+    {
+     "key": "rel_z",
+     "required": true,
+     "getter": "relZ",
+     "type": "float",
+     "desc": {
+      "ja": "機体の基準位置からの、投下位置の相対座標(機体の現在の向きに合わせて回転します)。",
+      "en": "the drop position's own relative coordinate from the vehicle's own reference position (rotates to match the vehicle's own current heading)."
+     }
+    },
+    {
+     "key": "interval_ticks",
+     "required": true,
+     "getter": "intervalTicks",
+     "type": "int",
+     "desc": {
+      "ja": "次のmobを投下するまでの間隔(tick数、1/20秒単位)。",
+      "en": "the interval before dropping the next mob (in ticks, 1/20 second each)."
+     }
+    }
+   ]
+  },
+  "NavLightPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名",
+      "en": "the target OBJ part's name"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": true,
+     "getter": "pivotX",
+     "type": "float",
+     "desc": {
+      "ja": "発光位置",
+      "en": "the light source position"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": true,
+     "getter": "pivotY",
+     "type": "float",
+     "desc": {
+      "ja": "発光位置",
+      "en": "the light source position"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": true,
+     "getter": "pivotZ",
+     "type": "float",
+     "desc": {
+      "ja": "発光位置",
+      "en": "the light source position"
+     }
+    },
+    {
+     "key": "color_argb",
+     "required": true,
+     "getter": "colorArgb",
+     "type": "int",
+     "desc": {
+      "ja": "光の色。アルファ値が輝度を表すため、`0`にするとモデル上にパーツは存在するが発光しない状態にできます",
+      "en": "the light's own color. Since the alpha value represents brightness, setting it to `0` lets you keep the part present in the model without it actually being lit"
+     }
+    }
+   ]
+  },
+  "SearchLightPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名",
+      "en": "the target OBJ part's name"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": true,
+     "getter": "pivotX",
+     "type": "float",
+     "desc": {
+      "ja": "発光位置",
+      "en": "the light source position"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": true,
+     "getter": "pivotY",
+     "type": "float",
+     "desc": {
+      "ja": "発光位置",
+      "en": "the light source position"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": true,
+     "getter": "pivotZ",
+     "type": "float",
+     "desc": {
+      "ja": "発光位置",
+      "en": "the light source position"
+     }
+    },
+    {
+     "key": "start_color_argb",
+     "required": true,
+     "getter": "startColorArgb",
+     "type": "int",
+     "desc": {
+      "ja": "光源側・末端側の色",
+      "en": "the color at the source end and the far end"
+     }
+    },
+    {
+     "key": "end_color_argb",
+     "required": true,
+     "getter": "endColorArgb",
+     "type": "int",
+     "desc": {
+      "ja": "光源側・末端側の色",
+      "en": "the color at the source end and the far end"
+     }
+    },
+    {
+     "key": "length",
+     "required": true,
+     "getter": "length",
+     "type": "float",
+     "desc": {
+      "ja": "光の長さと末端の半径",
+      "en": "the light's own length and the far-end radius"
+     }
+    },
+    {
+     "key": "end_radius",
+     "required": true,
+     "getter": "endRadius",
+     "type": "float",
+     "desc": {
+      "ja": "光の長さと末端の半径",
+      "en": "the light's own length and the far-end radius"
+     }
+    },
+    {
+     "key": "yaw",
+     "required": false,
+     "getter": "baseYaw",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "基準の向き",
+      "en": "the reference direction"
+     }
+    },
+    {
+     "key": "pitch",
+     "required": false,
+     "getter": "basePitch",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "基準の向き",
+      "en": "the reference direction"
+     }
+    },
+    {
+     "key": "steer_angle",
+     "required": false,
+     "getter": "steerAngle",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "`follow_mode: STEERING`時の最大振れ角",
+      "en": "the maximum swing angle for `follow_mode: STEERING`"
+     }
+    },
+    {
+     "key": "follow_mode",
+     "required": true,
+     "getter": "followMode",
+     "type": "enum",
+     "choices": [
+      "PILOT_VIEW",
+      "FIXED"
+     ],
+     "desc": {
+      "ja": "向きの決定方式",
+      "en": "how the direction is determined"
+     }
+    }
+   ]
+  },
+  "RunwayDefinition": {
+   "fields": [
+    {
+     "key": "width",
+     "required": true,
+     "getter": "width",
+     "type": "float",
+     "desc": {
+      "ja": "この機体自身の見た目上のサイズを表す参考値です。必須項目です。実際の当たり判定サイズには通常使われません(後述の`force_bounding_box`参照)。",
+      "en": "Reference values representing this vehicle's own visual size. Required. Not normally used for the actual hitbox size (see `force_bounding_box` below)."
+     },
+     "example": {
+      "ja": "\"width\": 2.2,\n\"height\": 1.4",
+      "en": "\"width\": 2.2,\n\"height\": 1.4"
+     }
+    },
+    {
+     "key": "center_x",
+     "required": false,
+     "getter": "centerX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "滑走路の中心となる、機体基準からの左右方向オフセット。",
+      "en": "The left/right offset from the vehicle's own reference point to the runway's own center."
+     },
+     "example": {
+      "ja": "`\"center_x\": 0.0`",
+      "en": "`\"center_x\": 0.0`"
+     }
+    },
+    {
+     "key": "height_y",
+     "required": false,
+     "getter": "heightY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "機体基準位置からの高さ。滑走路面はこの高さに位置します。",
+      "en": "Height above the vehicle's own reference position. The runway surface sits at this height."
+     },
+     "example": {
+      "ja": "`\"height_y\": 12.0`",
+      "en": "`\"height_y\": 12.0`"
+     }
+    },
+    {
+     "key": "start_z",
+     "required": true,
+     "getter": "startZ",
+     "type": "float",
+     "desc": {
+      "ja": "滑走路の前後方向の範囲(順不同)。",
+      "en": "The runway's own front-to-back extent (order doesn't matter)."
+     },
+     "example": {
+      "ja": "`\"start_z\": -105.0, \"end_z\": 90.0`",
+      "en": "`\"start_z\": -105.0, \"end_z\": 90.0`"
+     }
+    },
+    {
+     "key": "end_z",
+     "required": true,
+     "getter": "endZ",
+     "type": "float",
+     "desc": {
+      "ja": "滑走路の前後方向の範囲(順不同)。",
+      "en": "The runway's own front-to-back extent (order doesn't matter)."
+     },
+     "example": {
+      "ja": "`\"start_z\": -105.0, \"end_z\": 90.0`",
+      "en": "`\"start_z\": -105.0, \"end_z\": 90.0`"
+     }
+    },
+    {
+     "key": "hatch_gated",
+     "required": false,
+     "getter": "hatchGated",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "`true`の場合、この滑走路(とそのタイル)はハッチが開いている間だけ存在します。回転タイプのハッチ(揚陸艇の船首道板等)向けの単純なon/off切り替えで、開閉の途中経過は考慮しません",
+      "en": "when `true`, this runway (and its own tiles) only exists while a hatch is open. A simple on/off toggle intended for a rotating-type hatch (a landing craft's own bow ramp, say) - it doesn't account for any partial-open state in between"
+     }
+    },
+    {
+     "key": "hatch_offset_x",
+     "required": false,
+     "getter": "hatchOffsetX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "非ゼロの場合、ハッチが開くにつれてこの滑走路の実効位置がこの値ぶんまでイージングしながらオフセットされます(閉じると元に戻ります)。上下・前後・左右の平行移動タイプのハッチ(空母のエレベーター甲板等)向け"
+     }
+    },
+    {
+     "key": "hatch_offset_y",
+     "required": false,
+     "getter": "hatchOffsetY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "非ゼロの場合、ハッチが開くにつれてこの滑走路の実効位置がこの値ぶんまでイージングしながらオフセットされます(閉じると元に戻ります)。上下・前後・左右の平行移動タイプのハッチ(空母のエレベーター甲板等)向け"
+     }
+    },
+    {
+     "key": "hatch_offset_z",
+     "required": false,
+     "getter": "hatchOffsetZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "非ゼロの場合、ハッチが開くにつれてこの滑走路の実効位置がこの値ぶんまでイージングしながらオフセットされます(閉じると元に戻ります)。上下・前後・左右の平行移動タイプのハッチ(空母のエレベーター甲板等)向け"
+     }
+    },
+    {
+     "key": "hatch_move_speed",
+     "required": false,
+     "getter": "hatchMoveSpeed",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "上記オフセットのイージング速度(進捗/秒)。`toggle_parts`の`\"$hatch\"`プレフィックス付きパーツと同じ倍率補正(設定speedの2倍で動作)が自動的にかかるため、見た目のハッチと同じ速度にしたい場合は、対応する`toggle_parts`の`speed`と同じ数値を指定してください",
+      "en": "the easing speed (progress/second) for the offset above. This automatically gets the same scaling correction (runs at 2x the configured speed) that a `toggle_parts` entry with a `\"$hatch\"` prefix already gets - if you want it to move at the same speed as the visible hatch, give it the same number as that matching `toggle_parts` entry's own `speed`"
+     }
+    }
+   ]
+  },
+  "VtolRotorPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名。",
+      "en": "The target OBJ part's name."
+     },
+     "example": {
+      "ja": "`\"part\": \"$rotor_nacelle_l\"`",
+      "en": "`\"part\": \"$rotor_nacelle_l\"`"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": false,
+     "getter": "pivotX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "傾動の中心座標。",
+      "en": "The pivot coordinate for the tilting motion."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": -3.0, \"pivot_y\": 0.5, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": -3.0, \"pivot_y\": 0.5, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": false,
+     "getter": "pivotY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "傾動の中心座標。",
+      "en": "The pivot coordinate for the tilting motion."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": -3.0, \"pivot_y\": 0.5, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": -3.0, \"pivot_y\": 0.5, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": false,
+     "getter": "pivotZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "傾動の中心座標。",
+      "en": "The pivot coordinate for the tilting motion."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": -3.0, \"pivot_y\": 0.5, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": -3.0, \"pivot_y\": 0.5, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_x",
+     "required": false,
+     "getter": "axisX",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "傾動軸ベクトル。符号も含めて正確に指定してください(傾動方向が逆転する原因になります)。",
+      "en": "The tilt axis vector. Specify this precisely, sign included (getting it wrong causes the tilt direction to be reversed)."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_y",
+     "required": false,
+     "getter": "axisY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "傾動軸ベクトル。符号も含めて正確に指定してください(傾動方向が逆転する原因になります)。",
+      "en": "The tilt axis vector. Specify this precisely, sign included (getting it wrong causes the tilt direction to be reversed)."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_z",
+     "required": false,
+     "getter": "axisZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "傾動軸ベクトル。符号も含めて正確に指定してください(傾動方向が逆転する原因になります)。",
+      "en": "The tilt axis vector. Specify this precisely, sign included (getting it wrong causes the tilt direction to be reversed)."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`"
+     }
+    }
+   ]
+  },
+  "TrackRollerPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名。例: `\"part\": \"$roller1_l\"`",
+      "en": "the target OBJ part's name. Example: `\"part\": \"$roller1_l\"`"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": true,
+     "getter": "pivotX",
+     "type": "float",
+     "desc": {
+      "ja": "位置座標(ローカルX軸で自転)。例: `\"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5`",
+      "en": "the position coordinate (spins on the local X axis). Example: `\"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": true,
+     "getter": "pivotY",
+     "type": "float",
+     "desc": {
+      "ja": "位置座標(ローカルX軸で自転)。例: `\"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5`",
+      "en": "the position coordinate (spins on the local X axis). Example: `\"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": true,
+     "getter": "pivotZ",
+     "type": "float",
+     "desc": {
+      "ja": "位置座標(ローカルX軸で自転)。例: `\"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5`",
+      "en": "the position coordinate (spins on the local X axis). Example: `\"pivot_x\": -1.2, \"pivot_y\": 0.3, \"pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "rotations_per_block",
+     "required": false,
+     "getter": "rotationsPerBlock",
+     "type": "float",
+     "desc": {
+      "ja": "履帯1ブロック分の移動あたりの回転数(転輪の円周から算出される値)。省略時はモデル形状から自動計算されたキャッシュ値を使用します。例: `\"rotations_per_block\": 0.8`",
+      "en": "how many rotations occur per block of track movement (a value derived from the roller's own circumference). If omitted, an automatically-computed cached value derived from the model's own shape is used. Example: `\"rotations_per_block\": 0.8`"
+     }
+    }
+   ]
+  },
+  "CrawlerTrackPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "履帯コマのOBJパーツ名(1コマ分のモデル)。",
+      "en": "The track-link's own OBJ part name (the model for a single link)."
+     },
+     "example": {
+      "ja": "`\"part\": \"$track_link\"`",
+      "en": "`\"part\": \"$track_link\"`"
+     }
+    },
+    {
+     "key": "flip",
+     "required": false,
+     "getter": "flip",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "履帯の表裏を反転させます。",
+      "en": "Flips the track's own front/back face."
+     },
+     "example": {
+      "ja": "`\"flip\": true`",
+      "en": "`\"flip\": true`"
+     }
+    },
+    {
+     "key": "link_spacing",
+     "required": false,
+     "getter": "linkSpacing",
+     "default": 0.5,
+     "type": "float",
+     "desc": {
+      "ja": "履帯コマ同士の間隔。",
+      "en": "The spacing between track links."
+     },
+     "example": {
+      "ja": "`\"link_spacing\": 0.5`",
+      "en": "`\"link_spacing\": 0.5`"
+     }
+    },
+    {
+     "key": "x",
+     "required": true,
+     "getter": "x",
+     "type": "float",
+     "desc": {
+      "ja": "この履帯の左右位置。負の値=右側、正の値=左側という規則で、旋回時に左右の履帯が逆方向(その場旋回時)・異なる速度(通常旋回時)で動く差動操舵の計算に使われます。",
+      "en": "This track's own left/right position. By convention, a negative value means the right side and a positive value means the left side - this is used in the differential-steering calculation that makes the left and right tracks move in opposite directions (while pivot-turning) or at different speeds (while turning normally)."
+     },
+     "example": {
+      "ja": "`\"x\": -1.2`",
+      "en": "`\"x\": -1.2`"
+     }
+    },
+    {
+     "key": "path",
+     "required": true,
+     "getter": "path",
+     "type": "list",
+     "item_ref": "PathPoint",
+     "desc": {
+      "ja": "履帯コマが辿る閉じたループ経路上のY/Z座標点列。",
+      "en": "The sequence of Y/Z coordinate points along the closed loop path that the track links follow."
+     },
+     "example": {
+      "ja": "\"path\": [ { \"y\": 0.0, \"z\": 2.0 }, { \"y\": 0.6, \"z\": 2.0 }, { \"y\": 0.6, \"z\": -2.0 }, { \"y\": 0.0, \"z\": -2.0 } ]",
+      "en": "\"path\": [ { \"y\": 0.0, \"z\": 2.0 }, { \"y\": 0.6, \"z\": 2.0 }, { \"y\": 0.6, \"z\": -2.0 }, { \"y\": 0.0, \"z\": -2.0 } ]"
+     }
+    }
+   ]
+  },
+  "PathPoint": {
+   "fields": [
+    {
+     "key": "y",
+     "required": true,
+     "getter": "y",
+     "type": "float",
+     "desc": {
+      "ja": "視点座標",
+      "en": "the view coordinate"
+     }
+    },
+    {
+     "key": "z",
+     "required": true,
+     "getter": "z",
+     "type": "float",
+     "desc": {
+      "ja": "視点座標",
+      "en": "the view coordinate"
+     }
+    }
+   ]
+  },
+  "SteeringWheelPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名",
+      "en": "the target OBJ part's name"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": true,
+     "getter": "pivotX",
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標",
+      "en": "the rotation pivot coordinate"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": true,
+     "getter": "pivotY",
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標",
+      "en": "the rotation pivot coordinate"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": true,
+     "getter": "pivotZ",
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標",
+      "en": "the rotation pivot coordinate"
+     }
+    },
+    {
+     "key": "axis_x",
+     "required": false,
+     "getter": "axisX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転軸",
+      "en": "the rotation axis"
+     }
+    },
+    {
+     "key": "axis_y",
+     "required": false,
+     "getter": "axisY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転軸",
+      "en": "the rotation axis"
+     }
+    },
+    {
+     "key": "axis_z",
+     "required": false,
+     "getter": "axisZ",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転軸",
+      "en": "the rotation axis"
+     }
+    },
+    {
+     "key": "max_angle",
+     "required": false,
+     "getter": "maxAngle",
+     "default": 130.0,
+     "type": "float",
+     "desc": {
+      "ja": "最大操舵時の回転角度(度)",
+      "en": "the rotation angle (degrees) at maximum steering"
+     }
+    }
+   ]
+  },
+  "WheelPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名。",
+      "en": "The target OBJ part's name."
+     },
+     "example": {
+      "ja": "`\"part\": \"$wheel_fl\"`",
+      "en": "`\"part\": \"$wheel_fl\"`"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": true,
+     "getter": "pivotX",
+     "type": "float",
+     "desc": {
+      "ja": "タイヤの位置座標(スピン回転はこの座標を中心にローカルX軸で行われます)。",
+      "en": "The tire's own position coordinate (spin rotation happens around this point, on the local X axis)."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": -0.8, \"pivot_y\": 0.4, \"pivot_z\": 1.5`",
+      "en": "`\"pivot_x\": -0.8, \"pivot_y\": 0.4, \"pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": true,
+     "getter": "pivotY",
+     "type": "float",
+     "desc": {
+      "ja": "タイヤの位置座標(スピン回転はこの座標を中心にローカルX軸で行われます)。",
+      "en": "The tire's own position coordinate (spin rotation happens around this point, on the local X axis)."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": -0.8, \"pivot_y\": 0.4, \"pivot_z\": 1.5`",
+      "en": "`\"pivot_x\": -0.8, \"pivot_y\": 0.4, \"pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": true,
+     "getter": "pivotZ",
+     "type": "float",
+     "desc": {
+      "ja": "タイヤの位置座標(スピン回転はこの座標を中心にローカルX軸で行われます)。",
+      "en": "The tire's own position coordinate (spin rotation happens around this point, on the local X axis)."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": -0.8, \"pivot_y\": 0.4, \"pivot_z\": 1.5`",
+      "en": "`\"pivot_x\": -0.8, \"pivot_y\": 0.4, \"pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "steer_angle",
+     "required": false,
+     "getter": "steerAngle",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "このタイヤが操舵入力に応じて振れる最大角度(度)。`0`なら操舵しません(後輪等)。",
+      "en": "The maximum angle (degrees) this tire swings through in response to steering input. `0` means it doesn't steer at all (e.g. a rear wheel)."
+     },
+     "example": {
+      "ja": "`\"steer_angle\": 30.0`",
+      "en": "`\"steer_angle\": 30.0`"
+     }
+    },
+    {
+     "key": "steer_axis_x",
+     "required": false,
+     "getter": "steerAxisX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "操舵回転軸。省略時は垂直軸(キングピン軸)。",
+      "en": "The steering rotation axis. If omitted, the vertical axis (kingpin axis)."
+     },
+     "example": {
+      "ja": "`\"steer_axis_x\": 0.0, \"steer_axis_y\": 1.0, \"steer_axis_z\": 0.0`",
+      "en": "`\"steer_axis_x\": 0.0, \"steer_axis_y\": 1.0, \"steer_axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "steer_axis_y",
+     "required": false,
+     "getter": "steerAxisY",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "操舵回転軸。省略時は垂直軸(キングピン軸)。",
+      "en": "The steering rotation axis. If omitted, the vertical axis (kingpin axis)."
+     },
+     "example": {
+      "ja": "`\"steer_axis_x\": 0.0, \"steer_axis_y\": 1.0, \"steer_axis_z\": 0.0`",
+      "en": "`\"steer_axis_x\": 0.0, \"steer_axis_y\": 1.0, \"steer_axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "steer_axis_z",
+     "required": false,
+     "getter": "steerAxisZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "操舵回転軸。省略時は垂直軸(キングピン軸)。",
+      "en": "The steering rotation axis. If omitted, the vertical axis (kingpin axis)."
+     },
+     "example": {
+      "ja": "`\"steer_axis_x\": 0.0, \"steer_axis_y\": 1.0, \"steer_axis_z\": 0.0`",
+      "en": "`\"steer_axis_x\": 0.0, \"steer_axis_y\": 1.0, \"steer_axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "steer_pivot_x",
+     "required": false,
+     "getter": "steerPivotX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "操舵回転の中心座標。省略時はこのタイヤ自身の`pivot_x/y/z`と同じ。",
+      "en": "The steering rotation's own pivot coordinate. If omitted, the same as this tire's own `pivot_x/y/z`."
+     },
+     "example": {
+      "ja": "`\"steer_pivot_x\": -0.8, \"steer_pivot_y\": 0.4, \"steer_pivot_z\": 1.5`",
+      "en": "`\"steer_pivot_x\": -0.8, \"steer_pivot_y\": 0.4, \"steer_pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "steer_pivot_y",
+     "required": false,
+     "getter": "steerPivotY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "操舵回転の中心座標。省略時はこのタイヤ自身の`pivot_x/y/z`と同じ。",
+      "en": "The steering rotation's own pivot coordinate. If omitted, the same as this tire's own `pivot_x/y/z`."
+     },
+     "example": {
+      "ja": "`\"steer_pivot_x\": -0.8, \"steer_pivot_y\": 0.4, \"steer_pivot_z\": 1.5`",
+      "en": "`\"steer_pivot_x\": -0.8, \"steer_pivot_y\": 0.4, \"steer_pivot_z\": 1.5`"
+     }
+    },
+    {
+     "key": "steer_pivot_z",
+     "required": false,
+     "getter": "steerPivotZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "操舵回転の中心座標。省略時はこのタイヤ自身の`pivot_x/y/z`と同じ。",
+      "en": "The steering rotation's own pivot coordinate. If omitted, the same as this tire's own `pivot_x/y/z`."
+     },
+     "example": {
+      "ja": "`\"steer_pivot_x\": -0.8, \"steer_pivot_y\": 0.4, \"steer_pivot_z\": 1.5`",
+      "en": "`\"steer_pivot_x\": -0.8, \"steer_pivot_y\": 0.4, \"steer_pivot_z\": 1.5`"
+     }
+    }
+   ]
+  },
+  "PassengerDisplay": {
+   "fields": [
+    {
+     "key": "hide_entity",
+     "required": false,
+     "getter": "hideEntity",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "`true`の場合、搭乗中のプレイヤーモデル自体を完全に非表示にします(機能自体は維持されたまま見た目のみ消えます)。",
+      "en": "when `true`, completely hides the riding player's own model (the feature itself is still fully functional - only the visible appearance disappears)."
+     }
+    },
+    {
+     "key": "entity_width",
+     "required": false,
+     "getter": "entityWidth",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "搭乗中のプレイヤーモデルの表示スケール。",
+      "en": "the display scale of the riding player's own model."
+     }
+    },
+    {
+     "key": "entity_height",
+     "required": false,
+     "getter": "entityHeight",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "搭乗中のプレイヤーモデルの表示スケール。",
+      "en": "the display scale of the riding player's own model."
+     }
+    }
+   ]
+  },
+  "AmmoPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名",
+      "en": "the target OBJ part's name"
+     }
+    },
+    {
+     "key": "weapon_name",
+     "required": true,
+     "getter": "weaponName",
+     "type": "string",
+     "hint": "weapon",
+     "desc": {
+      "ja": "対象武器の`weapon_name`",
+      "en": "the target weapon's own `weapon_name`"
+     }
+    },
+    {
+     "key": "slot_index",
+     "required": false,
+     "getter": "slotIndex",
+     "default": 0,
+     "type": "int",
+     "desc": {
+      "ja": "残弾数がこの値以下になった時点で非表示化(0,1,2...と複数指定すると1発ずつ順番に消えていく演出が可能)",
+      "en": "hidden once remaining ammo drops to this value or below (setting several with 0, 1, 2, ... lets you produce an effect where they disappear one at a time, in order)"
+     }
+    },
+    {
+     "key": "display_penalty",
+     "required": false,
+     "getter": "displayPenalty",
+     "type": "string",
+     "desc": {
+      "ja": "このパーツが表示状態(残弾がslot_indexを上回っている間)にある間、機体の速度・運動性能をそれぞれ低下させる。`\"速度低下(%), 運動性能低下(%)\"`という形式の文字列で指定する(例: `\"10, 5\"`で速度10%減・運動性能5%減)。省略時は影響なし。複数のパーツを設定した場合、表示中の全パーツの値が加算される(乗算ではない)。パーツごとに個別の値を設定できるため、武器の種類や搭載位置に応じて異なる影響を与えられる",
+      "en": "while this part is in its displayed state (as long as remaining ammo is above `slot_index`), reduces the vehicle's own speed and maneuverability respectively. Specified as a string of the form `\"speed reduction(%), maneuverability reduction(%)\"` (for example, `\"10, 5\"` for a 10% speed reduction and 5% maneuverability reduction). If omitted, no effect. With several parts configured, the values of every currently-displayed part are added together (not multiplied) - since each part can have its own individual value, different effects can apply depending on weapon type or mount position"
+     }
+    }
+   ]
+  },
+  "WeaponPart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名。",
+      "en": "The target OBJ part's name."
+     },
+     "example": {
+      "ja": "`\"part\": \"$turret\"`",
+      "en": "`\"part\": \"$turret\"`"
+     }
+    },
+    {
+     "key": "seat_index",
+     "required": false,
+     "getter": "seatIndex",
+     "default": -1,
+     "type": "int",
+     "desc": {
+      "ja": "このパーツが追従する座席のインデックス。",
+      "en": "The index of the seat this part tracks."
+     },
+     "example": {
+      "ja": "`\"seat_index\": 1`",
+      "en": "`\"seat_index\": 1`"
+     }
+    },
+    {
+     "key": "hide_for_gunner",
+     "required": false,
+     "getter": "hideForGunner",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "`true`の場合、この座席の搭乗者自身の視点からはこのパーツを非表示にします。",
+      "en": "When `true`, hides this part from that seat's own occupant's own view specifically."
+     },
+     "example": {
+      "ja": "`\"hide_for_gunner\": true`",
+      "en": "`\"hide_for_gunner\": true`"
+     }
+    },
+    {
+     "key": "yaw_follow",
+     "required": false,
+     "getter": "yawFollow",
+     "default": true,
+     "type": "bool",
+     "desc": {
+      "ja": "それぞれヨー・ピッチ方向の追従を有効にするか。",
+      "en": "Whether yaw tracking and pitch tracking are each enabled."
+     },
+     "example": {
+      "ja": "`\"yaw_follow\": true, \"pitch_follow\": false`",
+      "en": "`\"yaw_follow\": true, \"pitch_follow\": false`"
+     }
+    },
+    {
+     "key": "pitch_follow",
+     "required": false,
+     "getter": "pitchFollow",
+     "default": true,
+     "type": "bool",
+     "desc": {
+      "ja": "それぞれヨー・ピッチ方向の追従を有効にするか。",
+      "en": "Whether yaw tracking and pitch tracking are each enabled."
+     },
+     "example": {
+      "ja": "`\"yaw_follow\": true, \"pitch_follow\": false`",
+      "en": "`\"yaw_follow\": true, \"pitch_follow\": false`"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": false,
+     "getter": "pivotX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標。",
+      "en": "The rotation pivot coordinate."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": false,
+     "getter": "pivotY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標。",
+      "en": "The rotation pivot coordinate."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": false,
+     "getter": "pivotZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標。",
+      "en": "The rotation pivot coordinate."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "recoil_distance",
+     "required": false,
+     "getter": "recoilDistance",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "発射時、このパーツ自身のローカルZ軸負方向へ後退する距離(反動演出)。",
+      "en": "On firing, how far this part itself pulls back along its own local negative Z axis (a recoil effect)."
+     },
+     "example": {
+      "ja": "`\"recoil_distance\": 0.15`",
+      "en": "`\"recoil_distance\": 0.15`"
+     }
+    },
+    {
+     "key": "pilot_fallback",
+     "required": false,
+     "getter": "pilotFallback",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "`true`の場合、`seat_index`の座席が無人のとき操縦席の視点を代わりに追従します。",
+      "en": "When `true`, if the `seat_index` seat is unoccupied, it tracks the pilot seat's own view instead."
+     },
+     "example": {
+      "ja": "`\"pilot_fallback\": true`",
+      "en": "`\"pilot_fallback\": true`"
+     }
+    },
+    {
+     "key": "child_info",
+     "required": false,
+     "getter": "childInfo",
+     "type": "object",
+     "ref": "ChildInfo",
+     "desc": {
+      "ja": "`AddPartWeaponChild`(親パーツの回転を無条件で継承する子パーツ)を表現する場合に設定します。\n- `parent_yaw_follow` / `parent_pitch_follow`(既定値いずれも`false`)\n- `parent_pivot_x` / `parent_pivot_y` / `parent_pivot_z`(既定値いずれも`0.0`):親パーツ自身のピボット",
+      "en": "Set this when representing `AddPartWeaponChild` (a child part that unconditionally inherits its parent part's own rotation).\n- `parent_yaw_follow` / `parent_pitch_follow` (default `false` for each)\n- `parent_pivot_x` / `parent_pivot_y` / `parent_pivot_z` (default `0.0` for each): the parent part's own pivot"
+     },
+     "example": {
+      "ja": "\"child_info\": { \"parent_yaw_follow\": true, \"parent_pitch_follow\": true, \"parent_pivot_x\": 0.0, \"parent_pivot_y\": 1.0, \"parent_pivot_z\": 0.0 }",
+      "en": "\"child_info\": { \"parent_yaw_follow\": true, \"parent_pitch_follow\": true, \"parent_pivot_x\": 0.0, \"parent_pivot_y\": 1.0, \"parent_pivot_z\": 0.0 }"
+     }
+    },
+    {
+     "key": "aim_range",
+     "required": false,
+     "getter": "aimRange",
+     "type": "object",
+     "ref": "WeaponAimRange",
+     "desc": {
+      "ja": "このパーツが紐付く武器自身の照準範囲。設定すると、パーツの見た目の可動範囲も実際の発射方向のクランプと一致します。",
+      "en": "The aim range for the weapon this part is linked to. When set, the part's own visible range of motion also matches the actual firing-direction clamp."
+     },
+     "example": {
+      "ja": "\"aim_range\": { \"min_yaw\": -170.0, \"max_yaw\": 170.0, \"min_pitch\": -10.0, \"max_pitch\": 60.0 }",
+      "en": "\"aim_range\": { \"min_yaw\": -170.0, \"max_yaw\": 170.0, \"min_pitch\": -10.0, \"max_pitch\": 60.0 }"
+     }
+    },
+    {
+     "key": "weapon_name",
+     "required": false,
+     "getter": "weaponName",
+     "type": "string",
+     "hint": "weapon",
+     "desc": {
+      "ja": "このパーツが特定のどの武器に紐付くか(`seat_index`だけでは同一座席の複数武器を区別できないため)。",
+      "en": "Which specific weapon this part is linked to (since `seat_index` alone can't distinguish between multiple weapons on the same seat)."
+     },
+     "example": {
+      "ja": "`\"weapon_name\": \"cannon\"`",
+      "en": "`\"weapon_name\": \"cannon\"`"
+     }
+    },
+    {
+     "key": "spins_while_firing",
+     "required": false,
+     "getter": "spinsWhileFiring",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "`true`の場合(`AddPartRotWeapon`相当)、対応武器の発射中、このパーツ自身のローカルZ軸(銃身前方)を中心に連続回転します(ガトリング演出)。速度は対応武器側の`RotationSpeed`設定に従います。",
+      "en": "When `true` (corresponds to `AddPartRotWeapon`), this part itself continuously rotates around its own local Z axis (forward along the barrel) while the corresponding weapon is firing (a Gatling gun effect). Speed follows the corresponding weapon's own `RotationSpeed` setting."
+     },
+     "example": {
+      "ja": "`\"spins_while_firing\": true`",
+      "en": "`\"spins_while_firing\": true`"
+     }
+    }
+   ]
+  },
+  "WeaponAimRange": {
+   "fields": [
+    {
+     "key": "default_yaw",
+     "required": false,
+     "getter": "defaultYaw",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "既定値`0.0`",
+      "en": "default `0.0`"
+     }
+    },
+    {
+     "key": "min_yaw",
+     "required": false,
+     "getter": "minYaw",
+     "default": -180.0,
+     "type": "float",
+     "desc": {
+      "ja": "既定値`-180.0`/`180.0`",
+      "en": "default `-180.0`/`180.0`"
+     }
+    },
+    {
+     "key": "max_yaw",
+     "required": false,
+     "getter": "maxYaw",
+     "default": 180.0,
+     "type": "float",
+     "desc": {
+      "ja": "既定値`-180.0`/`180.0`",
+      "en": "default `-180.0`/`180.0`"
+     }
+    },
+    {
+     "key": "min_pitch",
+     "required": false,
+     "getter": "minPitch",
+     "default": -90.0,
+     "type": "float",
+     "desc": {
+      "ja": "既定値`-90.0`/`90.0`",
+      "en": "default `-90.0`/`90.0`"
+     }
+    },
+    {
+     "key": "max_pitch",
+     "required": false,
+     "getter": "maxPitch",
+     "default": 90.0,
+     "type": "float",
+     "desc": {
+      "ja": "既定値`-90.0`/`90.0`",
+      "en": "default `-90.0`/`90.0`"
+     }
+    }
+   ]
+  },
+  "ChildInfo": {
+   "fields": [
+    {
+     "key": "parent_yaw_follow",
+     "required": false,
+     "getter": "parentYawFollow",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "既定値いずれも`false`"
+     }
+    },
+    {
+     "key": "parent_pitch_follow",
+     "required": false,
+     "getter": "parentPitchFollow",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "既定値いずれも`false`"
+     }
+    },
+    {
+     "key": "parent_pivot_x",
+     "required": false,
+     "getter": "parentPivotX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "親パーツ自身のピボット"
+     }
+    },
+    {
+     "key": "parent_pivot_y",
+     "required": false,
+     "getter": "parentPivotY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "親パーツ自身のピボット"
+     }
+    },
+    {
+     "key": "parent_pivot_z",
+     "required": false,
+     "getter": "parentPivotZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "親パーツ自身のピボット"
+     }
+    }
+   ]
+  },
+  "SpawnItemDefinition": {
+   "fields": [
+    {
+     "key": "display_name",
+     "required": false,
+     "getter": "displayName",
+     "type": "string",
+     "desc": {
+      "ja": "表示名。省略時は機体IDから自動生成されます。",
+      "en": "The display name. If omitted, generated automatically from the vehicle's own id."
+     },
+     "example": {
+      "ja": "`\"display_name\": \"F-16 Fighting Falcon\"`",
+      "en": "`\"display_name\": \"F-16 Fighting Falcon\"`"
+     }
+    },
+    {
+     "key": "tier",
+     "required": false,
+     "getter": "tier",
+     "default": 1,
+     "type": "int",
+     "desc": {
+      "ja": "このスポナーアイテムがこの機体を召喚可能になる階層。",
+      "en": "The tier at which the spawner item for this vehicle becomes available."
+     },
+     "example": {
+      "ja": "`\"tier\": 3`",
+      "en": "`\"tier\": 3`"
+     }
+    }
+   ]
+  },
+  "TogglePart": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名。",
+      "en": "The target OBJ part's name."
+     },
+     "example": {
+      "ja": "`\"part\": \"$canopy\"`",
+      "en": "`\"part\": \"$canopy\"`"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": false,
+     "getter": "pivotX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転・スライドの基準座標。",
+      "en": "The reference coordinate for rotation/sliding."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": -0.5`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": -0.5`"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": false,
+     "getter": "pivotY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転・スライドの基準座標。",
+      "en": "The reference coordinate for rotation/sliding."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": -0.5`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": -0.5`"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": false,
+     "getter": "pivotZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転・スライドの基準座標。",
+      "en": "The reference coordinate for rotation/sliding."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": -0.5`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.0, \"pivot_z\": -0.5`"
+     }
+    },
+    {
+     "key": "mode",
+     "required": false,
+     "getter": "mode",
+     "default": "rotate",
+     "type": "string",
+     "desc": {
+      "ja": "`rotate`は`axis_x/y/z`+`max_angle`による回転、`slide`は`offset_x/y/z`によるスライド移動。",
+      "en": "`rotate` uses `axis_x/y/z` + `max_angle` for rotation; `slide` uses `offset_x/y/z` for a sliding motion."
+     },
+     "example": {
+      "ja": "`\"mode\": \"slide\"`",
+      "en": "`\"mode\": \"slide\"`"
+     }
+    },
+    {
+     "key": "axis_x",
+     "required": false,
+     "getter": "axisX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "`mode: rotate`時の回転軸。",
+      "en": "The rotation axis for `mode: rotate`."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_y",
+     "required": false,
+     "getter": "axisY",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "`mode: rotate`時の回転軸。",
+      "en": "The rotation axis for `mode: rotate`."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_z",
+     "required": false,
+     "getter": "axisZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "`mode: rotate`時の回転軸。",
+      "en": "The rotation axis for `mode: rotate`."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 1.0, \"axis_y\": 0.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "max_angle",
+     "required": false,
+     "getter": "maxAngle",
+     "default": 90.0,
+     "type": "float",
+     "desc": {
+      "ja": "`mode: rotate`時、全開状態での回転角度(度)。",
+      "en": "For `mode: rotate`, the rotation angle (degrees) at the fully-open state."
+     },
+     "example": {
+      "ja": "`\"max_angle\": 80.0`",
+      "en": "`\"max_angle\": 80.0`"
+     }
+    },
+    {
+     "key": "offset_x",
+     "required": false,
+     "getter": "offsetX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "`mode: slide`時、全開状態での移動量。",
+      "en": "For `mode: slide`, how far it moves at the fully-open state."
+     }
+    },
+    {
+     "key": "offset_y",
+     "required": false,
+     "getter": "offsetY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "`mode: slide`時、全開状態での移動量。",
+      "en": "For `mode: slide`, how far it moves at the fully-open state."
+     }
+    },
+    {
+     "key": "offset_z",
+     "required": false,
+     "getter": "offsetZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "`mode: slide`時、全開状態での移動量。",
+      "en": "For `mode: slide`, how far it moves at the fully-open state."
+     }
+    },
+    {
+     "key": "trigger",
+     "required": false,
+     "getter": "trigger",
+     "default": "key",
+     "type": "string",
+     "desc": {
+      "ja": "このパーツの開閉状態を何が決定するか:\n- `key`: Hキーによる手動開閉。パーツ名が`$hatch`で始まる場合は設定`speed`の2倍速、`$canopy`で始まる場合は0.1倍速で動作します(本プロジェクト独自の命名規則による補正)\n- `landing_gear`: 降着装置の展開・格納状態に追従(`Aircraft`/`Vtol`専用)\n- `landing_gear_hatch`: 降着装置が動作中の間だけ開く(`AddPartLGHatch`相当)\n- `weapon_bay`: `weapon_name`で指定した武器が選択されている間だけ開く\n- `wing_fold`: 主翼折りたたみ専用キーで開閉(`Aircraft`専用、`wing_sweep`参照)\n- `light_hatch`: サーチライト点灯中だけ開く",
+      "en": "What determines this part's own open/close state:\n- `key`: manual open/close via the H key. If the part's own name starts with `$hatch`, it moves at 2x the configured `speed`; if it starts with `$canopy`, at 0.1x speed (a correction based on this project's own naming convention)\n- `landing_gear`: follows the landing gear's own deploy/retract state (`Aircraft`/`Vtol` only)\n- `landing_gear_hatch`: opens only while the landing gear is in motion (corresponds to `AddPartLGHatch`)\n- `weapon_bay`: opens only while the weapon specified in `weapon_name` is selected\n- `wing_fold`: opens/closes with the dedicated wing-fold key (`Aircraft` only, see `wing_sweep`)\n- `light_hatch`: opens only while the searchlight is lit"
+     },
+     "example": {
+      "ja": "`\"trigger\": \"landing_gear\"`",
+      "en": "`\"trigger\": \"landing_gear\"`"
+     }
+    },
+    {
+     "key": "speed",
+     "required": false,
+     "getter": "speed",
+     "default": 6.0,
+     "type": "float",
+     "desc": {
+      "ja": "1tickあたりの開閉進捗の変化速度。",
+      "en": "How fast open/close progress changes per tick."
+     },
+     "example": {
+      "ja": "`\"speed\": 6.0`",
+      "en": "`\"speed\": 6.0`"
+     }
+    },
+    {
+     "key": "weapon_name",
+     "required": false,
+     "getter": "weaponName",
+     "type": "string",
+     "hint": "weapon",
+     "desc": {
+      "ja": "`trigger: weapon_bay`の場合のみ意味を持ちます。対象武器の`weapon_name`。",
+      "en": "Only has meaning for `trigger: weapon_bay`. The target weapon's own `weapon_name`."
+     },
+     "example": {
+      "ja": "{ \"part\": \"$weapon_bay_door\", \"trigger\": \"weapon_bay\", \"weapon_name\": \"agm65\" }",
+      "en": "{ \"part\": \"$weapon_bay_door\", \"trigger\": \"weapon_bay\", \"weapon_name\": \"agm65\" }"
+     }
+    },
+    {
+     "key": "wing_sweep",
+     "required": false,
+     "getter": "wingSweep",
+     "type": "object",
+     "ref": "WingSweepConfig",
+     "desc": {
+      "ja": "`trigger: wing_fold`の場合のみ意味を持ちます。詳細は`Readme_Vehicle_Aircraft.md`参照。",
+      "en": "Only has meaning for `trigger: wing_fold`. See `Readme_Vehicle_Aircraft.md` for details."
+     },
+     "example": {
+      "ja": "{ \"part\": \"$wing_l\", \"trigger\": \"wing_fold\", \"wing_sweep\": { \"variable_sweep_wing\": true, \"sweep_wing_speed\": 2.5 } }",
+      "en": "{ \"part\": \"$wing_l\", \"trigger\": \"wing_fold\", \"wing_sweep\": { \"variable_sweep_wing\": true, \"sweep_wing_speed\": 2.5 } }"
+     }
+    }
+   ]
+  },
+  "WingSweepConfig": {
+   "fields": [
+    {
+     "key": "variable_sweep_wing",
+     "required": false,
+     "getter": "variableSweepWing",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "`true`にすると、飛行中でも専用キーで後退角を変更できる可変後退翼になります(速度による制限はありません)",
+      "en": "when `true`, becomes a variable-sweep wing whose sweep angle can be changed with a dedicated key even while airborne (no speed restriction at all)"
+     }
+    },
+    {
+     "key": "sweep_wing_speed",
+     "required": false,
+     "getter": "sweepWingSpeed",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "`variable_sweep_wing: true`の場合、折りたたみ・折りたたみ中はこの値が`max_speed`の代わりに最高速度上限として使われます(後退角を増すほど高速、が実機の可変後退翼の挙動です)",
+      "en": "when `variable_sweep_wing: true`, this value is used as the top speed cap instead of `max_speed` while folded/folding (a greater sweep angle allowing higher speed matches a real variable-sweep wing's own behavior)"
+     }
+    }
+   ]
+  },
+  "PartAnimation": {
+   "fields": [
+    {
+     "key": "part",
+     "required": true,
+     "getter": "part",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "対象のOBJパーツ名。",
+      "en": "The target OBJ part's name."
+     },
+     "example": {
+      "ja": "`\"part\": \"$main_rotor\"`",
+      "en": "`\"part\": \"$main_rotor\"`"
+     }
+    },
+    {
+     "key": "pivot_x",
+     "required": false,
+     "getter": "pivotX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標。",
+      "en": "The rotation pivot coordinate."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.5, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.5, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "pivot_y",
+     "required": false,
+     "getter": "pivotY",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標。",
+      "en": "The rotation pivot coordinate."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.5, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.5, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "pivot_z",
+     "required": false,
+     "getter": "pivotZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転中心座標。",
+      "en": "The rotation pivot coordinate."
+     },
+     "example": {
+      "ja": "`\"pivot_x\": 0.0, \"pivot_y\": 1.5, \"pivot_z\": 0.0`",
+      "en": "`\"pivot_x\": 0.0, \"pivot_y\": 1.5, \"pivot_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_x",
+     "required": false,
+     "getter": "axisX",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転軸ベクトル。",
+      "en": "The rotation axis vector."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 0.0, \"axis_y\": 1.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 0.0, \"axis_y\": 1.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_y",
+     "required": false,
+     "getter": "axisY",
+     "default": 1.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転軸ベクトル。",
+      "en": "The rotation axis vector."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 0.0, \"axis_y\": 1.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 0.0, \"axis_y\": 1.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "axis_z",
+     "required": false,
+     "getter": "axisZ",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "回転軸ベクトル。",
+      "en": "The rotation axis vector."
+     },
+     "example": {
+      "ja": "`\"axis_x\": 0.0, \"axis_y\": 1.0, \"axis_z\": 0.0`",
+      "en": "`\"axis_x\": 0.0, \"axis_y\": 1.0, \"axis_z\": 0.0`"
+     }
+    },
+    {
+     "key": "speed",
+     "required": false,
+     "getter": "degreesPerTick",
+     "default": 15.0,
+     "type": "float",
+     "desc": {
+      "ja": "1tickあたりの回転角度(度)。",
+      "en": "The rotation angle (degrees) per tick."
+     },
+     "example": {
+      "ja": "`\"speed\": 60.0`",
+      "en": "`\"speed\": 60.0`"
+     }
+    },
+    {
+     "key": "vtol_rotor_parent",
+     "required": false,
+     "getter": "vtolRotorParent",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "`Vtol`タイプ専用。このブレードが従属するローターナセル(`vtol_rotor_parts`の`part`名)を指定すると、常時回転に加えてそのナセルの傾動も追従します。詳細は`Readme_Vehicle_Vtol.md`参照。",
+      "en": "`Vtol` type only. Specifying the rotor nacelle this blade depends on (the `part` name from `vtol_rotor_parts`) makes it also follow that nacelle's own tilting, on top of always spinning. See `Readme_Vehicle_Vtol.md` for details."
+     },
+     "example": {
+      "ja": "`\"vtol_rotor_parent\": \"$vtol_rotor0\"`",
+      "en": "`\"vtol_rotor_parent\": \"$vtol_rotor0\"`"
+     }
+    }
+   ]
+  },
+  "WeaponDefinition": {
+   "fields": [
+    {
+     "key": "seat_index",
+     "required": true,
+     "getter": "seatIndex",
+     "type": "int",
+     "desc": {
+      "ja": "この武器を使用できる座席のインデックス(`seats`配列の添字、0が操縦席)。",
+      "en": "The index of the seat that can use this weapon (an index into the `seats` array; 0 is the pilot seat)."
+     },
+     "example": {
+      "ja": "`\"seat_index\": 0`",
+      "en": "`\"seat_index\": 0`"
+     }
+    },
+    {
+     "key": "offsets",
+     "required": false,
+     "getter": "offsets",
+     "type": "list",
+     "item_ref": "WeaponOffset",
+     "desc": {
+      "ja": "発射位置の一覧(複数設定すると連装砲等を表現可能)。各要素:\n- `x` / `y` / `z`(既定値`0.0`): 機体基準の発射位置座標\n- `mount_yaw` / `mount_pitch`(既定値`0.0`): 固定の向き(`aim_range`未設定時)\n- `linked_part`(Optional、文字列): この発射位置を特定の`weapon_parts`名に紐付ける(複数連装砲でどのパーツがどの発射口か区別する場合に使用)",
+      "en": "The list of firing positions (setting several lets you represent a multi-barrel gun, etc.). Each element:\n- `x` / `y` / `z` (default `0.0`): the firing position coordinate, relative to the vehicle\n- `mount_yaw` / `mount_pitch` (default `0.0`): the fixed direction (when `aim_range` isn't set)\n- `linked_part` (optional, string): links this firing position to a specific `weapon_parts` name (used for a multi-barrel gun, to distinguish which part corresponds to which muzzle)"
+     }
+    },
+    {
+     "key": "aim_range",
+     "required": false,
+     "getter": "aimRange",
+     "type": "object",
+     "ref": "WeaponAimRange",
+     "desc": {
+      "ja": "設定すると、この武器は固定方向ではなく搭乗者の視点を追従します(`min`/`max`の範囲でクランプ)。MCヘリの`AddWeapon`末尾パラメータに相当。\n- `default_yaw`(既定値`0.0`)\n- `min_yaw`/`max_yaw`(既定値`-180.0`/`180.0`)\n- `min_pitch`/`max_pitch`(既定値`-90.0`/`90.0`)",
+      "en": "When set, this weapon follows the occupant's own view direction instead of a fixed direction (clamped to the `min`/`max` range). Corresponds to the trailing parameters of MC Heli's own `AddWeapon`.\n- `default_yaw` (default `0.0`)\n- `min_yaw`/`max_yaw` (default `-180.0`/`180.0`)\n- `min_pitch`/`max_pitch` (default `-90.0`/`90.0`)"
+     },
+     "example": {
+      "ja": "\"aim_range\": { \"default_yaw\": 0.0, \"min_yaw\": -170.0, \"max_yaw\": 170.0, \"min_pitch\": -10.0, \"max_pitch\": 60.0 }",
+      "en": "\"aim_range\": { \"default_yaw\": 0.0, \"min_yaw\": -170.0, \"max_yaw\": 170.0, \"min_pitch\": -10.0, \"max_pitch\": 60.0 }"
+     }
+    },
+    {
+     "key": "projectile_item",
+     "required": true,
+     "getter": "projectileItem",
+     "type": "identifier",
+     "hint": "item",
+     "desc": {
+      "ja": "弾体のアイテム表示(モデル未設定時のフォールバック)に使うアイテムID。",
+      "en": "The item id used for the projectile's own item display (a fallback when no model is set)."
+     },
+     "example": {
+      "ja": "`\"projectile_item\": \"minecraft:iron_nugget\"`",
+      "en": "`\"projectile_item\": \"minecraft:iron_nugget\"`"
+     }
+    },
+    {
+     "key": "weapon_name",
+     "required": true,
+     "getter": "weaponName",
+     "type": "string",
+     "hint": "weapon",
+     "desc": {
+      "ja": "対応する武器設定ファイル(`assets/<namespace>/weapons/<weapon_name>.txt`)の名前(拡張子なし)。必須項目です。ダメージ・弾速・武器タイプ等、実際の性能は全てこのファイル側で定義されます(`Readme_Weapon.md`参照)。",
+      "en": "The name (without extension) of the corresponding weapon config file (`assets/<namespace>/weapons/<weapon_name>.txt`). Required. Every actual performance value - damage, projectile speed, weapon type, etc.\n- is defined entirely on that file's own side (see `Readme_Weapon.md`)."
+     },
+     "example": {
+      "ja": "`\"weapon_name\": \"m61_vulcan\"`",
+      "en": "`\"weapon_name\": \"m61_vulcan\"`"
+     }
+    },
+    {
+     "key": "pilot_usable",
+     "required": false,
+     "getter": "pilotUsable",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "`true`の場合、`seat_index`の座席が無人のとき、操縦席(座席0)の搭乗者がこの武器を代わりに使用できます。`seat_index`が座席0以外の場合のみ意味を持ちます。",
+      "en": "When `true`, if the `seat_index` seat is unoccupied, the pilot seat's own occupant (seat 0) can use this weapon instead. Only has meaning when `seat_index` is anything other than seat 0."
+     },
+     "example": {
+      "ja": "`\"pilot_usable\": true`",
+      "en": "`\"pilot_usable\": true`"
+     }
+    },
+    {
+     "key": "turret_rotation_speed",
+     "required": false,
+     "getter": "turretRotationSpeed",
+     "type": "float",
+     "desc": {
+      "ja": "この武器マウント固有の旋回速度上限。省略時は搭乗者の視点へ即座に追従します。設定した場合、`weapon_parts`(9章参照)の追従がこの速度に制限され、旋回が完了するまでこの武器は発砲できません。",
+      "en": "A turn-rate cap specific to this weapon mount. If omitted, it follows the occupant's own view instantly. If set, any tracking on `weapon_parts` (see chapter 9) is limited to this rate, and this weapon can't fire until it's finished turning."
+     },
+     "example": {
+      "ja": "\"turret_rotation_speed\": 25.0",
+      "en": "\"turret_rotation_speed\": 25.0"
+     }
+    }
+   ]
+  },
+  "WeaponOffset": {
+   "fields": [
+    {
+     "key": "x",
+     "required": false,
+     "getter": "x",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "機体基準の発射位置座標",
+      "en": "the firing position coordinate, relative to the vehicle"
+     }
+    },
+    {
+     "key": "y",
+     "required": false,
+     "getter": "y",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "機体基準の発射位置座標",
+      "en": "the firing position coordinate, relative to the vehicle"
+     }
+    },
+    {
+     "key": "z",
+     "required": false,
+     "getter": "z",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "機体基準の発射位置座標",
+      "en": "the firing position coordinate, relative to the vehicle"
+     }
+    },
+    {
+     "key": "mount_yaw",
+     "required": false,
+     "getter": "mountYaw",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "固定の向き(`aim_range`未設定時)",
+      "en": "the fixed direction (when `aim_range` isn't set)"
+     }
+    },
+    {
+     "key": "mount_pitch",
+     "required": false,
+     "getter": "mountPitch",
+     "default": 0.0,
+     "type": "float",
+     "desc": {
+      "ja": "固定の向き(`aim_range`未設定時)",
+      "en": "the fixed direction (when `aim_range` isn't set)"
+     }
+    },
+    {
+     "key": "linked_part",
+     "required": false,
+     "getter": "linkedPart",
+     "type": "string",
+     "hint": "obj_group",
+     "desc": {
+      "ja": "この発射位置を特定の`weapon_parts`名に紐付ける(複数連装砲でどのパーツがどの発射口か区別する場合に使用)",
+      "en": "links this firing position to a specific `weapon_parts` name (used for a multi-barrel gun, to distinguish which part corresponds to which muzzle)"
+     }
+    }
+   ]
+  },
+  "SeatDefinition": {
+   "fields": [
+    {
+     "key": "name",
+     "required": true,
+     "getter": "name",
+     "type": "string",
+     "desc": {
+      "ja": "座席の識別名。",
+      "en": "The seat's own identifying name."
+     },
+     "example": {
+      "ja": "`\"name\": \"pilot\"`",
+      "en": "`\"name\": \"pilot\"`"
+     }
+    },
+    {
+     "key": "offset_x",
+     "required": true,
+     "getter": "offsetX",
+     "type": "float",
+     "desc": {
+      "ja": "機体基準位置からの座席の相対座標。必須項目です。",
+      "en": "The seat's own relative coordinate from the vehicle's own reference position. Required."
+     },
+     "example": {
+      "ja": "`\"offset_x\": 0.0, \"offset_y\": 0.5, \"offset_z\": 0.5`",
+      "en": "`\"offset_x\": 0.0, \"offset_y\": 0.5, \"offset_z\": 0.5`"
+     }
+    },
+    {
+     "key": "offset_y",
+     "required": true,
+     "getter": "offsetY",
+     "type": "float",
+     "desc": {
+      "ja": "機体基準位置からの座席の相対座標。必須項目です。",
+      "en": "The seat's own relative coordinate from the vehicle's own reference position. Required."
+     },
+     "example": {
+      "ja": "`\"offset_x\": 0.0, \"offset_y\": 0.5, \"offset_z\": 0.5`",
+      "en": "`\"offset_x\": 0.0, \"offset_y\": 0.5, \"offset_z\": 0.5`"
+     }
+    },
+    {
+     "key": "offset_z",
+     "required": true,
+     "getter": "offsetZ",
+     "type": "float",
+     "desc": {
+      "ja": "機体基準位置からの座席の相対座標。必須項目です。",
+      "en": "The seat's own relative coordinate from the vehicle's own reference position. Required."
+     },
+     "example": {
+      "ja": "`\"offset_x\": 0.0, \"offset_y\": 0.5, \"offset_z\": 0.5`",
+      "en": "`\"offset_x\": 0.0, \"offset_y\": 0.5, \"offset_z\": 0.5`"
+     }
+    },
+    {
+     "key": "driver",
+     "required": false,
+     "getter": "driver",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "この座席が操縦可能かどうか。",
+      "en": "Whether this seat can pilot the vehicle."
+     },
+     "example": {
+      "ja": "`\"driver\": true`",
+      "en": "`\"driver\": true`"
+     }
+    },
+    {
+     "key": "enable_parachuting",
+     "required": false,
+     "getter": "enableParachuting",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "この座席の搭乗者(パイロット席を除く)がパラシュートジャンプ用の割り当てキーでパラシュート降下できるかどうか。詳細は「13. パラシュート降下」を参照してください。",
+      "en": "Whether this seat's own occupant (excluding the pilot seat) can parachute-jump with the parachute-jump key binding. See \"13. Parachuting\" for details."
+     },
+     "example": {
+      "ja": "`\"enable_parachuting\": true`",
+      "en": "`\"enable_parachuting\": true`"
+     }
+    },
+    {
+     "key": "camera_positions",
+     "required": false,
+     "getter": "cameraPositions",
+     "default": [],
+     "type": "list",
+     "item_ref": "CameraPositionEntry",
+     "desc": {
+      "ja": "この座席で使用可能な視点位置のリスト。複数設定するとHキーで視点を切り替えられます(MCヘリの`CameraPosition`に相当)。各要素:\n- `x` / `y` / `z`(必須): 視点座標\n- `force_camera`(既定値`false`): 常にカメラ視点になる(一人称に切り替わらない)\n- `fixed_yaw` / `fixed_pitch`(Optional): 固定視点角度",
+      "en": "The list of view positions usable from this seat. With several set, the H key cycles between views (corresponds to MC Heli's own `CameraPosition`). Each element:\n- `x` / `y` / `z` (required): the view coordinate\n- `force_camera` (default `false`): always uses this camera view (never switches to first-person)\n- `fixed_yaw` / `fixed_pitch` (optional): a fixed view angle"
+     },
+     "example": {
+      "ja": "\"camera_positions\": [\n{ \"x\": 0.0, \"y\": 0.6, \"z\": 0.2 },\n{ \"x\": 0.0, \"y\": 3.0, \"z\": -6.0, \"force_camera\": true }\n]",
+      "en": "\"camera_positions\": [\n{ \"x\": 0.0, \"y\": 0.6, \"z\": 0.2 },\n{ \"x\": 0.0, \"y\": 3.0, \"z\": -6.0, \"force_camera\": true }\n]"
+     }
+    },
+    {
+     "key": "dismount_x",
+     "required": false,
+     "getter": "dismountOffsetX",
+     "type": "float",
+     "desc": {
+      "ja": "この座席の降車位置を個別に上書きします。`offset_x/y/z`と同じ座標系(機体基準・機体の向きに応じて回転)です。軸ごとに独立して設定でき、指定しなかった軸は既定の挙動(X・Zは`offset_x/z`、Yは上記の機体基準+1.0の固定高さ)になります。",
+      "en": "Overrides this seat's own dismount position individually. Uses the same coordinate space as `offset_x/y/z` (vehicle- relative, rotated to match the vehicle's own heading). Each axis can be set independently; any axis left unset falls back to its own default behavior (X/Z from `offset_x/z`, Y from the fixed vehicle-relative +1.0 height described above)."
+     },
+     "example": {
+      "ja": "`\"dismount_x\": 0.0, \"dismount_y\": 1.0, \"dismount_z\": 2.5`",
+      "en": "`\"dismount_x\": 0.0, \"dismount_y\": 1.0, \"dismount_z\": 2.5`"
+     }
+    },
+    {
+     "key": "dismount_y",
+     "required": false,
+     "getter": "dismountOffsetY",
+     "type": "float",
+     "desc": {
+      "ja": "この座席の降車位置を個別に上書きします。`offset_x/y/z`と同じ座標系(機体基準・機体の向きに応じて回転)です。軸ごとに独立して設定でき、指定しなかった軸は既定の挙動(X・Zは`offset_x/z`、Yは上記の機体基準+1.0の固定高さ)になります。",
+      "en": "Overrides this seat's own dismount position individually. Uses the same coordinate space as `offset_x/y/z` (vehicle- relative, rotated to match the vehicle's own heading). Each axis can be set independently; any axis left unset falls back to its own default behavior (X/Z from `offset_x/z`, Y from the fixed vehicle-relative +1.0 height described above)."
+     },
+     "example": {
+      "ja": "`\"dismount_x\": 0.0, \"dismount_y\": 1.0, \"dismount_z\": 2.5`",
+      "en": "`\"dismount_x\": 0.0, \"dismount_y\": 1.0, \"dismount_z\": 2.5`"
+     }
+    },
+    {
+     "key": "dismount_z",
+     "required": false,
+     "getter": "dismountOffsetZ",
+     "type": "float",
+     "desc": {
+      "ja": "この座席の降車位置を個別に上書きします。`offset_x/y/z`と同じ座標系(機体基準・機体の向きに応じて回転)です。軸ごとに独立して設定でき、指定しなかった軸は既定の挙動(X・Zは`offset_x/z`、Yは上記の機体基準+1.0の固定高さ)になります。",
+      "en": "Overrides this seat's own dismount position individually. Uses the same coordinate space as `offset_x/y/z` (vehicle- relative, rotated to match the vehicle's own heading). Each axis can be set independently; any axis left unset falls back to its own default behavior (X/Z from `offset_x/z`, Y from the fixed vehicle-relative +1.0 height described above)."
+     },
+     "example": {
+      "ja": "`\"dismount_x\": 0.0, \"dismount_y\": 1.0, \"dismount_z\": 2.5`",
+      "en": "`\"dismount_x\": 0.0, \"dismount_y\": 1.0, \"dismount_z\": 2.5`"
+     }
+    }
+   ]
+  },
+  "CameraPositionEntry": {
+   "fields": [
+    {
+     "key": "x",
+     "required": true,
+     "getter": "x",
+     "type": "float",
+     "desc": {
+      "ja": "視点座標",
+      "en": "the view coordinate"
+     }
+    },
+    {
+     "key": "y",
+     "required": true,
+     "getter": "y",
+     "type": "float",
+     "desc": {
+      "ja": "視点座標",
+      "en": "the view coordinate"
+     }
+    },
+    {
+     "key": "z",
+     "required": true,
+     "getter": "z",
+     "type": "float",
+     "desc": {
+      "ja": "視点座標",
+      "en": "the view coordinate"
+     }
+    },
+    {
+     "key": "force_camera",
+     "required": false,
+     "getter": "forceCamera",
+     "default": false,
+     "type": "bool",
+     "desc": {
+      "ja": "常にカメラ視点になる(一人称に切り替わらない)",
+      "en": "always uses this camera view (never switches to first-person)"
+     }
+    },
+    {
+     "key": "fixed_yaw",
+     "required": false,
+     "getter": "fixedYaw",
+     "type": "float",
+     "desc": {
+      "ja": "固定視点角度",
+      "en": "a fixed view angle"
+     }
+    },
+    {
+     "key": "fixed_pitch",
+     "required": false,
+     "getter": "fixedPitch",
+     "type": "float",
+     "desc": {
+      "ja": "固定視点角度",
+      "en": "a fixed view angle"
+     }
+    }
+   ]
+  }
+ },
+ "legacy_keys": {
+  "hide_entity": "passenger_display",
+  "entity_width": "passenger_display",
+  "entity_height": "passenger_display"
+ }
+}

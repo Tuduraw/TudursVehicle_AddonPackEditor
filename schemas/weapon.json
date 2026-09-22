@@ -1,0 +1,2649 @@
+{
+ "schema_version": 1,
+ "kind": "weapon",
+ "root": "WeaponFile",
+ "entity_types": [
+  {
+   "id": "MachineGun1",
+   "label": {
+    "ja": "MachineGun1",
+    "en": "MachineGun1"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "MachineGun2",
+   "label": {
+    "ja": "MachineGun2",
+    "en": "MachineGun2"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "Rocket",
+   "label": {
+    "ja": "Rocket",
+    "en": "Rocket"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "Bomb",
+   "label": {
+    "ja": "Bomb",
+    "en": "Bomb"
+   },
+   "category": "projectile",
+   "desc": {
+    "ja": "真下に投下する爆弾です。以下の制約・挙動があります:",
+    "en": "A bomb dropped straight down. It has the following constraints and behavior:"
+   }
+  },
+  {
+   "id": "Depth",
+   "label": {
+    "ja": "Depth",
+    "en": "Depth"
+   },
+   "category": "projectile",
+   "desc": {
+    "ja": "`Bomb`と全く同じ挙動・発射制限(姿勢制限含む)ですが、水面での爆発が発生しません。水中を沈み続け、実際に固体ブロック・エンティティに命中した場合(または他の信管設定)にのみ爆発します。`Bomb`の水面貫通版として使用してください。MCヘリには存在しない、本Mod独自のType名です。",
+    "en": "Behaves exactly like `Bomb`, with the exact same firing restrictions (including the attitude limit), but does not explode at the water surface. It keeps sinking underwater and only explodes once it actually hits a solid block/entity (or per some other fuse setting). Use this as a water-penetrating version of `Bomb`. This is a type name specific to this project, not present in the original MC Heli."
+   }
+  },
+  {
+   "id": "Torpedo",
+   "label": {
+    "ja": "Torpedo",
+    "en": "Torpedo"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "ASMissile",
+   "label": {
+    "ja": "ASMissile",
+    "en": "ASMissile"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "AAMissile",
+   "label": {
+    "ja": "AAMissile",
+    "en": "AAMissile"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "ATMissile",
+   "label": {
+    "ja": "ATMissile",
+    "en": "ATMissile"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "Missile",
+   "label": {
+    "ja": "Missile",
+    "en": "Missile"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "TVMissile",
+   "label": {
+    "ja": "TVMissile",
+    "en": "TVMissile"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "MkRocket",
+   "label": {
+    "ja": "MkRocket",
+    "en": "MkRocket"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "ASWeapon",
+   "label": {
+    "ja": "ASWeapon",
+    "en": "ASWeapon"
+   },
+   "category": "projectile"
+  },
+  {
+   "id": "Dispenser",
+   "label": {
+    "ja": "Dispenser",
+    "en": "Dispenser"
+   },
+   "category": "other",
+   "desc": {
+    "ja": "着弾地点に対して、設定したMinecraftのアイテムを使用したのと同じ効果を発生させます(実際に着弾する見た目の弾道は表示されます)。",
+    "en": "Applies the same effect as using a configured Minecraft item, targeted at the impact point (the visible flight path to the actual impact point is still shown)."
+   }
+  },
+  {
+   "id": "Smoke",
+   "label": {
+    "ja": "Smoke",
+    "en": "Smoke"
+   },
+   "category": "other",
+   "desc": {
+    "ja": "発射元の現在位置に、設定した色・サイズ・持続時間のパーティクルの塊を発生させるだけの武器です(飛行機雲の演出等)。",
+    "en": "A weapon that simply produces a cluster of particles, with a configured color, size, and lifetime, at the firing position's own current location (for a contrail effect, etc.)."
+   }
+  },
+  {
+   "id": "Dummy",
+   "label": {
+    "ja": "Dummy",
+    "en": "Dummy"
+   },
+   "category": "other",
+   "desc": {
+    "ja": "使用不可能な武器です。武器欄に文字を表示するためだけに使用します(例:武器ベイと組み合わせた見た目の水増し等)。専用の追加設定項目はありません。使用しても発射音・弾体・クールダウンのいずれも一切発生しません。",
+    "en": "An unusable weapon. Used purely to display text in the weapon slot (for example, to pad out the look of a weapon bay). It has no additional fields of its own. Using it never produces a firing sound, a projectile, or a cooldown at all."
+   }
+  },
+  {
+   "id": "TargetingPod",
+   "label": {
+    "ja": "TargetingPod",
+    "en": "TargetingPod"
+   },
+   "category": "other",
+   "desc": {
+    "ja": "モブ・プレイヤーへのスポット表示、またはブロックへのマーク表示を行います(実際のダメージは発生しません)。",
+    "en": "Displays a spot marker on a mob/player, or a mark on a block (deals no actual damage at all)."
+   }
+  },
+  {
+   "id": "DropTank",
+   "label": {
+    "ja": "DropTank",
+    "en": "DropTank"
+   },
+   "category": "other",
+   "desc": {
+    "ja": "このプロジェクト独自の拡張武器タイプです(MCヘリ本来のTypeではありません)。外付けの増槽(燃料タンク)を表現します。装備している間、残弾数に応じて機体の最大燃料を一時的に増加させます。使用(投下)すると残弾が1減り、それに伴い最大燃料の増加分も減少します。減少後の最大燃料を現在の燃料が上回っている場合、超過分は消滅します(補給・回復されません)。",
+    "en": "A weapon type this project extends with of its own (not an original MC Heli `Type`). Represents an external drop tank (fuel tank). While equipped, it temporarily increases the vehicle's own max fuel based on its own remaining ammo count. Using it (dropping it) decreases remaining ammo by 1, reducing the max-fuel increase along with it. If current fuel is above the reduced max fuel afterward, the excess simply disappears (it is not refunded or restored)."
+   }
+  },
+  {
+   "id": "CAS",
+   "label": {
+    "ja": "CAS",
+    "en": "CAS"
+   },
+   "category": "other",
+   "desc": {
+    "ja": "使用すると、搭乗者の照準が地面(または水面)と交わる点を目標地点として、別途指定した支援機を目標地点に近いルート先頭でスポーンさせ、設定した経路を自動飛行させながら攻撃させます。ルート終端まで到達すると自動的に消滅します(帰投・着陸はしません)。",
+    "en": "When used, targets the point where the occupant's own aim reticle meets the ground (or water surface), spawns a separately-specified support aircraft near the start of a route close to that target point, and has it attack automatically while flying the configured path. It despawns automatically once it reaches the end of the route (it does not return or land)."
+   }
+  },
+  {
+   "id": "Carrier",
+   "label": {
+    "ja": "Carrier",
+    "en": "Carrier"
+   },
+   "category": "other",
+   "desc": {
+    "ja": "`CAS`と似た仕組みですが、発艦させる機体自身の`AddWeapon`マウント位置(=母艦自身)からその場で発艦する点が異なります(`CAS`は離れた目標地点付近でスポーン)。搭乗者はAlt+Yキーで発艦した機体と母艦の間を行き来できます。ルート終端到達後は消滅せず、帰投・着艦シーケンスに入ります。滑走路自体は母艦側の機体JSON(`runways`、`Readme_Vehicle.md`の「12. 空母(Carrier)甲板・滑走路」参照)で定義します。母艦は艦船に限らず、`entity_type`を問わずどの乗り物にも設定できます。",
+    "en": "A similar mechanism to `CAS`, but the launched aircraft takes off on the spot from this weapon's own `AddWeapon` mount position (i.e. the mothership itself), rather than spawning near a distant target point (as `CAS` does). The occupant can move back and forth between the launched aircraft and the mothership with Alt+Y. It doesn't despawn once it reaches the end of the route - it instead enters a return/landing sequence. The runway itself is defined on the mothership's own vehicle JSON (`runways`, see `Readme_Vehicle.md`'s \"12. Carrier deck / runway\"). The mothership isn't limited to ships - it can be set on any vehicle, regardless of `entity_type`."
+   }
+  }
+ ],
+ "records": {
+  "WeaponFile": {
+   "fields": [
+    {
+     "key": "Type",
+     "group": "Basic",
+     "required": true,
+     "type": "enum",
+     "choices": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon",
+      "Dispenser",
+      "Smoke",
+      "Dummy",
+      "TargetingPod",
+      "DropTank",
+      "CAS",
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "武器の挙動タイプ。必須項目です。MCヘリと異なる実装や独自の武器タイプも存在するため、使用可能な値と詳細は各`Readme_Weapon_○○.md`を参照してください: `MachineGun`/`Rocket`(`Readme_Weapon_Gun.md`)、`Bomb`/`Depth`(`Readme_Weapon_Bomb.md`)、`Torpedo`(`Readme_Weapon_Torpedo.md`)、`ASMissile`/`MkRocket`/`AAMissile`/`ATMissile`/`Missile`/`ASWeapon`/`TVMissile`(`Readme_Weapon_Missile.md`)、`Dispenser`/`Smoke`/`Dummy`/`TargetingPod`(`Readme_Weapon_Special.md`)、`CAS`/`Carrier`(`Readme_Weapon_Cas.md`)。未対応・不明な値は全て「その他」として扱われ、実弾を発射する挙動にはなりません。",
+      "en": "The weapon's own behavior type. Required. Some implementations differ from MC Heli, and some weapon types are unique to this mod, so see each `Readme_Weapon_<Type>.md` for the accepted values and details: `MachineGun`/`Rocket` (`Readme_Weapon_Gun.md`), `Bomb`/`Depth` (`Readme_Weapon_Bomb.md`), `Torpedo` (`Readme_Weapon_Torpedo.md`), `ASMissile`/`MkRocket`/`AAMissile`/`ATMissile`/`Missile`/`ASWeapon`/`TVMissile` (`Readme_Weapon_Missile.md`), `Dispenser`/`Smoke`/`Dummy`/`TargetingPod` (`Readme_Weapon_Special.md`), `CAS`/`Carrier` (`Readme_Weapon_Cas.md`). Any unsupported or unrecognized value is treated as \"other\" and never fires a live round."
+     },
+     "example": {
+      "ja": "`Type = MachineGun`",
+      "en": "`Type = MachineGun`"
+     }
+    },
+    {
+     "key": "DisplayName",
+     "group": "Basic",
+     "required": false,
+     "type": "string",
+     "default_display": {
+      "ja": "ファイル名",
+      "en": "file name"
+     },
+     "desc": {
+      "ja": "HUDの武器名表示(WPN_NAME)に使われる名前。省略時はファイル名の先頭を大文字にしたものになります。",
+      "en": "Name shown by the HUD weapon name (WPN_NAME). Defaults to the file name with its first letter capitalized."
+     }
+    },
+    {
+     "key": "Group",
+     "group": "Basic",
+     "required": false,
+     "type": "string",
+     "desc": {
+      "ja": "同じグループ名(大文字小文字を区別する完全一致)の武器同士で、連射間隔(Delay)とリロード時間(ReloadTime)を共有します。どれか1つを使うと、同じグループの全武器に同じ待ち時間が適用されます。",
+      "en": "Weapons with the same group name (case-sensitive exact match) share their fire cooldown (Delay) and reload timer (ReloadTime): using any one applies the same wait to all of them."
+     }
+    },
+    {
+     "key": "ModeNum",
+     "group": "Basic",
+     "required": false,
+     "type": "int",
+     "default": 1,
+     "desc": {
+      "ja": "`Type = ATMissile`に`ModeNum = 2`を設定すると、専用キーでTop Attackモード(通常誘導⇔目標上空への上昇後、急降下する誘導方式)を切り替えられます。",
+      "en": "Setting `ModeNum = 2` on `Type = ATMissile` lets a dedicated key switch between ordinary guidance and Top Attack mode (a guidance profile that climbs above the target before diving steeply)."
+     },
+     "example": {
+      "ja": "Type = ATMissile\nModeNum = 2\nLockTime = 60",
+      "en": "Type = ATMissile\nModeNum = 2\nLockTime = 60"
+     }
+    },
+    {
+     "key": "Sight",
+     "group": "Basic",
+     "required": false,
+     "type": "enum",
+     "choices": [
+      "MoveSight",
+      "MissileSight",
+      "None"
+     ],
+     "default": "MoveSight",
+     "desc": {
+      "ja": "選択中に表示される照準の種類。MoveSight(既定)は機体の照準方向に追従、MissileSightはロックオン式の照準、Noneは照準を表示しません。",
+      "en": "Reticle shown while the weapon is selected. MoveSight (default) follows the aim direction, MissileSight is a lock-on style reticle, None shows nothing."
+     }
+    },
+    {
+     "key": "Delay",
+     "group": "Firing",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "desc": {
+      "ja": "連射間隔(tick)。1回発射してから次に発射できるまでの時間です。",
+      "en": "Fire interval in ticks - the wait after each shot before the next one can be fired."
+     }
+    },
+    {
+     "key": "Round",
+     "group": "Firing",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "desc": {
+      "ja": "弾倉の装弾数。0(既定)は無制限で、リロードの概念自体がなくなります。",
+      "en": "Magazine size. 0 (default) means unlimited, with no reload cycle at all."
+     }
+    },
+    {
+     "key": "ReloadTime",
+     "group": "Firing",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "desc": {
+      "ja": "弾倉が空になったときのリロード時間(tick)。Roundが1以上のときのみ意味を持ちます。",
+      "en": "Reload time in ticks when the magazine runs empty. Only meaningful when Round is 1 or more."
+     }
+    },
+    {
+     "key": "MaxAmmo",
+     "group": "Firing",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "desc": {
+      "ja": "弾倉(Round)の補充元となる予備弾の総数。弾倉とは別枠です。0(既定)は予備弾無制限。",
+      "en": "Total reserve ammo the magazine (Round) refills from - a pool separate from the magazine. 0 (default) means an unlimited reserve."
+     }
+    },
+    {
+     "key": "SuppliedNum",
+     "group": "Firing",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "desc": {
+      "ja": "機体メニューの補給ボタン1回で補充される弾数(装弾数が上限)。",
+      "en": "Ammo added per press of the resupply button in the vehicle menu (capped at the magazine size)."
+     }
+    },
+    {
+     "key": "Item",
+     "group": "Firing",
+     "required": false,
+     "type": "list",
+     "item_type": "columns",
+     "columns": [
+      {
+       "name": "count",
+       "type": "int"
+      },
+      {
+       "name": "item",
+       "type": "enum",
+       "choices": [
+        "iron_ingot",
+        "gunpowder",
+        "redstone"
+       ]
+      }
+     ],
+     "max_rows": 3,
+     "desc": {
+      "ja": "補給1回に必要な素材。「個数, 素材名」の形式で、iron_ingot / gunpowder / redstone をそれぞれ1行ずつ、最大3行まで指定できます。それ以外の素材名は無視されます。",
+      "en": "Materials consumed per resupply, written \"count, material\". Up to 3 lines, one each for iron_ingot / gunpowder / redstone; any other material is ignored."
+     }
+    },
+    {
+     "key": "HeatCount",
+     "group": "Firing",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "desc": {
+      "ja": "1発ごとに加算される熱量(オーバーヒート方式の武器用)。",
+      "en": "Heat added per shot (for overheat-style weapons)."
+     }
+    },
+    {
+     "key": "MaxHeatCount",
+     "group": "Firing",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "desc": {
+      "ja": "熱量の上限。蓄積した熱量がこの値に達すると、冷えるまで発射できなくなります。0(既定)は熱管理なし。",
+      "en": "Heat limit. Once accumulated heat reaches this value, firing is blocked until it cools down. 0 (default) disables heat."
+     }
+    },
+    {
+     "key": "UsableWhileDiving",
+     "group": "Firing",
+     "required": false,
+     "type": "bool",
+     "default": false,
+     "desc": {
+      "ja": "trueにすると、潜水艦の潜航中でもこの武器を使用できます(既定では潜航中に使えるのは魚雷のみ)。",
+      "en": "When true, this weapon stays usable while a submarine is submerged (by default only torpedoes are)."
+     }
+    },
+    {
+     "key": "RotationSpeed",
+     "group": "Firing",
+     "required": false,
+     "type": "float",
+     "default": 15.0,
+     "desc": {
+      "ja": "発射中に、この武器に連動する回転パーツ(ガトリングの銃身など)が回る速さ(1秒あたりの回転数)。",
+      "en": "How fast linked rotating parts (e.g. a gatling barrel) spin while firing, in rotations per second."
+     }
+    },
+    {
+     "key": "Power",
+     "group": "Projectile",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "命中時のダメージ量。",
+      "en": "Damage dealt on hit."
+     }
+    },
+    {
+     "key": "Acceleration",
+     "group": "Projectile",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "弾の初速(ブロック/tick)。上限による切り詰めは行われません。",
+      "en": "Muzzle velocity in blocks/tick. Not capped."
+     }
+    },
+    {
+     "key": "Gravity",
+     "group": "Projectile",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "弾にかかる重力。符号は無視され、常に下向きに働きます(-0.04 と 0.04 は同じ意味)。",
+      "en": "Gravity on the projectile. The sign is ignored - it always pulls downward (-0.04 and 0.04 are the same)."
+     }
+    },
+    {
+     "key": "GravityInWater",
+     "group": "Projectile",
+     "required": false,
+     "type": "float",
+     "default_display": {
+      "ja": "Gravityと同じ",
+      "en": "same as Gravity"
+     },
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "水中に入るまでの落下速度とは別の、水没後専用の落下速度(`Readme_Weapon.md`の共通項目としても使用できますが、魚雷では特に意味を持ちます)。",
+      "en": "A separate fall speed used specifically after submersion, distinct from the fall speed before entering the water (this can also be used as a common field per `Readme_Weapon.md`, but it carries particular significance for a torpedo)."
+     },
+     "example": {
+      "ja": "`GravityInWater = 0.0`",
+      "en": "`GravityInWater = 0.0`"
+     }
+    },
+    {
+     "key": "Accuracy",
+     "group": "Projectile",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "発射時に加わるランダムな角度のずれ(度)。大きいほど弾がばらけます。0(既定)は完全にまっすぐ。",
+      "en": "Random angular error in degrees applied at firing; larger values scatter shots more. 0 (default) fires perfectly straight."
+     }
+    },
+    {
+     "key": "Piercing",
+     "group": "Projectile",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "ブロックを何個まで貫通(破壊)して進めるか。0(既定)は貫通なし。",
+      "en": "How many blocks in a row the projectile can punch through (destroying them). 0 (default) means none."
+     }
+    },
+    {
+     "key": "Bound",
+     "group": "Projectile",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "着弾時の跳ね返りの強さ。0(既定)は跳ねずにその場で止まります。",
+      "en": "Bounce strength on impact. 0 (default) means no bounce - it stops at the first hit."
+     }
+    },
+    {
+     "key": "ModelBullet",
+     "group": "Projectile",
+     "required": false,
+     "type": "string",
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "弾の見た目に使うモデル名(拡張子なし)。models/obj/bullet_<名前>.obj と textures/vehicle/bullet_<名前>.png が使われます。省略時はアイテム表示になります。",
+      "en": "Model name (no extension) used for the projectile: models/obj/bullet_<name>.obj with textures/vehicle/bullet_<name>.png. Without it the projectile is drawn as an item."
+     }
+    },
+    {
+     "key": "BulletColor",
+     "group": "Projectile",
+     "required": false,
+     "type": "columns",
+     "columns": [
+      {
+       "name": "A",
+       "type": "int",
+       "default": 255
+      },
+      {
+       "name": "R",
+       "type": "int",
+       "default": 255
+      },
+      {
+       "name": "G",
+       "type": "int",
+       "default": 255
+      },
+      {
+       "name": "B",
+       "type": "int",
+       "default": 255
+      }
+     ],
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "空中での弾の軌跡(パーティクル)の色。A, R, G, B(各0〜255)の順にコンマ区切りで指定します。既定は不透明の白。",
+      "en": "Trail (particle) color in the air, as A, R, G, B (0-255 each) separated by commas. Default is opaque white."
+     }
+    },
+    {
+     "key": "BulletColorInWater",
+     "group": "Projectile",
+     "required": false,
+     "type": "columns",
+     "columns": [
+      {
+       "name": "A",
+       "type": "int",
+       "default": ""
+      },
+      {
+       "name": "R",
+       "type": "int",
+       "default": ""
+      },
+      {
+       "name": "G",
+       "type": "int",
+       "default": ""
+      },
+      {
+       "name": "B",
+       "type": "int",
+       "default": ""
+      }
+     ],
+     "default_display": {
+      "ja": "BulletColorと同じ",
+      "en": "same as BulletColor"
+     },
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "水中での弾の軌跡の色(A, R, G, B)。省略時はBulletColorと同じ色になります。",
+      "en": "Trail color while underwater (A, R, G, B). Defaults to the same color as BulletColor."
+     }
+    },
+    {
+     "key": "TrajectoryParticle",
+     "group": "Projectile",
+     "required": false,
+     "type": "enum_open",
+     "choices": [
+      "none",
+      "smoke",
+      "largesmoke",
+      "flame",
+      "explode",
+      "largeexplode",
+      "hugeexplosion"
+     ],
+     "default": "none",
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "飛行中に弾の後ろに出るパーティクルの種類。none で無効。",
+      "en": "Particle trailing the projectile in flight. none disables it."
+     }
+    },
+    {
+     "key": "TrajectoryParticleStartTick",
+     "group": "Projectile",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "発射から何tick後に軌跡パーティクルを出し始めるか。",
+      "en": "Ticks after firing before the trail particle starts appearing."
+     }
+    },
+    {
+     "key": "DisableSmoke",
+     "group": "Projectile",
+     "required": false,
+     "type": "bool",
+     "default": false,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "trueにすると、飛行中の軌跡パーティクル(TrajectoryParticle)を表示しません。",
+      "en": "When true, suppresses the in-flight trail particle (TrajectoryParticle)."
+     }
+    },
+    {
+     "key": "Explosion",
+     "group": "Explosion",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "着弾時の爆発の威力。0(既定)で爆発なし、1がガストの火球程度です。",
+      "en": "Explosion power on impact. 0 (default) means no explosion; 1 is about a ghast fireball."
+     }
+    },
+    {
+     "key": "ExplosionInWater",
+     "group": "Explosion",
+     "required": false,
+     "type": "float",
+     "default_display": {
+      "ja": "Explosionと同じ",
+      "en": "same as Explosion"
+     },
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "水に触れた状態で爆発したときの威力。省略時はExplosionと同じ値になります。",
+      "en": "Explosion power when detonating in water. Defaults to the same value as Explosion."
+     }
+    },
+    {
+     "key": "ExplosionBlock",
+     "group": "Explosion",
+     "required": false,
+     "type": "float",
+     "default_display": {
+      "ja": "爆発の威力と同じ",
+      "en": "same as the explosion power"
+     },
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "ブロック破壊用の独立した威力。0を指定するとブロックを壊しません。省略した場合は、その場で使われる爆発の威力(ExplosionまたはExplosionInWater)でブロックを壊します。",
+      "en": "Separate block-destruction power. 0 means blocks are not broken. When omitted, blocks are broken using whichever explosion power applies (Explosion or ExplosionInWater)."
+     }
+    },
+    {
+     "key": "Flaming",
+     "group": "Explosion",
+     "required": false,
+     "type": "bool",
+     "default": false,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "trueにすると、命中した対象に火を付けます。Explosionが0のときは効果がありません。",
+      "en": "When true, sets the hit target on fire. Has no effect while Explosion is 0."
+     }
+    },
+    {
+     "key": "FAE",
+     "group": "Explosion",
+     "required": false,
+     "type": "bool",
+     "default": false,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "trueにすると燃料気化爆弾として扱い、爆発でブロックを一切壊しません(ExplosionBlockの設定に関係なく)。",
+      "en": "When true, treated as a fuel-air explosive: its explosion never breaks blocks, regardless of ExplosionBlock."
+     }
+    },
+    {
+     "key": "ExplosionAltitude",
+     "group": "Explosion",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "真下の地面からの高さがこの値以下になった時点で、何にも当たっていなくても起爆します。0(既定)は無効。",
+      "en": "Detonates as soon as its height above the ground directly below drops to this value, even without hitting anything. 0 (default) disables it."
+     }
+    },
+    {
+     "key": "DelayFuse",
+     "group": "Explosion",
+     "required": false,
+     "type": "int",
+     "default_display": {
+      "ja": "なし",
+      "en": "none"
+     },
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "命中してから実際に起爆(消滅)するまでの遅延(tick)。0は即時。省略時は遅延なし。",
+      "en": "Delay in ticks between hitting something and actually detonating. 0 is immediate; omitted means no delay."
+     }
+    },
+    {
+     "key": "TimeFuse",
+     "group": "Explosion",
+     "required": false,
+     "type": "int",
+     "default_display": {
+      "ja": "なし",
+      "en": "none"
+     },
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "発射からこのtick数が経つと、何にも当たっていなくても起爆(消滅)します。省略時は無効。",
+      "en": "Detonates (disappears) this many ticks after firing, whether or not it has hit anything. Omitted means disabled."
+     }
+    },
+    {
+     "key": "Bomblet",
+     "group": "Explosion",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "展開する子弾の数(クラスター爆弾用)。0(既定)は子弾なし。子弾の性能はこの武器自体の設定が使われます。",
+      "en": "Number of submunitions scattered (cluster munitions). 0 (default) means none. Submunitions use this weapon's own settings."
+     }
+    },
+    {
+     "key": "BombletSTime",
+     "group": "Explosion",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "発射から子弾が展開するまでの時間(tick)。",
+      "en": "Ticks after firing before the submunitions deploy."
+     }
+    },
+    {
+     "key": "BombletDiff",
+     "group": "Explosion",
+     "required": false,
+     "type": "float",
+     "default": 0.7,
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "子弾の拡散の度合い(親弾の進行方向からどれだけばらけるか)。",
+      "en": "How widely the submunitions spread from the parent projectile's direction."
+     }
+    },
+    {
+     "key": "ModelBomblet",
+     "group": "Explosion",
+     "required": false,
+     "type": "string",
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "子弾の見た目に使うモデル名。ModelBulletと同じ規則(bullet_<名前>)でファイルを参照します。",
+      "en": "Model name for the submunitions, using the same bullet_<name> convention as ModelBullet."
+     }
+    },
+    {
+     "key": "LockTime",
+     "group": "Guidance",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "entity_types": [
+      "AAMissile",
+      "ATMissile",
+      "Missile"
+     ],
+     "desc": {
+      "ja": "同一対象を照準内に維持し続ける必要のあるtick数。この時間が経過するまでは発射キーを押しても発射されません(本プロジェクトでは、ロック完了前の無誘導発射は行いません)。",
+      "en": "How many ticks the same target must stay within the aim reticle before the lock is complete. Pressing the fire key before this time has elapsed does not fire at all (this project never fires an unguided shot before the lock completes)."
+     },
+     "example": {
+      "ja": "`LockTime = 40`",
+      "en": "`LockTime = 40`"
+     }
+    },
+    {
+     "key": "LockRange",
+     "group": "Guidance",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "AAMissile",
+      "ATMissile",
+      "Missile"
+     ],
+     "desc": {
+      "ja": "ロックオンできる最大距離(ブロック)。0(既定)は無制限。",
+      "en": "Maximum lock-on distance in blocks. 0 (default) means unlimited."
+     }
+    },
+    {
+     "key": "LockTimePerBlock",
+     "group": "Guidance",
+     "required": false,
+     "type": "float",
+     "default": 0.3,
+     "entity_types": [
+      "AAMissile",
+      "ATMissile",
+      "Missile"
+     ],
+     "desc": {
+      "ja": "目標までの距離1ブロックあたりに追加で必要なロックオン時間(tick)。必要時間 = LockTime + この値 × 距離。",
+      "en": "Extra lock-on ticks required per block of distance to the target: required = LockTime + this × distance."
+     }
+    },
+    {
+     "key": "TurnRate",
+     "group": "Guidance",
+     "required": false,
+     "type": "float",
+     "default": 3.0,
+     "entity_types": [
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "ASMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "誘導中に弾の進行方向が1tickで曲がれる最大角度(度)。",
+      "en": "Maximum degrees the projectile's heading can turn per tick while guiding."
+     }
+    },
+    {
+     "key": "RidableOnly",
+     "group": "Guidance",
+     "required": false,
+     "type": "bool",
+     "default": true,
+     "entity_types": [
+      "AAMissile",
+      "ATMissile",
+      "Missile"
+     ],
+     "desc": {
+      "ja": "MCヘリでは「機体に乗っている状態でのみロック可能」を意味しますが、本プロジェクトの武器システムはそもそも全て機体搭載専用(携行武器アイテムが存在しない)のため、値に関わらず実質的な効果はありません。互換性のためパース・保持のみ行っています。",
+      "en": "In the original MC Heli this means \"can only lock while riding a vehicle\", but since this project's own weapon system is entirely vehicle-mounted to begin with (there is no such thing as a hand-held weapon item), this has no practical effect regardless of its value. It's only parsed and retained for compatibility."
+     },
+     "example": {
+      "ja": "`RidableOnly = true`",
+      "en": "`RidableOnly = true`"
+     }
+    },
+    {
+     "key": "ProximityFuseDist",
+     "group": "Guidance",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "AAMissile",
+      "ATMissile",
+      "Missile"
+     ],
+     "desc": {
+      "ja": "ロック済みの誘導弾が、実際に命中しなくても目標からこの距離(ブロック)以内に近づいた時点で起爆します。",
+      "en": "A locked guided round detonates once it closes to within this distance (blocks) of the target, even without an actual direct hit."
+     },
+     "example": {
+      "ja": "`ProximityFuseDist = 3.0`",
+      "en": "`ProximityFuseDist = 3.0`"
+     }
+    },
+    {
+     "key": "RigidityTime",
+     "group": "Guidance",
+     "required": false,
+     "type": "int",
+     "default": 7,
+     "entity_types": [
+      "AAMissile",
+      "ATMissile",
+      "Missile"
+     ],
+     "desc": {
+      "ja": "発射から実際に誘導(進路修正)を開始するまでの時間(tick)。発射直後は真っ直ぐ飛び、発射母機から物理的に十分離れてから誘導を開始します。",
+      "en": "How long (ticks) after firing before actual guidance (course correction) actually begins. It flies straight right after launch, and only starts guiding once it's physically far enough from the launching vehicle."
+     },
+     "example": {
+      "ja": "`RigidityTime = 7`",
+      "en": "`RigidityTime = 7`"
+     }
+    },
+    {
+     "key": "DiveDistance",
+     "group": "Guidance",
+     "required": false,
+     "type": "float",
+     "default": 10.0,
+     "entity_types": [
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "`ASWeapon`専用。目標までの距離がこの値(ブロック)以下になった時点で潜航を開始します。",
+      "en": "`ASWeapon`-only. Begins diving once the distance to the target drops to this value (blocks) or below."
+     },
+     "example": {
+      "ja": "`DiveDistance = 10.0`",
+      "en": "`DiveDistance = 10.0`"
+     }
+    },
+    {
+     "key": "AccelerationInWater",
+     "group": "Torpedo",
+     "required": false,
+     "type": "float",
+     "default": 4.0,
+     "entity_types": [
+      "Torpedo",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "水中巡航時の目標速度。着水直後からこの速度まで徐々に加速します。",
+      "en": "The target speed while cruising underwater. Gradually accelerates toward this speed starting right after hitting the water."
+     },
+     "example": {
+      "ja": "`AccelerationInWater = 2.5`",
+      "en": "`AccelerationInWater = 2.5`"
+     }
+    },
+    {
+     "key": "VelocityInWater",
+     "group": "Torpedo",
+     "required": false,
+     "type": "float",
+     "default": 0.5,
+     "entity_types": [
+      "Torpedo",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "水中での速度変化の応答速度(tickごとにこの割合で目標速度へ近づくイージング係数)。",
+      "en": "How responsively speed changes underwater (an easing factor - each tick, speed moves this fraction of the way toward the target speed)."
+     },
+     "example": {
+      "ja": "`VelocityInWater = 0.3`",
+      "en": "`VelocityInWater = 0.3`"
+     }
+    },
+    {
+     "key": "TargetDepth",
+     "group": "Torpedo",
+     "required": false,
+     "type": "float",
+     "default": 2.0,
+     "entity_types": [
+      "Torpedo",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "本プロジェクト独自の追加項目(MCヘリ非対応)。水面からこのブロック数だけ下を目標巡航深度とします(`水面Y - TargetDepth`)。",
+      "en": "An addition specific to this project (not supported by MC Heli). This many blocks below the water surface becomes the target cruising depth (`water surface Y - TargetDepth`)."
+     },
+     "example": {
+      "ja": "`TargetDepth = 3.0`",
+      "en": "`TargetDepth = 3.0`"
+     }
+    },
+    {
+     "key": "GuidedTorpedo",
+     "group": "Torpedo",
+     "required": false,
+     "type": "bool",
+     "default": true,
+     "entity_types": [
+      "Torpedo"
+     ],
+     "desc": {
+      "ja": "`true`(既定)の場合、着水時に指定されたブロック(発射時の照準地点)へ向けて誘導します(水平方向は固定、着水時のピッチを目標深度に向けて徐々に補正)。`false`の場合、無誘導魚雷になり、着水した位置からまっすぐ進みます(`AccelerationInWater`/`VelocityInWater`による速度制御は引き続き適用され、進路の補正のみ行われません)。",
+      "en": "When `true` (default), homes toward the block that was specified at the moment it hit the water (the aim point at the time of firing) - horizontal direction is fixed, while pitch at the moment of water entry is gradually corrected toward the target depth. When `false`, it becomes an unguided torpedo that travels straight from wherever it entered the water (speed control via `AccelerationInWater` / `VelocityInWater` still applies - only the course correction itself is skipped)."
+     },
+     "example": {
+      "ja": "`GuidedTorpedo = false`",
+      "en": "`GuidedTorpedo = false`"
+     }
+    },
+    {
+     "key": "Sound",
+     "group": "Effects",
+     "required": false,
+     "type": "string",
+     "default_display": {
+      "ja": "<武器名>_snd",
+      "en": "<weapon name>_snd"
+     },
+     "hint": "sound",
+     "desc": {
+      "ja": "発射音のファイル名(拡張子なし、フォルダ名なし)。省略時は「<武器名>_snd」が使われます。見つからない場合は無音で発射します。",
+      "en": "Firing sound file name (no extension, no folder). Defaults to \"<weapon name>_snd\". Fires silently if the file isn't found."
+     }
+    },
+    {
+     "key": "SoundVolume",
+     "group": "Effects",
+     "required": false,
+     "type": "float",
+     "default": 1.0,
+     "desc": {
+      "ja": "発射音の音量。",
+      "en": "Firing sound volume."
+     }
+    },
+    {
+     "key": "SoundPitch",
+     "group": "Effects",
+     "required": false,
+     "type": "float",
+     "default": 1.0,
+     "desc": {
+      "ja": "発射音の高さ(ピッチ)。",
+      "en": "Firing sound pitch."
+     }
+    },
+    {
+     "key": "SoundPitchRandom",
+     "group": "Effects",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "desc": {
+      "ja": "発射音のピッチに加えるランダムな揺らぎの幅。",
+      "en": "Random variation added to the firing sound pitch."
+     }
+    },
+    {
+     "key": "SoundDelay",
+     "group": "Effects",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "desc": {
+      "ja": "発射音を実際に鳴らす間隔(tick)。連射の速い武器で、毎発ではなく一定間隔で鳴らしたいときに使います。連射間隔(Delay)とは独立しています。",
+      "en": "Interval in ticks at which the firing sound actually plays - for fast-firing weapons that shouldn't play it every shot. Independent of Delay."
+     }
+    },
+    {
+     "key": "AddMuzzleFlash",
+     "group": "Effects",
+     "required": false,
+     "type": "columns",
+     "columns": [
+      {
+       "name": "distance",
+       "type": "float",
+       "default": 0.5
+      },
+      {
+       "name": "size",
+       "type": "float",
+       "default": 0.2
+      },
+      {
+       "name": "ticks",
+       "type": "int",
+       "default": 1
+      },
+      {
+       "name": "A",
+       "type": "int",
+       "default": 150
+      },
+      {
+       "name": "R",
+       "type": "int",
+       "default": 254
+      },
+      {
+       "name": "G",
+       "type": "int",
+       "default": 219
+      },
+      {
+       "name": "B",
+       "type": "int",
+       "default": 184
+      }
+     ],
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "発射炎(マズルフラッシュ)を表示します。値は「発射位置からの距離, 大きさ, 表示tick数, A, R, G, B」。",
+      "en": "Shows a muzzle flash. Value: distance from the muzzle, size, display ticks, A, R, G, B."
+     }
+    },
+    {
+     "key": "AddMuzzleFlashSmoke",
+     "group": "Effects",
+     "required": false,
+     "type": "columns",
+     "columns": [
+      {
+       "name": "distance",
+       "type": "float",
+       "default": 2.2
+      },
+      {
+       "name": "count",
+       "type": "int",
+       "default": 1
+      },
+      {
+       "name": "size",
+       "type": "float",
+       "default": 5.0
+      },
+      {
+       "name": "range",
+       "type": "float",
+       "default": 2.0
+      },
+      {
+       "name": "ticks",
+       "type": "int",
+       "default": 15
+      },
+      {
+       "name": "A",
+       "type": "int",
+       "default": 180
+      },
+      {
+       "name": "R",
+       "type": "int",
+       "default": 250
+      },
+      {
+       "name": "G",
+       "type": "int",
+       "default": 245
+      },
+      {
+       "name": "B",
+       "type": "int",
+       "default": 240
+      }
+     ],
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "発射時の煙を表示します。値は「距離, 個数, 大きさ, 範囲, 表示tick数, A, R, G, B」。",
+      "en": "Shows a smoke puff when firing. Value: distance, count, size, range, display ticks, A, R, G, B."
+     }
+    },
+    {
+     "key": "SetCartridge",
+     "group": "Effects",
+     "required": false,
+     "type": "columns",
+     "columns": [
+      {
+       "name": "model",
+       "type": "string",
+       "default": "cartridge"
+      },
+      {
+       "name": "speed",
+       "type": "float",
+       "default": 0.0
+      },
+      {
+       "name": "yaw",
+       "type": "float",
+       "default": 0.0
+      },
+      {
+       "name": "pitch",
+       "type": "float",
+       "default": 0.0
+      },
+      {
+       "name": "scale",
+       "type": "float",
+       "default": 1.0
+      },
+      {
+       "name": "gravity",
+       "type": "float",
+       "default": -0.04
+      },
+      {
+       "name": "bound",
+       "type": "float",
+       "default": 0.4
+      }
+     ],
+     "entity_types": [
+      "MachineGun1",
+      "MachineGun2",
+      "Rocket",
+      "Bomb",
+      "Depth",
+      "Torpedo",
+      "ASMissile",
+      "AAMissile",
+      "ATMissile",
+      "Missile",
+      "TVMissile",
+      "MkRocket",
+      "ASWeapon"
+     ],
+     "desc": {
+      "ja": "発射時に薬莢を排出します。値は「モデル名, 初速, ヨー, ピッチ, 大きさ, 重力, 跳ね返り」。重力は符号に関係なく下向きに働きます。",
+      "en": "Ejects a cartridge case when firing. Value: model name, speed, yaw, pitch, scale, gravity, bounce. Gravity always pulls downward regardless of sign."
+     }
+    },
+    {
+     "key": "Recoil",
+     "group": "Effects",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "desc": {
+      "ja": "発射ごとの画面の揺れ(反動)の強さ。0(既定)は揺れなし。",
+      "en": "Strength of the camera shake (recoil) per shot. 0 (default) means none."
+     }
+    },
+    {
+     "key": "RecoilBufCount",
+     "group": "Effects",
+     "required": false,
+     "type": "columns",
+     "columns": [
+      {
+       "name": "ticks",
+       "type": "int",
+       "default": 40
+      },
+      {
+       "name": "rate",
+       "type": "int",
+       "default": 5
+      }
+     ],
+     "desc": {
+      "ja": "反動の揺れ方。値は「揺れ全体の長さ(tick), 戻りの速さの倍率」。",
+      "en": "How the recoil shake behaves. Value: total shake duration in ticks, return-speed multiplier."
+     }
+    },
+    {
+     "key": "CameraRotationSpeedPitch",
+     "group": "View",
+     "required": false,
+     "type": "float",
+     "default": 1.0,
+     "desc": {
+      "ja": "この武器を選択中、視点の上下方向の回転速度に掛かる倍率。小さくすると細かい照準合わせがしやすくなります。",
+      "en": "Multiplier on vertical view rotation speed while this weapon is selected; smaller values allow finer aiming."
+     }
+    },
+    {
+     "key": "FixCameraPitch",
+     "group": "View",
+     "required": false,
+     "type": "bool",
+     "default": false,
+     "desc": {
+      "ja": "trueにすると、この武器を選択中は視点の上下角を水平(0度)に固定します。",
+      "en": "When true, locks the view pitch to level (0 degrees) while this weapon is selected."
+     }
+    },
+    {
+     "key": "DisplayMortarDistance",
+     "group": "View",
+     "required": false,
+     "type": "bool",
+     "default": false,
+     "desc": {
+      "ja": "着弾予測距離をHUD上に表示するか(`Bomb`/`Rocket`はHUD上の数値ではなく、地面への着弾予測地点を示す円形マーカー表示になります)。",
+      "en": "Whether to show the predicted impact distance on the HUD (for `Bomb`/`Rocket`, instead of a HUD number this becomes a circular marker on the ground showing the predicted impact point)."
+     },
+     "example": {
+      "ja": "`DisplayMortarDistance = true`",
+      "en": "`DisplayMortarDistance = true`"
+     }
+    },
+    {
+     "key": "DispenseItem",
+     "group": "Special",
+     "required": false,
+     "type": "string",
+     "entity_types": [
+      "Dispenser"
+     ],
+     "desc": {
+      "ja": "着弾地点に対して使用するアイテム。例: `flint_and_steel`を指定すると着弾地点に火打ち石を使用したのと同じ効果(着火)が発生します。効果の有無はアイテムによって異なります。例外として`water_bucket`は水を設置するのではなく、着弾地点付近の火・溶岩を消火する効果になります(MCヘリの実装より)。",
+      "en": "The item to apply at the impact point. For example, setting `flint_and_steel` produces the same effect as using flint and steel at the impact point (ignition). Whether there's any effect at all depends on the item. As an exception, `water_bucket` doesn't place water - it instead extinguishes fire/lava near the impact point."
+     },
+     "example": {
+      "ja": "`DispenseItem = flint_and_steel`",
+      "en": "`DispenseItem = flint_and_steel`"
+     }
+    },
+    {
+     "key": "DispenseRange",
+     "group": "Special",
+     "required": false,
+     "type": "float",
+     "default": 4.0,
+     "entity_types": [
+      "Dispenser"
+     ],
+     "desc": {
+      "ja": "`DispenseItem`の効果が適用される範囲(ブロック)。",
+      "en": "The range (blocks) over which `DispenseItem`'s own effect applies."
+     },
+     "example": {
+      "ja": "`DispenseRange = 4`",
+      "en": "`DispenseRange = 4`"
+     }
+    },
+    {
+     "key": "SmokeColor",
+     "group": "Special",
+     "required": false,
+     "type": "columns",
+     "columns": [
+      {
+       "name": "A",
+       "type": "int",
+       "default": 230
+      },
+      {
+       "name": "R",
+       "type": "int",
+       "default": 200
+      },
+      {
+       "name": "G",
+       "type": "int",
+       "default": 20
+      },
+      {
+       "name": "B",
+       "type": "int",
+       "default": 80
+      }
+     ],
+     "entity_types": [
+      "Smoke"
+     ],
+     "desc": {
+      "ja": "スモークの色。",
+      "en": "The smoke's own color."
+     },
+     "example": {
+      "ja": "`SmokeColor = 230, 200, 20, 80`",
+      "en": "`SmokeColor = 230, 200, 20, 80`"
+     }
+    },
+    {
+     "key": "SmokeSize",
+     "group": "Special",
+     "required": false,
+     "type": "float",
+     "default": 2.0,
+     "entity_types": [
+      "Smoke"
+     ],
+     "desc": {
+      "ja": "スモークの粒子サイズ。",
+      "en": "The smoke particle's own size."
+     },
+     "example": {
+      "ja": "`SmokeSize = 2.0`",
+      "en": "`SmokeSize = 2.0`"
+     }
+    },
+    {
+     "key": "SmokeMaxAge",
+     "group": "Special",
+     "required": false,
+     "type": "int",
+     "default": 500,
+     "entity_types": [
+      "Smoke"
+     ],
+     "desc": {
+      "ja": "スモークの表示時間(tick)。",
+      "en": "How long (ticks) the smoke stays visible."
+     },
+     "example": {
+      "ja": "`SmokeMaxAge = 500`",
+      "en": "`SmokeMaxAge = 500`"
+     }
+    },
+    {
+     "key": "Target",
+     "group": "Special",
+     "required": false,
+     "type": "string",
+     "entity_types": [
+      "TargetingPod"
+     ],
+     "desc": {
+      "ja": "スポット対象の種類。以下から選択:\n- `planes` / `helicopters` / `vehicles`: 本MODの各種機体\n- `players`: 他のプレイヤー\n- `monsters`: モンスター\n- `others`: その他のモブ\n- `block`: ブロックをマークするモードに切り替わります(他の指定は全て無効化されます。エンティティのスポット機能ではなくなります)",
+      "en": "What kind of target can be spotted. Choose from:\n- `planes` / `helicopters` / `vehicles`: this mod's own various vehicles\n- `players`: other players\n- `monsters`: hostile mobs\n- `others`: other mobs\n- `block`: switches to a block-marking mode instead (every other value is ignored entirely - this stops being an entity-spotting feature at all)"
+     },
+     "example": {
+      "ja": "`Target = planes/helicopters/vehicles`",
+      "en": "`Target = planes/helicopters/vehicles`"
+     }
+    },
+    {
+     "key": "Length",
+     "group": "Special",
+     "required": false,
+     "type": "float",
+     "default": 100.0,
+     "entity_types": [
+      "TargetingPod"
+     ],
+     "desc": {
+      "ja": "スポット可能な距離(ブロック)。",
+      "en": "The distance (blocks) over which spotting is possible."
+     },
+     "example": {
+      "ja": "`Length = 100`",
+      "en": "`Length = 100`"
+     }
+    },
+    {
+     "key": "Radius",
+     "group": "Special",
+     "required": false,
+     "type": "float",
+     "default": 45.0,
+     "entity_types": [
+      "TargetingPod"
+     ],
+     "desc": {
+      "ja": "スポット可能な範囲の半径角度(度)。",
+      "en": "The spotting cone's own radius angle (degrees)."
+     },
+     "example": {
+      "ja": "`Radius = 45`",
+      "en": "`Radius = 45`"
+     }
+    },
+    {
+     "key": "MarkTime",
+     "group": "Special",
+     "required": false,
+     "type": "float",
+     "default": 10.0,
+     "entity_types": [
+      "TargetingPod"
+     ],
+     "desc": {
+      "ja": "スポット表示の持続時間。",
+      "en": "How long the spot marker stays visible."
+     },
+     "example": {
+      "ja": "`MarkTime = 10`",
+      "en": "`MarkTime = 10`"
+     }
+    },
+    {
+     "key": "FuelPerAmmo",
+     "group": "Special",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "DropTank"
+     ],
+     "desc": {
+      "ja": "残弾1発ごとに増加する最大燃料の量。実際の増加分は`FuelPerAmmo × 現在の残弾数`で、残弾が減る(投下する)たびに自動的に再計算されます。省略時(既定)は最大燃料に一切影響しません。",
+      "en": "How much max fuel increases per remaining round. The actual increase is `FuelPerAmmo × current remaining ammo`, recalculated automatically every time remaining ammo decreases (is dropped). If omitted (the default), this has no effect on max fuel at all."
+     },
+     "example": {
+      "ja": "`FuelPerAmmo = 50.0`",
+      "en": "`FuelPerAmmo = 50.0`"
+     }
+    },
+    {
+     "key": "Destruct",
+     "group": "Special",
+     "required": false,
+     "type": "bool",
+     "default": false,
+     "entity_types": [
+      "Bomb"
+     ],
+     "desc": {
+      "ja": "`true`にすると、使用と同時に発射元の機体自身が自爆します。この機体が無人機(UAV)ヘリコプターの場合のみ効果があります。",
+      "en": "When `true`, the firing vehicle itself self-destructs the instant it's used. Only has any effect if this vehicle is an unmanned (UAV) helicopter."
+     },
+     "example": {
+      "ja": "`Destruct = true`",
+      "en": "`Destruct = true`"
+     }
+    },
+    {
+     "key": "CasAircraft",
+     "group": "CAS",
+     "required": false,
+     "type": "string",
+     "hint": "vehicle",
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "発艦させる支援機の機体ファイル名(`data/<namespace>/vehicles/<名前>.json`、名前空間は不要)。",
+      "en": "The support aircraft's own vehicle file name (`data/<namespace>/vehicles/<name>.json`, no namespace needed)."
+     },
+     "example": {
+      "ja": "`CasAircraft = Airstriker`",
+      "en": "`CasAircraft = a10_thunderbolt`"
+     }
+    },
+    {
+     "key": "CasWeaponIndex",
+     "group": "CAS",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "支援機自身が攻撃時に使用する武器スロット番号(支援機自身の`weapons`配列の添字)。0から始まるので注意。",
+      "en": "The weapon slot number the support aircraft itself uses when attacking (an index into that aircraft's own `weapons` array)."
+     },
+     "example": {
+      "ja": "`CasWeaponIndex = 0`",
+      "en": "`CasWeaponIndex = 0`"
+     }
+    },
+    {
+     "key": "CasAccuracy",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "支援機自身の航法誤差(ルート自体のランダムなずれ幅)。武器自体の命中精度(`Accuracy`)とは別の項目です。",
+      "en": "The support aircraft's own navigation error (a random amount of drift in the route itself). This is a separate field from the weapon's own actual accuracy (`Accuracy`)."
+     },
+     "example": {
+      "ja": "`CasAccuracy = 3.0`",
+      "en": "`CasAccuracy = 3.0`"
+     }
+    },
+    {
+     "key": "CasTimeout",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default": 60.0,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "支援機の総飛行時間の上限。この時間が経過すると、ルートの進捗に関わらず強制的に消滅します(安全装置)。",
+      "en": "The cap on the support aircraft's own total flight time. Once this time elapses, it despawns forcibly regardless of route progress."
+     },
+     "example": {
+      "ja": "`CasTimeout = 60`",
+      "en": "`CasTimeout = 60`"
+     }
+    },
+    {
+     "key": "CasStuckTimeout",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default": 60.0,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "次のウェイポイントへ進めないままこの時間が経過すると、進行状況に関わらず強制的に消滅します(`CasTimeout`とは独立した、進捗停止専用のタイムアウトです)。",
+      "en": "If this much time elapses without being able to advance to the next waypoint, it despawns forcibly regardless of progress (a separate timeout from `CasTimeout`, dedicated specifically to stalled progress)."
+     },
+     "example": {
+      "ja": "`CasStuckTimeout = 30`",
+      "en": "`CasStuckTimeout = 30`"
+     }
+    },
+    {
+     "key": "CasYawOffset",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "ルート自体の回転基準(搭乗者の視線方向)に加える補正角度(度)。",
+      "en": "A correction angle (degrees) added to the route's own rotation reference (the occupant's own line of sight direction)."
+     },
+     "example": {
+      "ja": "`CasYawOffset = 0`",
+      "en": "`CasYawOffset = 0`"
+     }
+    },
+    {
+     "key": "CasFormationSize",
+     "group": "CAS",
+     "required": false,
+     "type": "int",
+     "default": 1,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "1発の発射で、単機ではなくこの機数分の支援機を編隊で出撃させます。1機目(リーダー機)は常に設定通りのルートを辿り、2機目以降は`CasFormationType`で指定した隊形に従い、リーダー機に追随しながら飛行します(隊形内の相対位置を保ったまま、全機が一斉に同じルートを飛行します)。既定値`1`(省略時)は編隊を組まない、従来通りの単機出撃です。",
+      "en": "An extension specific to this project. A single use launches this many support aircraft in formation, rather than a single one. The first aircraft (the flight leader) always follows the route exactly as configured; every subsequent one follows the exact same route, simply translated according to the formation specified by `CasFormationType` (every aircraft flies the same route simultaneously, keeping its own relative position within the formation). The default `1` (if omitted) launches a single aircraft with no formation, exactly as before."
+     },
+     "example": {
+      "ja": "`CasFormationSize = 4`",
+      "en": "`CasFormationSize = 4`"
+     }
+    },
+    {
+     "key": "CasFormationSpacing",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default": 8.0,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "編隊内の機体間隔。`Diamond`/`Delta`では、エレメント内(小さな隊形内)の機体間隔として使われます。エレメント同士の間隔は`CasFormationElementSpacing`で別途指定します。",
+      "en": "The spacing between aircraft within the formation. For `Diamond`/`Delta`, this is used as the spacing between aircraft within an element (a small sub-formation). Spacing between elements themselves is set separately via `CasFormationElementSpacing`."
+     },
+     "example": {
+      "ja": "`CasFormationSpacing = 10.0`",
+      "en": "`CasFormationSpacing = 10.0`"
+     }
+    },
+    {
+     "key": "CasFormationElementSpacing",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default_display": {
+      "ja": "自動(FormationSpacingから算出)",
+      "en": "auto (derived from FormationSpacing)"
+     },
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "`Diamond`/`Delta`限定。エレメント(小隊形)同士の中心間隔。省略した場合は、`CasFormationSpacing`のエレメント内機数×1.5倍が自動的に使われます(従来通りの挙動)。`Diamond`/`Delta`以外の隊形では意味を持ちません。",
+      "en": "`Diamond`/`Delta` only. The center-to-center spacing between elements (sub-formations). If omitted, `CasFormationSpacing` times 1.5x the number of aircraft per element is used automatically (the same behavior as before). Has no meaning for any formation other than `Diamond`/`Delta`."
+     },
+     "example": {
+      "ja": "`CasFormationElementSpacing = 20.0`",
+      "en": "`CasFormationElementSpacing = 20.0`"
+     }
+    },
+    {
+     "key": "CasFormationType",
+     "group": "CAS",
+     "required": false,
+     "type": "enum",
+     "choices": [
+      "LineAbreast",
+      "LineAstern",
+      "VFormation",
+      "Diamond",
+      "Delta"
+     ],
+     "default": "LineAbreast",
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "`CasFormationSize`が2以上の場合の隊形。\n- `LineAbreast`: 横一列。リーダー機を基準に左右交互に並びます(機数が偶数の場合、片側へ1機多くなり左右非対称になります)\n- `LineAstern`: 縦一列。リーダー機の真後ろへ等間隔に並びます\n- `VFormation`: V字。リーダー機を先頭に、左右交互かつ後方へ段階的に下がりながら並びます(`LineAbreast`と同様、偶数機では左右非対称)\n- `Diamond`: 4機1組のダイヤ隊形(先頭・右・左・後尾)を構成します。5機以上の場合、ダイヤの塊(エレメント)自体を`VFormation`と同じ考え方でさらに大きく展開し、全体としてコンバットボックスを形成します\n- `Delta`: 3機1組のデルタ(小規模なV字)隊形を構成します。4機以上の場合は`Diamond`と同様、デルタのエレメント自体をさらに展開します",
+      "en": "The formation used when `CasFormationSize` is 2 or more.\n- `LineAbreast`: side-by-side. Aircraft alternate left and right of the leader (with an even count, one side ends up with one more, making it asymmetric)\n- `LineAstern`: in a single-file line. Aircraft line up directly behind the leader at equal spacing\n- `VFormation`: a V shape. With the leader at the front, aircraft alternate left and right while progressively dropping back (same as `LineAbreast`, an even count is asymmetric)\n- `Diamond`: forms a 4-aircraft diamond (lead, right, left, tail). With 5 or more aircraft, the diamond block itself (the \"element\") is further expanded using the same idea as `VFormation`, forming an overall combat box\n- `Delta`: forms a 3-aircraft delta (a small V) formation. With 4 or more aircraft, the delta element itself is further expanded, the same as `Diamond`"
+     },
+     "example": {
+      "ja": "`CasFormationType = VFormation`",
+      "en": "`CasFormationType = VFormation`"
+     }
+    },
+    {
+     "key": "CasWaypoint",
+     "group": "CAS",
+     "required": false,
+     "type": "list",
+     "item_type": "columns",
+     "columns": [
+      {
+       "name": "relX",
+       "type": "int"
+      },
+      {
+       "name": "relY",
+       "type": "int"
+      },
+      {
+       "name": "relZ",
+       "type": "int"
+      },
+      {
+       "name": "speed%",
+       "type": "float"
+      },
+      {
+       "name": "attack",
+       "type": "enum",
+       "choices": [
+        "true",
+        "false"
+       ]
+      }
+     ],
+     "min_rows": 1,
+     "entity_types": [
+      "CAS"
+     ],
+     "desc": {
+      "ja": "支援機が辿るルートのウェイポイント。座標はマークした目標地点からの相対値です。速度%は支援機自身の最高速度に対する割合(0〜100)。攻撃フラグ`true`/`false`(または`1`/`0`)が`true`の区間では、そのレグを飛行中に`CasWeaponIndex`の武器で自動攻撃します。ルートは通常、攻撃フラグ`false`の進入・離脱区間と、`true`の攻撃run区間で構成します。",
+      "en": "A waypoint on the route the support aircraft follows. Coordinates are relative to the marked target point. Speed% is a fraction (0-100) of the support aircraft's own top speed. During a leg where the attack flag is `true` (or `1`), it automatically attacks using the `CasWeaponIndex` weapon while flying that leg. A route typically consists of ingress/egress legs with the attack flag `false`, and an attack run leg with `true`."
+     }
+    },
+    {
+     "key": "CasTargetMode",
+     "group": "CAS",
+     "required": false,
+     "type": "enum",
+     "choices": [
+      "Ballistic",
+      "Raycast",
+      "Collision"
+     ],
+     "default": "Ballistic",
+     "entity_types": [
+      "CAS",
+      "Carrier",
+      "MachineGun1",
+      "MachineGun2",
+      "ASMissile",
+      "MkRocket",
+      "Bomb",
+      "Rocket"
+     ],
+     "desc": {
+      "ja": "目標地点(ルート自体の相対座標の中心点)をどのように決定するかを選択します。\n- `Ballistic`(既定): 障害物を一切考慮しない、純粋に数学的な計算方式。武器自身の`Velocity`/`Gravity`(未設定時は既定値)と搭乗者の照準方向から、「発射高度へ戻ってくる地点」を弾道計算で求めます。照準の仰角がそのまま着弾距離を決める、間接照準兵器らしい挙動になります\n- `Raycast`: 照準方向へ直接レイキャストし、最初にブロックへ当たった地点を目標とします(何も当たらなければ固定の最大距離地点)\n- `Collision`: `Ballistic`と同じ弾道物理計算を使いつつ、シミュレーションの各区間で実際にブロックとの衝突を判定し、着弾地点(=実際にブロックへ衝突した地点)のみを目標とします。`Ballistic`のような「発射高度へ戻る地点」への早期打ち切りは行わず、地形が発射地点より低い場合など、必要であればより長く弾道をシミュレートし続け、また地形が発射地点より高い場合にも追随できます。",
+      "en": "Selects how the target point (the center point that the route's own relative coordinates are based on) is determined.\n- `Ballistic` (default): a purely mathematical calculation that doesn't account for obstacles at all. From the weapon's own `Velocity` / `Gravity` (default values if unset) and the occupant's own aim direction, computes \"the point it would return to firing altitude\" via ballistic calculation. The reticle's own elevation angle directly determines impact distance, behaving like a typical indirect-fire weapon\n- `Raycast`: raycasts directly along the aim direction, and targets the first point that hits a block (or a fixed maximum-distance point if nothing is hit)\n- `Collision`: uses the same ballistic physics calculation as `Ballistic`, but actually checks for a block collision at each step of the simulation, and only targets the actual impact point (where it actually hit a block). Unlike `Ballistic`'s own early cutoff at \"the point it returns to firing altitude\", it keeps simulating the trajectory for as long as needed - for example if the terrain is lower than the firing point"
+     },
+     "example": {
+      "ja": "`CasTargetMode = Collision`",
+      "en": "`CasTargetMode = Collision`"
+     }
+    },
+    {
+     "key": "CasAttackStartAltitude",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default": 200.0,
+     "entity_types": [
+      "CAS",
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "Carrierの僚機への目標ロック機能で、地表・水上の目標を攻撃する際の高度しきい値です。単純な「目標地点からの一定オフセット高度」だけでは、その高度へ到達するまでの飛行経路自体が安全である保証がないため、2段階のヒステリシス方式を採用しています。\n- `CasAttackStartAltitude`: 攻撃(目標への旋回・接近・発射)を開始・再開する高度。目標に対してこの高さ以上まで実際に上昇して初めて、攻撃動作へ移行します\n- `CasAttackStopAltitude`: この高さを下回ると、攻撃を中断して`CasAttackStartAltitude`まで機首上げして上昇します。`CasAttackStartAltitude`まで戻るまでは(`CasAttackStopAltitude`を上回っただけでは)攻撃を再開しません(境界付近での頻繁な切り替えを防ぐためです)\n- この2つの値は、僚機がロック時に使用する武器スロット(隊長機がロック時点で選択していた武装)自身の設定が使われます",
+      "en": "The altitude thresholds used when Carrier's own wingman target-lock feature (the `/tvm` lock mode) attacks a ground/surface target. Simply using \"a fixed offset altitude above the target\" alone can't guarantee that the flight path taken to reach that altitude is itself safe, so a two-stage hysteresis scheme is used instead.\n- `CasAttackStartAltitude`: the altitude at which an attack (turning toward, closing on, and firing at the target) begins/resumes. Only once it actually climbs to at least this height above the target does it transition into attack behavior\n- `CasAttackStopAltitude`: dropping below this height aborts the attack and climbs, nose up, back to `CasAttackStartAltitude`. The attack doesn't resume just because it's back above `CasAttackStopAltitude` alone - it waits until it's back up to `CasAttackStartAltitude` (this prevents rapid toggling near the boundary)\n- Both of these values come from the settings of the weapon slot the wingman is using at the moment of locking (whichever weapon the flight leader had selected at the time of the lock)"
+     },
+     "example": {
+      "ja": "`CasAttackStartAltitude = 200` / `CasAttackStopAltitude = 40`",
+      "en": "`CasAttackStartAltitude = 200` / `CasAttackStopAltitude = 40`"
+     }
+    },
+    {
+     "key": "CasAttackStopAltitude",
+     "group": "CAS",
+     "required": false,
+     "type": "float",
+     "default": 40.0,
+     "entity_types": [
+      "CAS",
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "Carrierの僚機への目標ロック機能で、地表・水上の目標を攻撃する際の高度しきい値です。単純な「目標地点からの一定オフセット高度」だけでは、その高度へ到達するまでの飛行経路自体が安全である保証がないため、2段階のヒステリシス方式を採用しています。\n- `CasAttackStartAltitude`: 攻撃(目標への旋回・接近・発射)を開始・再開する高度。目標に対してこの高さ以上まで実際に上昇して初めて、攻撃動作へ移行します\n- `CasAttackStopAltitude`: この高さを下回ると、攻撃を中断して`CasAttackStartAltitude`まで機首上げして上昇します。`CasAttackStartAltitude`まで戻るまでは(`CasAttackStopAltitude`を上回っただけでは)攻撃を再開しません(境界付近での頻繁な切り替えを防ぐためです)\n- この2つの値は、僚機がロック時に使用する武器スロット(隊長機がロック時点で選択していた武装)自身の設定が使われます",
+      "en": "The altitude thresholds used when Carrier's own wingman target-lock feature (the `/tvm` lock mode) attacks a ground/surface target. Simply using \"a fixed offset altitude above the target\" alone can't guarantee that the flight path taken to reach that altitude is itself safe, so a two-stage hysteresis scheme is used instead.\n- `CasAttackStartAltitude`: the altitude at which an attack (turning toward, closing on, and firing at the target) begins/resumes. Only once it actually climbs to at least this height above the target does it transition into attack behavior\n- `CasAttackStopAltitude`: dropping below this height aborts the attack and climbs, nose up, back to `CasAttackStartAltitude`. The attack doesn't resume just because it's back above `CasAttackStopAltitude` alone - it waits until it's back up to `CasAttackStartAltitude` (this prevents rapid toggling near the boundary)\n- Both of these values come from the settings of the weapon slot the wingman is using at the moment of locking (whichever weapon the flight leader had selected at the time of the lock)"
+     },
+     "example": {
+      "ja": "`CasAttackStartAltitude = 200` / `CasAttackStopAltitude = 40`",
+      "en": "`CasAttackStartAltitude = 200` / `CasAttackStopAltitude = 40`"
+     }
+    },
+    {
+     "key": "CarrierAircraft",
+     "group": "Carrier",
+     "required": false,
+     "type": "string",
+     "hint": "vehicle",
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`の同名項目(`CasAircraft`等)と全く同じ意味です。\n(CasAircraft) 発艦させる支援機の機体ファイル名(`data/<namespace>/vehicles/<名前>.json`、名前空間は不要)。",
+      "en": "Exactly the same meaning as `CAS`'s own identically-named fields (`CasAircraft`, etc.).\n(CasAircraft) The support aircraft's own vehicle file name (`data/<namespace>/vehicles/<name>.json`, no namespace needed)."
+     },
+     "example": {
+      "ja": "CarrierAircraft = f4u_corsair\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0",
+      "en": "CarrierAircraft = f14_tomcat\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0"
+     }
+    },
+    {
+     "key": "CarrierWeaponIndex",
+     "group": "Carrier",
+     "required": false,
+     "type": "int",
+     "default": 0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`の同名項目(`CasAircraft`等)と全く同じ意味です。\n(CasWeaponIndex) 支援機自身が攻撃時に使用する武器スロット番号(支援機自身の`weapons`配列の添字)。0から始まるので注意。",
+      "en": "Exactly the same meaning as `CAS`'s own identically-named fields (`CasAircraft`, etc.).\n(CasWeaponIndex) The weapon slot number the support aircraft itself uses when attacking (an index into that aircraft's own `weapons` array)."
+     },
+     "example": {
+      "ja": "CarrierAircraft = f4u_corsair\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0",
+      "en": "CarrierAircraft = f14_tomcat\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0"
+     }
+    },
+    {
+     "key": "CarrierAccuracy",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`の同名項目(`CasAircraft`等)と全く同じ意味です。\n(CasAccuracy) 支援機自身の航法誤差(ルート自体のランダムなずれ幅)。武器自体の命中精度(`Accuracy`)とは別の項目です。",
+      "en": "Exactly the same meaning as `CAS`'s own identically-named fields (`CasAircraft`, etc.).\n(CasAccuracy) The support aircraft's own navigation error (a random amount of drift in the route itself). This is a separate field from the weapon's own actual accuracy (`Accuracy`)."
+     },
+     "example": {
+      "ja": "CarrierAircraft = f4u_corsair\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0",
+      "en": "CarrierAircraft = f14_tomcat\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0"
+     }
+    },
+    {
+     "key": "CarrierTimeout",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 60.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`の同名項目(`CasAircraft`等)と全く同じ意味です。\n(CasTimeout) 支援機の総飛行時間の上限。この時間が経過すると、ルートの進捗に関わらず強制的に消滅します(安全装置)。",
+      "en": "Exactly the same meaning as `CAS`'s own identically-named fields (`CasAircraft`, etc.).\n(CasTimeout) The cap on the support aircraft's own total flight time. Once this time elapses, it despawns forcibly regardless of route progress."
+     },
+     "example": {
+      "ja": "CarrierAircraft = f4u_corsair\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0",
+      "en": "CarrierAircraft = f14_tomcat\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0"
+     }
+    },
+    {
+     "key": "CarrierStuckTimeout",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 60.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`の同名項目(`CasAircraft`等)と全く同じ意味です。\n(CasStuckTimeout) 次のウェイポイントへ進めないままこの時間が経過すると、進行状況に関わらず強制的に消滅します(`CasTimeout`とは独立した、進捗停止専用のタイムアウトです)。",
+      "en": "Exactly the same meaning as `CAS`'s own identically-named fields (`CasAircraft`, etc.).\n(CasStuckTimeout) If this much time elapses without being able to advance to the next waypoint, it despawns forcibly regardless of progress (a separate timeout from `CasTimeout`, dedicated specifically to stalled progress)."
+     },
+     "example": {
+      "ja": "CarrierAircraft = f4u_corsair\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0",
+      "en": "CarrierAircraft = f14_tomcat\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0"
+     }
+    },
+    {
+     "key": "CarrierYawOffset",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`の同名項目(`CasAircraft`等)と全く同じ意味です。\n(CasYawOffset) ルート自体の回転基準(搭乗者の視線方向)に加える補正角度(度)。",
+      "en": "Exactly the same meaning as `CAS`'s own identically-named fields (`CasAircraft`, etc.).\n(CasYawOffset) A correction angle (degrees) added to the route's own rotation reference (the occupant's own line of sight direction)."
+     },
+     "example": {
+      "ja": "CarrierAircraft = f4u_corsair\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0",
+      "en": "CarrierAircraft = f14_tomcat\nCarrierWeaponIndex = 0\nCarrierAccuracy = 3.0\nCarrierTimeout = 300\nCarrierStuckTimeout = 30\nCarrierYawOffset = 0"
+     }
+    },
+    {
+     "key": "CarrierLandingYawOffset",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CarrierYawOffset`に加え、着艦進入方向にのみ追加で適用される補正角度。",
+      "en": "A correction angle applied only to the landing approach direction, in addition to `CarrierYawOffset`."
+     },
+     "example": {
+      "ja": "`CarrierLandingYawOffset = 0`",
+      "en": "`CarrierLandingYawOffset = 0`"
+     }
+    },
+    {
+     "key": "CarrierTargetYawOffset",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 0.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CarrierYawOffset`に加え、ルート自体の回転にのみ追加で適用される補正角度。",
+      "en": "A correction angle applied only to the route's own rotation, in addition to `CarrierYawOffset`."
+     },
+     "example": {
+      "ja": "`CarrierTargetYawOffset = 0`",
+      "en": "`CarrierTargetYawOffset = 0`"
+     }
+    },
+    {
+     "key": "CarrierLandingToAmmoRadius",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 15.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "この武器自身のAddWeapon位置からこの半径(ブロック)以内に、対応する機体ファイルの搭乗機体が入ると(速度に関わらず)、自動的に弾薬+1に変換されます(`MaxAmmo`に空きがある場合)。この武器から実際に発艦させた機体に限らず、同じ機体ファイルの任意のプレイヤー操縦機が対象です。",
+      "en": "When a mounted aircraft of the corresponding vehicle file comes within this radius (blocks) of this weapon's own AddWeapon position (regardless of speed), it's automatically converted into +1 ammo (as long as `MaxAmmo` has room). This applies to any player-piloted aircraft of the same vehicle file, not only one that was actually launched from this weapon."
+     },
+     "example": {
+      "ja": "`CarrierLandingToAmmoRadius = 15.0`",
+      "en": "`CarrierLandingToAmmoRadius = 15.0`"
+     }
+    },
+    {
+     "key": "CarrierFormationSize",
+     "group": "Carrier",
+     "required": false,
+     "type": "int",
+     "default": 1,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`側の`CasFormationSize`/`CasFormationType`/ `CasFormationSpacing`/`CasFormationElementSpacing`と全く同じ形式・意味です。\n(CasFormationSize) 1発の発射で、単機ではなくこの機数分の支援機を編隊で出撃させます。1機目(リーダー機)は常に設定通りのルートを辿り、2機目以降は`CasFormationType`で指定した隊形に従い、リーダー機に追随しながら飛行します(隊形内の相対位置を保ったまま、全機が一斉に同じルートを飛行します)。既定値`1`(省略時)は編隊を組まない、従来通りの単機出撃です。",
+      "en": "Exactly the same format and meaning as `CAS`'s own `CasFormationSize` / `CasFormationType` / `CasFormationSpacing` / `CasFormationElementSpacing`.\n(CasFormationSize) An extension specific to this project. A single use launches this many support aircraft in formation, rather than a single one. The first aircraft (the flight leader) always follows the route exactly as configured; every subsequent one follows the exact same route, simply translated according to the formation specified by `CasFormationType` (every aircraft flies the same route simultaneously, keeping its own relative position within the formation). The default `1` (if omitted) launches a single aircraft with no formation, exactly as before."
+     },
+     "example": {
+      "ja": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`",
+      "en": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`"
+     }
+    },
+    {
+     "key": "CarrierFormationSpacing",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default": 8.0,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`側の`CasFormationSize`/`CasFormationType`/ `CasFormationSpacing`/`CasFormationElementSpacing`と全く同じ形式・意味です。\n(CasFormationSpacing) 編隊内の機体間隔。`Diamond`/`Delta`では、エレメント内(小さな隊形内)の機体間隔として使われます。エレメント同士の間隔は`CasFormationElementSpacing`で別途指定します。",
+      "en": "Exactly the same format and meaning as `CAS`'s own `CasFormationSize` / `CasFormationType` / `CasFormationSpacing` / `CasFormationElementSpacing`.\n(CasFormationSpacing) The spacing between aircraft within the formation. For `Diamond`/`Delta`, this is used as the spacing between aircraft within an element (a small sub-formation). Spacing between elements themselves is set separately via `CasFormationElementSpacing`."
+     },
+     "example": {
+      "ja": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`",
+      "en": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`"
+     }
+    },
+    {
+     "key": "CarrierFormationElementSpacing",
+     "group": "Carrier",
+     "required": false,
+     "type": "float",
+     "default_display": {
+      "ja": "自動(FormationSpacingから算出)",
+      "en": "auto (derived from FormationSpacing)"
+     },
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`側の`CasFormationSize`/`CasFormationType`/ `CasFormationSpacing`/`CasFormationElementSpacing`と全く同じ形式・意味です。\n(CasFormationElementSpacing) `Diamond`/`Delta`限定。エレメント(小隊形)同士の中心間隔。省略した場合は、`CasFormationSpacing`のエレメント内機数×1.5倍が自動的に使われます(従来通りの挙動)。`Diamond`/`Delta`以外の隊形では意味を持ちません。",
+      "en": "Exactly the same format and meaning as `CAS`'s own `CasFormationSize` / `CasFormationType` / `CasFormationSpacing` / `CasFormationElementSpacing`.\n(CasFormationElementSpacing) `Diamond`/`Delta` only. The center-to-center spacing between elements (sub-formations). If omitted, `CasFormationSpacing` times 1.5x the number of aircraft per element is used automatically (the same behavior as before). Has no meaning for any formation other than `Diamond`/`Delta`."
+     },
+     "example": {
+      "ja": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`",
+      "en": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`"
+     }
+    },
+    {
+     "key": "CarrierFormationType",
+     "group": "Carrier",
+     "required": false,
+     "type": "enum",
+     "choices": [
+      "LineAbreast",
+      "LineAstern",
+      "VFormation",
+      "Diamond",
+      "Delta"
+     ],
+     "default": "LineAbreast",
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CAS`側の`CasFormationSize`/`CasFormationType`/ `CasFormationSpacing`/`CasFormationElementSpacing`と全く同じ形式・意味です。\n(CasFormationType) `CasFormationSize`が2以上の場合の隊形。\n- `LineAbreast`: 横一列。リーダー機を基準に左右交互に並びます(機数が偶数の場合、片側へ1機多くなり左右非対称になります)\n- `LineAstern`: 縦一列。リーダー機の真後ろへ等間隔に並びます\n- `VFormation`: V字。リーダー機を先頭に、左右交互かつ後方へ段階的に下がりながら並びます(`LineAbreast`と同様、偶数機では左右非対称)\n- `Diamond`: 4機1組のダイヤ隊形(先頭・右・左・後尾)を構成します。5機以上の場合、ダイヤの塊(エレメント)自体を`VFormation`と同じ考え方でさらに大きく展開し、全体としてコンバットボックスを形成します\n- `Delta`: 3機1組のデルタ(小規模なV字)隊形を構成します。4機以上の場合は`Diamond`と同様、デルタのエレメント自体をさらに展開します",
+      "en": "Exactly the same format and meaning as `CAS`'s own `CasFormationSize` / `CasFormationType` / `CasFormationSpacing` / `CasFormationElementSpacing`.\n(CasFormationType) The formation used when `CasFormationSize` is 2 or more.\n- `LineAbreast`: side-by-side. Aircraft alternate left and right of the leader (with an even count, one side ends up with one more, making it asymmetric)\n- `LineAstern`: in a single-file line. Aircraft line up directly behind the leader at equal spacing\n- `VFormation`: a V shape. With the leader at the front, aircraft alternate left and right while progressively dropping back (same as `LineAbreast`, an even count is asymmetric)\n- `Diamond`: forms a 4-aircraft diamond (lead, right, left, tail). With 5 or more aircraft, the diamond block itself (the \"element\") is further expanded using the same idea as `VFormation`, forming an overall combat box\n- `Delta`: forms a 3-aircraft delta (a small V) formation. With 4 or more aircraft, the delta element itself is further expanded, the same as `Diamond`"
+     },
+     "example": {
+      "ja": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`",
+      "en": "`CarrierFormationSize = 3` / `CarrierFormationType = Delta`"
+     }
+    },
+    {
+     "key": "CarrierWaypoint",
+     "group": "Carrier",
+     "required": false,
+     "type": "list",
+     "item_type": "columns",
+     "columns": [
+      {
+       "name": "relX",
+       "type": "int"
+      },
+      {
+       "name": "relY",
+       "type": "int"
+      },
+      {
+       "name": "relZ",
+       "type": "int"
+      },
+      {
+       "name": "speed%",
+       "type": "float"
+      },
+      {
+       "name": "attack",
+       "type": "enum",
+       "choices": [
+        "true",
+        "false"
+       ]
+      }
+     ],
+     "min_rows": 1,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "通常の哨戒・攻撃ルート。\n(CasWaypoint) 支援機が辿るルートのウェイポイント。座標はマークした目標地点からの相対値です。速度%は支援機自身の最高速度に対する割合(0〜100)。攻撃フラグ`true`/`false`(または`1`/`0`)が`true`の区間では、そのレグを飛行中に`CasWeaponIndex`の武器で自動攻撃します。ルートは通常、攻撃フラグ`false`の進入・離脱区間と、`true`の攻撃run区間で構成します。",
+      "en": "The ordinary patrol/attack route.\n(CasWaypoint) A waypoint on the route the support aircraft follows. Coordinates are relative to the marked target point. Speed% is a fraction (0-100) of the support aircraft's own top speed. During a leg where the attack flag is `true` (or `1`), it automatically attacks using the `CasWeaponIndex` weapon while flying that leg. A route typically consists of ingress/egress legs with the attack flag `false`, and an attack run leg with `true`."
+     },
+     "example": {
+      "ja": "CarrierWaypoint = 0,80,300,80,false\nCarrierWaypoint = 0,80,600,80,true",
+      "en": "CarrierWaypoint = 0,80,300,80,false\nCarrierWaypoint = 0,80,600,80,true"
+     }
+    },
+    {
+     "key": "CarrierLaunchWaypoint",
+     "group": "Carrier",
+     "required": false,
+     "type": "list",
+     "item_type": "columns",
+     "columns": [
+      {
+       "name": "relX",
+       "type": "int"
+      },
+      {
+       "name": "relY",
+       "type": "int"
+      },
+      {
+       "name": "relZ",
+       "type": "int"
+      },
+      {
+       "name": "speed%",
+       "type": "float"
+      },
+      {
+       "name": "gear",
+       "type": "enum",
+       "choices": [
+        "-",
+        "0",
+        "1"
+       ],
+       "optional": true
+      },
+      {
+       "name": "bay",
+       "type": "enum",
+       "choices": [
+        "-",
+        "0",
+        "1"
+       ],
+       "optional": true
+      },
+      {
+       "name": "boost km/h",
+       "type": "string",
+       "optional": true
+      }
+     ],
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "発艦直後に最初に飛行する専用の離陸ルート(`CarrierWaypoint`より先に実行されます)。攻撃フラグはありません。末尾3列は省略可能:\n- `gear`(`0`/`1`/`-`、既定値`-`=変更なし): このウェイポイント到達の瞬間、降着装置の状態を強制的に設定(格納/展開)\n- `bay`(同上): 武器ベイの開閉状態を強制的に設定\n- `speedBoostKmh`(数値または`-`、既定値`-`=無効): このウェイポイント到達の瞬間、現在の水平方向を保ったまま速度をこのkm/h値へ瞬間的に変更します(カタパルト射出の演出)\n- 現状、`gear`/`bay`は最初のウェイポイント(0番目、発艦直後)と着艦ルートの最終ウェイポイントでのみ実際に反映されます(中間のウェイポイントでは無視されます)",
+      "en": "A dedicated takeoff route flown first, right after launch (executed before `CarrierWaypoint`). There's no attack flag. The last 3 columns are optional:\n- `gear` (`0` / `1` / `-`, default `-` = no change): the instant this waypoint is reached, forcibly sets the landing gear's own state (retracted/deployed)\n- `bay` (same as above): forcibly sets the weapon bay's own open/closed state\n- `speedBoostKmh` (a number, or `-`, default `-` = disabled): the instant this waypoint is reached, instantly changes speed to this km/h value while keeping the current horizontal direction (a catapult-launch effect)\n- Currently, `gear`/`bay` only actually take effect at the very first waypoint (index 0, right after launch) and the final waypoint of the landing route (they're ignored at any waypoint in between)"
+     }
+    },
+    {
+     "key": "CarrierLandingWaypoint",
+     "group": "Carrier",
+     "required": false,
+     "type": "list",
+     "item_type": "columns",
+     "columns": [
+      {
+       "name": "relX",
+       "type": "int"
+      },
+      {
+       "name": "relY",
+       "type": "int"
+      },
+      {
+       "name": "relZ",
+       "type": "int"
+      },
+      {
+       "name": "speed%",
+       "type": "float"
+      },
+      {
+       "name": "gear",
+       "type": "enum",
+       "choices": [
+        "-",
+        "0",
+        "1"
+       ],
+       "optional": true
+      },
+      {
+       "name": "bay",
+       "type": "enum",
+       "choices": [
+        "-",
+        "0",
+        "1"
+       ],
+       "optional": true
+      },
+      {
+       "name": "boost km/h",
+       "type": "string",
+       "optional": true
+      }
+     ],
+     "min_rows": 1,
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "帰投・着艦ルート。母艦の現在位置・向きに対する相対座標で、毎tick再計算されます(着艦には時間がかかり、その間も母艦が移動している可能性があるため)。最後のウェイポイントが、最終進入(母艦のAddWeapon位置そのものへの直線進入)の基準点になります。",
+      "en": "The return/landing route. Coordinates are relative to the mothership's own current position and heading, recalculated every tick (since landing takes time, and the mothership may keep moving during that time). The last waypoint becomes the reference point for the final approach (a straight-line approach directly toward the weapon's own AddWeapon position itself)."
+     }
+    },
+    {
+     "key": "CarrierRecoveryPoint",
+     "group": "Carrier",
+     "required": false,
+     "type": "list",
+     "item_type": "columns",
+     "columns": [
+      {
+       "name": "relX",
+       "type": "float"
+      },
+      {
+       "name": "relY",
+       "type": "float"
+      },
+      {
+       "name": "relZ",
+       "type": "float"
+      },
+      {
+       "name": "radius",
+       "type": "float"
+      }
+     ],
+     "entity_types": [
+      "Carrier"
+     ],
+     "desc": {
+      "ja": "`CarrierLandingToAmmoRadius`の範囲に加え、追加の回収ゾーンを設定できます(例: 甲板とは別のエレベーター等)。各行が独立した座標・半径を持ちます。省略時は既定の1ゾーンのみが有効です。",
+      "en": "Adds an additional recovery zone, on top of the `CarrierLandingToAmmoRadius` area (for example, an elevator separate from the main deck). Each line has its own independent coordinate and radius. If omitted, only the single default zone is active."
+     }
+    }
+   ]
+  }
+ }
+}
