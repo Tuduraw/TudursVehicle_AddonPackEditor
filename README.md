@@ -1,6 +1,6 @@
 # アドオンパックエディタ(Addon Pack Editor)
 
-Tudur's Vehicle Mod 用のアドオンパックを、GUIで作成・編集するツールです。
+Tudur's Vehicle Mod (https://github.com/Tuduraw/tudursvehiclemod) 用のアドオンパックを、GUIで作成・編集するツールです。
 日本語・英語に対応しています(「設定」→「言語 / Language」で切り替え)。
 
 
